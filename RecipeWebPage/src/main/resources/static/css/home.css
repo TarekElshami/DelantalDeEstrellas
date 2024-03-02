@@ -1,0 +1,48 @@
+body {
+    background-image: url('/static/img/fondo.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+section {
+    padding: 20px 0;
+    border-bottom: 2px solid #dee2e6; 
+    background-color: rgba(255, 255, 255, 0.8); 
+}
+
+h2 {
+    color: #007bff; 
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    border-radius: 10px; 
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.btn-primary {
+    background-color: #007bff; 
+    border: none;
+}
+
+
