@@ -5,11 +5,14 @@ import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ChefService {
 
     private static ChefService chefService = null;
     private final Map<Long, Chef> chefMap;
+
+    AtomicLong nextId = new AtomicLong();
 
     public static ChefService getInstance(){
         if (chefService==null){
@@ -29,7 +32,9 @@ public class ChefService {
     }
 
     public void newChef(Chef chef) {
-        chefMap.put(chef.getId(), chef);
+        long id = nextId.incrementAndGet();
+        chef.setId(id);
+        chefMap.put(id, chef);
     }
 
     public void substitute(Long id, Chef chef) {
@@ -42,10 +47,10 @@ public class ChefService {
             storedChef.setName(chef.getName());
         } if (chef.getDescription() != null){
             storedChef.setDescription(chef.getName());
-        } if (chef.getFavIng() != null){
-            storedChef.setFavIng(chef.getFavIng());
-        } if (chef.getBestRecipes() != null){
-            storedChef.setBestRecipes(chef.getBestRecipes());
+            //} if (chef.getFavIng() != null){
+            //    storedChef.setFavIng(chef.getFavIng());
+            //} if (chef.getBestRecipes() != null){
+            //    storedChef.setBestRecipes(chef.getBestRecipes());
         }
     }
 

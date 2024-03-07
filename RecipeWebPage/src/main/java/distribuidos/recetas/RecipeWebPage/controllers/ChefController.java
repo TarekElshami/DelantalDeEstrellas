@@ -3,6 +3,7 @@ package distribuidos.recetas.RecipeWebPage.controllers;
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.service.ChefService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -15,11 +16,28 @@ public class ChefController {
         this.chefService = ChefService.getInstance();
     }
 
+    @GetMapping("/chef")
+    public String showChefs(Model model){
+        model.addAttribute("chef", chefService.getAll());
+        return "ChefList";
+    }
+
+    @GetMapping("/chef/new")
+    public String newChefForm(Model model){
+        model.addAttribute("url", "new");
+        model.addAttribute("FormBtn", "Añadir");
+        return "NewChef";
+    }
+    @PostMapping("/chef/new")
+    public String newChef(Chef chef){
+        chefService.newChef(chef);
+        return "redirect:/chef";
+    }
     @GetMapping("/chef/{id}")
-    public String showChef(@PathVariable Long id){
+    public String showChef(@PathVariable Long id, Model model){
         Chef chef = chefService.getChefById(id);
-        //TODO: pass the chef info to the model and return it
-        return "";
+        model.addAttribute("chef", chef);
+        return "Chef";
     }
 
     @PostMapping("/chef/{id}")
@@ -29,24 +47,21 @@ public class ChefController {
         return "";
     }
 
-    @PutMapping("/chef/{id}")
-    public String substituteChef(@PathVariable Long id, @RequestParam Chef chef){
+    @GetMapping("/chef/{id}/update")
+    public String showChefeEdit(@PathVariable Long id, Model model){
+        Chef chef = chefService.getChefById(id);
+        model.addAttribute("FormBtn", "Guardar cambios");
+        model.addAttribute("url", id+"/update");
+        model.addAttribute("chef", chef);
+        return "NewChef";
+    }
+
+    @PostMapping("/chef/{id}/update")
+    public String editChef(@PathVariable Long id, Chef chef){
         chefService.substitute(id, chef);
-        //TODO: return the correct view
-        return "";
+
+        return "redirect:/chef/"+id;
     }
 
-    @PatchMapping("/chef/{id}")
-    public String modifyChef(@PathVariable Long id, @RequestParam Chef chef){
-        chefService.modifyToMatch(id, chef);
-        //TODO: return the correct view
-        return "";
-    }
 
-    @DeleteMapping("/chef/{id}")
-    public String newChef(@PathVariable Long id){
-        chefService.delete(id);
-        //TODO: return the correct view
-        return "";
-    }
 }

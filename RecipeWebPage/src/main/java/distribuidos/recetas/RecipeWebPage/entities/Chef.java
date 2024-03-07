@@ -22,12 +22,22 @@ public class Chef {
     private Long id;
     private String name;
     private String description;
-    //private Blob image;
+    private String image;
 
-    private Collection<Ingredient> favIng;
-    private Collection<Recipe> bestRecipes;
+    //private Collection<Ingredient> favIng;
+    //private Collection<Recipe> bestRecipes;
 
-    public Chef(String name){
+
+    public Chef() {
+    }
+
+    public Chef(String name) {
         this.name = name;
+    }
+
+    public Chef(String name, String description, String image){
+        this.name = name;
+        this.description = description;
+        this.image = image;
     }
 }
