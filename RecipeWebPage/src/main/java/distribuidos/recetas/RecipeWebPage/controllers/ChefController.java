@@ -48,7 +48,7 @@ public class ChefController {
     }
 
     @GetMapping("/chef/{id}/update")
-    public String showChefeEdit(@PathVariable Long id, Model model){
+    public String showChefEdit(@PathVariable Long id, Model model){
         Chef chef = chefService.getChefById(id);
         model.addAttribute("FormBtn", "Guardar cambios");
         model.addAttribute("url", id+"/update");
@@ -61,6 +61,12 @@ public class ChefController {
         chefService.substitute(id, chef);
 
         return "redirect:/chef/"+id;
+    }
+
+    @GetMapping("/chef/{id}/deleted")
+    public String deleteChef(@PathVariable Long id){
+        chefService.delete(id);
+        return "redirect:/chef";
     }
 
 
