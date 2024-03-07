@@ -31,8 +31,8 @@ public class IngredientService {
         return ingredientMap.get(id);
     }
 
-    public void newIngredient(String name, String description) {
-        Ingredient ingredient = new Ingredient(++currentId, name, description);
+    public void newIngredient(String name, String description, String imageUrl) {
+        Ingredient ingredient = new Ingredient(++currentId, name, description, imageUrl);
         ingredientMap.put(ingredient.getId(), ingredient);
     }
 

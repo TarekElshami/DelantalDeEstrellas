@@ -19,13 +19,15 @@ public class Ingredient {
     private Long id;
     private String name;
     private String description;
+    private String image;
 
     private Collection<Ingredient> matchesWith;
     private Collection<Recipe> bestRecipes;
 
-    public Ingredient(Long id, String name, String description) {
+    public Ingredient(Long id, String name, String description, String imageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.image = imageUrl;
     }
 }

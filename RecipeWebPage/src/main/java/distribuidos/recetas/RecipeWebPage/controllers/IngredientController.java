@@ -22,7 +22,7 @@ public class IngredientController {
     public String showIngredients(Model model){
         Collection<Ingredient> ingredients = ingredientService.getAll();
         model.addAttribute("ingredientsList", ingredients);
-        return "ingredients";
+        return "IngredientList";
     }
 
     @GetMapping("/ingredient/{id}")
