@@ -2,7 +2,10 @@ package distribuidos.recetas.RecipeWebPage.controllers;
 
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api")
@@ -13,6 +16,16 @@ public class IngredientRestController {
     public IngredientRestController() {
         this.ingredientService = IngredientService.getInstance();
     }
+
+    @GetMapping("/ingredients")
+    public ResponseEntity<Collection<Ingredient>> getAllIngredients() {
+        Collection<Ingredient> ingredients = ingredientService.getAll();
+        if (ingredients.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(ingredients);
+    }
+
 
     @GetMapping("/ingredient/{id}")
     public String showIngredient(@PathVariable Long id){
