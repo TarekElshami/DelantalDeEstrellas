@@ -2,12 +2,11 @@ package distribuidos.recetas.RecipeWebPage.service;
 
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RecipeService {
 
+    public static final int PAGESIZE = 6;
     private static RecipeService recipeService = null;
     private final Map<Long, Recipe> recipeMap;
 
@@ -18,7 +17,7 @@ public class RecipeService {
         return recipeService;
     }
     private RecipeService(){
-        recipeMap = new HashMap<>();
+        recipeMap = new LinkedHashMap<>();
     }
 
     public Collection<Recipe> getAll(){
@@ -53,5 +52,13 @@ public class RecipeService {
 
     public Recipe delete(Long id) {
         return recipeMap.remove(id);
+    }
+
+    public Collection<Recipe> getPage(int page) {
+        ArrayList<Recipe> recipes = new ArrayList<>(recipeMap.values());
+        if (recipes.size()<page*PAGESIZE){
+            return null;
+        }
+        return recipes.subList(page*PAGESIZE, Math.min(recipes.size(), (page + 1) * PAGESIZE));
     }
 }

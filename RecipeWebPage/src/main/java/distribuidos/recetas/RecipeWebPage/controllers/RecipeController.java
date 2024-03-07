@@ -3,6 +3,7 @@ package distribuidos.recetas.RecipeWebPage.controllers;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.service.DatabaseInitializer;
 import distribuidos.recetas.RecipeWebPage.service.RecipeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class RecipeController {
 
     @GetMapping("/recipes")
     public String showAllRecipes(Model model){
-        Collection<Recipe> recipes = recipeService.getAll();
+        Collection<Recipe> recipes = recipeService.getPage(0);
         model.addAttribute("recipeList", recipes);
         model.addAttribute("title", "Nuestras Recetas");
         model.addAttribute("subtitle", "La mejor selección de recetas de toda la web");
@@ -70,5 +71,16 @@ public class RecipeController {
         recipeService.delete(id);
         //TODO: return the correct view
         return "";
+    }
+
+    @GetMapping("/NextRecipePage")
+    @ResponseBody
+    public ResponseEntity<Collection<Recipe>> nextPage(@RequestParam("page") int pageNum){
+        Collection<Recipe> page = recipeService.getPage(pageNum);
+        if (page==null){
+            return ResponseEntity.status(204).body(null);
+        } else if (page.size()<RecipeService.PAGESIZE){
+            return ResponseEntity.status(206).body(page);
+        }   return ResponseEntity.status(200).body(page);
     }
 }
