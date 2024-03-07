@@ -2,6 +2,7 @@ package distribuidos.recetas.RecipeWebPage.controllers;
 
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.service.RecipeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,37 +17,37 @@ public class RecipeRestController {
     }
     
     @GetMapping("/recipe/{id}")
-    public String showRecipe(@PathVariable Long id){
+    public ResponseEntity<Recipe> showRecipe(@PathVariable Long id){
         Recipe recipe = recipeService.getRecipeById(id);
         //TODO: pass the recipe info to the model and return it
-        return "";
+        return ResponseEntity.status(200).body(null);
     }
 
     @PostMapping("/recipe/{id}")
-    public String newRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
+    public ResponseEntity<Recipe> newRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
         recipeService.newRecipe(recipe);
         //TODO: return the correct view
-        return "";
+        return ResponseEntity.status(200).body(null);
     }
 
     @PutMapping("/recipe/{id}")
-    public String substituteRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
+    public ResponseEntity<Recipe> substituteRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
         recipeService.substitute(id, recipe);
         //TODO: return the correct view
-        return "";
+        return ResponseEntity.status(200).body(null);
     }
 
     @PatchMapping("/recipe/{id}")
-    public String modifyRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
+    public ResponseEntity<Recipe> modifyRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
         recipeService.modifyToMatch(id, recipe);
         //TODO: return the correct view
-        return "";
+        return ResponseEntity.status(200).body(null);
     }
 
     @DeleteMapping("/recipe/{id}")
-    public String newRecipe(@PathVariable Long id){
+    public ResponseEntity<Recipe> newRecipe(@PathVariable Long id){
         recipeService.delete(id);
         //TODO: return the correct view
-        return "";
+        return ResponseEntity.status(200).body(null);
     }
 }
