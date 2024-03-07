@@ -1,9 +1,15 @@
 package distribuidos.recetas.RecipeWebPage.controllers;
 
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
+import distribuidos.recetas.RecipeWebPage.service.DatabaseInitializer;
 import distribuidos.recetas.RecipeWebPage.service.RecipeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Collection;
 
 
 @Controller
@@ -13,8 +19,24 @@ public class RecipeController {
 
     public RecipeController() {
         this.recipeService = RecipeService.getInstance();
+        try {
+            new DatabaseInitializer().init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    @GetMapping("/recipes")
+    public String showAllRecipes(Model model){
+        Collection<Recipe> recipes = recipeService.getAll();
+        model.addAttribute("recipeList", recipes);
+        model.addAttribute("title", "Nuestras Recetas");
+        model.addAttribute("subtitle", "La mejor selección de recetas de toda la web");
+        model.addAttribute("headerImg", "recipesHeader.png");
+        return "RecipeList";
+    }
     @GetMapping("/recipe/{id}")
     public String showRecipe(@PathVariable Long id){
         Recipe recipe = recipeService.getRecipeById(id);

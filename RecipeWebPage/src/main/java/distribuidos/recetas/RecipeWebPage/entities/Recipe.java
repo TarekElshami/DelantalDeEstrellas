@@ -24,12 +24,20 @@ public class Recipe {
     private List<String> steps;
     private boolean complete; //true if the recipe is complete. Since one can be created with only its name, this attribute is used to know if it is complete enough to show.
     //private Blob image;
+    private String img;
 
     private Collection<Ingredient> ingredients; //cómo hacemos el tema cantidades? Para que pueda ser  por ejemplo 5g de mejorana
     private Chef chef;
 
     public Recipe(String name){
         this.name = name;
+    }
+    public Recipe(Long id, String name, String description, String chef, String img){
+        this.name = name;
+        this.img = img;
+        this.id = id;
+        this.description = description;
+        this.chef = new Chef(chef);
     }
 
 }
