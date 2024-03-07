@@ -31,5 +31,9 @@ public class DatabaseInitializer {
         recipeService.newRecipe(new Recipe(8L, "Shrimp Scampi", "Garlicky shrimp in a lemon butter sauce", "Chef Isabella", "recipe.png"));
         recipeService.newRecipe(new Recipe(9L, "Mango Salsa Chicken", "Grilled chicken topped with fresh mango salsa", "Chef Miguel", "recipe.png"));
         recipeService.newRecipe(new Recipe(10L, "Vegetable Lasagna", "Layers of pasta, vegetables, and cheesy goodness", "Chef Sofia", "recipe.png"));
+
+        ingredientService.newIngredient("Pimiento", "Verde, fresco y ligeramente picante, perfecto para ensaladas.");
+        ingredientService.newIngredient("Pimiento", "Verde, fresco y ligeramente picante, perfecto para ensaladas.");
+
     }
 }

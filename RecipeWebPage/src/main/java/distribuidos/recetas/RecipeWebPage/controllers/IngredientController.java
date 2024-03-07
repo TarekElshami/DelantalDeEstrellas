@@ -3,7 +3,10 @@ package distribuidos.recetas.RecipeWebPage.controllers;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 
 @Controller
@@ -15,6 +18,13 @@ public class IngredientController {
         this.ingredientService = IngredientService.getInstance();
     }
 
+    @GetMapping("/ingredients")
+    public String showIngredients(Model model){
+        Collection<Ingredient> ingredients = ingredientService.getAll();
+        model.addAttribute("ingredientsList", ingredients);
+        return "ingredients";
+    }
+
     @GetMapping("/ingredient/{id}")
     public String showIngredient(@PathVariable Long id){
         Ingredient ingredient = ingredientService.getIngredientById(id);
@@ -24,7 +34,7 @@ public class IngredientController {
 
     @PostMapping("/ingredient/{id}")
     public String newIngredient(@PathVariable Long id, @RequestParam Ingredient ingredient){
-        ingredientService.newIngredient(ingredient);
+        //ingredientService.newIngredient(ingredient);
         //TODO: return the correct view
         return "";
     }

@@ -23,7 +23,9 @@ public class Ingredient {
     private Collection<Ingredient> matchesWith;
     private Collection<Recipe> bestRecipes;
 
-    public Ingredient(String name){
+    public Ingredient(Long id, String name, String description) {
+        this.id = id;
         this.name = name;
+        this.description = description;
     }
 }

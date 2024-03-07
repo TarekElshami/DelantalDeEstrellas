@@ -23,7 +23,7 @@ public class IngredientRestController {
 
     @PostMapping("/ingredient/{id}")
     public String newIngredient(@PathVariable Long id, @RequestParam Ingredient ingredient){
-        ingredientService.newIngredient(ingredient);
+        //ingredientService.newIngredient(ingredient);
         //TODO: return the correct view
         return "";
     }
