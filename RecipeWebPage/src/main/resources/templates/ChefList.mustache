@@ -32,18 +32,32 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                                     href="#portfolio">Chefs</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">About</a>
+                                                     href="#chefList">Chefs</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#chefCreation">Añadir chef</a>
                 </li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                                     href="#contact">Contact</a></li>
+
             </ul>
         </div>
     </div>
 </nav>
-
+<header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">
+        <!-- Masthead Avatar Image-->
+        <img class="mb-5 img-fluid-new" src="/img/coock.jpg" alt="..." />
+        <!-- Masthead Heading-->
+        <h1 class="masthead-heading text-uppercase mb-0">Nuestros cocineros</h1>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- Masthead Subheading-->
+        <p class="masthead-subheading font-weight-light mb-0">Los mejores cocineros de internet</p>
+    </div>
+</header>
 <!-- Portfolio Section-->
-<section class="page-section portfolio" id="portfolio" style="margin-top: 3%">
+<section class="page-section portfolio" id="chefList" style="margin-top: 3%">
     <div class="container">
         <!-- Portfolio Section Heading-->
         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Chefs</h2>
@@ -74,7 +88,7 @@
 </section>
 
 <!-- About Section-->
-<section class="page-section bg-primary text-white mb-0" id="about">
+<section class="page-section bg-primary text-white mb-0" id="chefCreation">
     <div class="container">
         <!-- About Section Heading-->
         <h2 class="page-section-heading text-center text-uppercase text-white">AÑADIR UN NUEVO CHEF</h2>
@@ -141,7 +155,7 @@
 </div>
 <!-- Portfolio Modals-->
 <!-- Portfolio Modal 1-->
-<div class="portfolio-modal modal" id="portfolioModal" style="display: none">
+<div class="portfolio-modal modal" id="popup-window" style="display: none">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header border-0">

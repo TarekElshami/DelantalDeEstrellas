@@ -5,6 +5,8 @@ import distribuidos.recetas.RecipeWebPage.service.ChefService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 
 @RestController
 @RequestMapping("/api")
@@ -16,38 +18,52 @@ public class ChefRestController {
         this.chefService = ChefService.getInstance();
     }
 
-    @GetMapping("/chef/{id}")
+    @GetMapping("/chefs")
+    public Collection<Chef> showChefs(){
+        return chefService.getAll();
+    }
+    @GetMapping("/chefs/{id}")
     public ResponseEntity<Chef> showChef(@PathVariable Long id){
         Chef chef = chefService.getChefById(id);
-        //TODO: pass the chef info to the model and return it
-        return ResponseEntity.status(200).body(null);
+        if (chef != null){
+            return ResponseEntity.status(200).body(chef);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
-    @PostMapping("/chef/{id}")
-    public ResponseEntity<Chef> newChef(@PathVariable Long id, @RequestParam Chef chef){
+    @PostMapping("/chefs/new")
+    public ResponseEntity<Chef> newChef(@RequestBody Chef chef){
         chefService.newChef(chef);
-        //TODO: return the correct view
         return ResponseEntity.status(200).body(null);
     }
 
-    @PutMapping("/chef/{id}")
-    public ResponseEntity<Chef> substituteChef(@PathVariable Long id, @RequestParam Chef chef){
-        chefService.substitute(id, chef);
-        //TODO: return the correct view
-        return ResponseEntity.status(200).body(null);
+    @PutMapping("/chefs/{id}")
+    public ResponseEntity<Chef> substituteChef(@PathVariable Long id, @RequestBody Chef chef){
+        Chef oldChef = chefService.getChefById(id);
+        if (oldChef != null){
+            chef.setId(id);
+            chefService.substitute(id, chef);
+            return ResponseEntity.ok(chef);
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    @PatchMapping("/chef/{id}")
-    public ResponseEntity<Chef> modifyChef(@PathVariable Long id, @RequestParam Chef chef){
+    @PatchMapping("/chefs/{id}")
+    public ResponseEntity<Chef> modifyChef(@PathVariable Long id, @RequestBody Chef chef){
         chefService.modifyToMatch(id, chef);
         //TODO: return the correct view
         return ResponseEntity.status(200).body(null);
     }
 
-    @DeleteMapping("/chef/{id}")
+    @DeleteMapping("/chefs/{id}")
     public ResponseEntity<Chef> newChef(@PathVariable Long id){
-        chefService.delete(id);
-        //TODO: return the correct view
-        return ResponseEntity.status(200).body(null);
+        Chef chef = chefService.getChefById(id);
+        if (chef != null){
+            chefService.delete(id);
+            return ResponseEntity.ok(chef);
+        }
+        return ResponseEntity.notFound().build();
     }
 }

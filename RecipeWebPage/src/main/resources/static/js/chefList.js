@@ -1,9 +1,13 @@
 let chefItems = document.getElementsByClassName("chef-item");
-const popup = document.getElementById("portfolioModal");
+const popup = document.getElementById("popup-window");
 const popupTitle = document.getElementById('chef-name');
 const popupDescription = document.getElementById('chef-description');
 const popupImage = document.getElementById('chef-image');
 const popupBtn = document.getElementById('popup-btn');
+
+const closePopUp = () => {
+    popup.style.display = "none"
+}
 
 for (const chefItem of chefItems) {
     chefItem.addEventListener('click', (e) => {
@@ -23,13 +27,15 @@ for (const chefItem of chefItems) {
 
 const closePopUpBtn = document.getElementById("close-popup");
 closePopUpBtn.addEventListener("click", () => {
-    popup.style.display = "none"
+    closePopUp();
 })
 
 popupBtn.addEventListener('click', () => {
     let id = popupBtn.getAttribute('data-id')
-    window.location.href = '/chef/' + id;
+    window.location.href = '/chefs/' + id;
 })
+
+window.addEventListener('click', (e) => {e.target === popup && closePopUp()})
 
 
 

@@ -16,38 +16,38 @@ public class ChefController {
         this.chefService = ChefService.getInstance();
     }
 
-    @GetMapping("/chef")
+    @GetMapping("/chefs")
     public String showChefs(Model model){
         model.addAttribute("chef", chefService.getAll());
         return "ChefList";
     }
 
-    @GetMapping("/chef/new")
+    @GetMapping("/chefs/new")
     public String newChefForm(Model model){
         model.addAttribute("url", "new");
         model.addAttribute("FormBtn", "Añadir");
         return "NewChef";
     }
-    @PostMapping("/chef/new")
+    @PostMapping("/chefs/new")
     public String newChef(Chef chef){
         chefService.newChef(chef);
-        return "redirect:/chef";
+        return "redirect:/chefs";
     }
-    @GetMapping("/chef/{id}")
+    @GetMapping("/chefs/{id}")
     public String showChef(@PathVariable Long id, Model model){
         Chef chef = chefService.getChefById(id);
         model.addAttribute("chef", chef);
         return "Chef";
     }
 
-    @PostMapping("/chef/{id}")
+    @PostMapping("/chefs/{id}")
     public String newChef(@PathVariable Long id, @RequestParam Chef chef){
         chefService.newChef(chef);
         //TODO: return the correct view
         return "";
     }
 
-    @GetMapping("/chef/{id}/update")
+    @GetMapping("/chefs/{id}/update")
     public String showChefEdit(@PathVariable Long id, Model model){
         Chef chef = chefService.getChefById(id);
         model.addAttribute("FormBtn", "Guardar cambios");
@@ -56,17 +56,17 @@ public class ChefController {
         return "NewChef";
     }
 
-    @PostMapping("/chef/{id}/update")
+    @PostMapping("/chefs/{id}/update")
     public String editChef(@PathVariable Long id, Chef chef){
         chefService.substitute(id, chef);
 
-        return "redirect:/chef/"+id;
+        return "redirect:/chefs/"+id;
     }
 
-    @GetMapping("/chef/{id}/deleted")
+    @GetMapping("/chefs/{id}/deleted")
     public String deleteChef(@PathVariable Long id){
         chefService.delete(id);
-        return "redirect:/chef";
+        return "redirect:/chefs";
     }
 
 
