@@ -19,25 +19,18 @@ public class IngredientRestController {
 
     @GetMapping("/ingredients")
     public ResponseEntity<Collection<Ingredient>> getAllIngredients() {
-        Collection<Ingredient> ingredients = ingredientService.getAll();
-        if (ingredients.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(ingredients);
+        return ResponseEntity.ok(ingredientService.getAll());
     }
 
+    @PostMapping("/ingredient")
+    public ResponseEntity<?> createIngredient(@RequestBody Ingredient ingredient) {
+        return ResponseEntity.status(201).body(ingredientService.newIngredient(ingredient));
+    }
 
     @GetMapping("/ingredient/{id}")
     public String showIngredient(@PathVariable Long id){
         Ingredient ingredient = ingredientService.getIngredientById(id);
         //TODO: pass the ingredient info to the model and return it
-        return "";
-    }
-
-    @PostMapping("/ingredient/{id}")
-    public String newIngredient(@PathVariable Long id, @RequestParam Ingredient ingredient){
-        //ingredientService.newIngredient(ingredient);
-        //TODO: return the correct view
         return "";
     }
 

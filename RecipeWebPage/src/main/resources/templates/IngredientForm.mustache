@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear ingrediente</title>
+    <link href="/css/styles.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- Ingredient Section -->
+<section class="page-section" id="ingredient">
+    <div class="container">
+        <!-- Ingredient Section Heading -->
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Crear ingrediente</h2>
+        <!-- Icon Divider -->
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-leaf"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- Ingredient Section Form -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                <!-- Form to add ingredient -->
+                <form id="ingredientForm" method="post" action="/newIngredient">
+                    <!-- Ingredient name input -->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" name="name" id="ingredientName" type="text" placeholder="Nombre" required/>
+                        <label for="ingredientName">Nombre</label>
+                    </div>
+                    <!-- Description input -->
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="description" id="description" type="text" placeholder="Descripción" style="height: 10rem" required></textarea>
+                        <label for="description">Descripción</label>
+                    </div>
+                    <!-- Image input -->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" name="image" id="imageString" type="text" placeholder="Imagen" required/>
+                        <label for="imageString">Imagen</label>
+                    </div>
+                    <!-- Submit Button -->
+                    <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Añadir ingrediente</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="path/to/your/jquery.slim.min.js"></script>
+<script src="path/to/your/popper.min.js"></script>
+<script src="path/to/your/bootstrap.min.js"></script>
+
+<!-- Your custom scripts here -->
+</body>
+</html>

@@ -5,12 +5,13 @@ import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class IngredientService {
 
     private static IngredientService ingredientService = null;
     private final Map<Long, Ingredient> ingredientMap;
-    private long currentId = 0;
+    AtomicLong currentId = new AtomicLong();
 
     public static IngredientService getInstance(){
         if (ingredientService==null){
@@ -31,9 +32,13 @@ public class IngredientService {
         return ingredientMap.get(id);
     }
 
-    public void newIngredient(String name, String description, String imageUrl) {
-        Ingredient ingredient = new Ingredient(++currentId, name, description, imageUrl);
+    public Ingredient newIngredient(Ingredient ingredient) {
+        if (ingredient.getId() == null) {
+            long id = currentId.incrementAndGet();
+            ingredient.setId(id);
+        }
         ingredientMap.put(ingredient.getId(), ingredient);
+        return ingredient;
     }
 
     public void substitute(Long id, Ingredient ingredient) {

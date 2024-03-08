@@ -25,17 +25,22 @@ public class IngredientController {
         return "IngredientList";
     }
 
+    @GetMapping("/newIngredient")
+    public String showCreateForm(Model model) {
+        model.addAttribute("ingredient", new Ingredient());
+        return "IngredientForm";
+    }
+
+    @PostMapping("/newIngredient")
+    public String saveIngredient(Ingredient ingredient) {
+        ingredientService.newIngredient(ingredient);
+        return "redirect:/ingredients";
+    }
+
     @GetMapping("/ingredient/{id}")
     public String showIngredient(@PathVariable Long id){
         Ingredient ingredient = ingredientService.getIngredientById(id);
         //TODO: pass the ingredient info to the model and return it
-        return "";
-    }
-
-    @PostMapping("/ingredient/{id}")
-    public String newIngredient(@PathVariable Long id, @RequestParam Ingredient ingredient){
-        //ingredientService.newIngredient(ingredient);
-        //TODO: return the correct view
         return "";
     }
 
