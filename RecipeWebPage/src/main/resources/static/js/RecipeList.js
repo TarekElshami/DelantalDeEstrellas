@@ -4,7 +4,7 @@ function loadMore(page){
     button.onclick = function () {loadMore(page+1)};
     fetch("/NextRecipePage?page="+page)
         .then(response => {
-            if (response.status===204 || response.status===206){
+            if (response.status===204 || response.headers.get("X-Is-Last-Page")){
                 button.style.display = "none"
             }
             return response.json()
@@ -39,6 +39,9 @@ function loadMore(page){
                                     <img class="img-fluid rounded mb-5" src="/img/${recipe.img}" alt="..." />
                                     <!-- Portfolio Modal - Text-->
                                     <p class="mb-4">${recipe.description}</p>
+                                    <a class="btn btn-primary"  href="/recipe/${recipe.id}">
+                                        Más Información
+                                    </a>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window

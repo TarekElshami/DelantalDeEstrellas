@@ -61,4 +61,8 @@ public class RecipeService {
         }
         return recipes.subList(page*PAGESIZE, Math.min(recipes.size(), (page + 1) * PAGESIZE));
     }
+
+    public boolean isLastPage(int pageNum) {
+        return pageNum == Math.ceil((double) recipeMap.size() / (double) PAGESIZE);
+    }
 }

@@ -32,8 +32,9 @@ public class DatabaseInitializer {
         recipeService.newRecipe(new Recipe(8L, "Shrimp Scampi", "Garlicky shrimp in a lemon butter sauce", "Chef Isabella", "recipe.png"));
         recipeService.newRecipe(new Recipe(9L, "Mango Salsa Chicken", "Grilled chicken topped with fresh mango salsa", "Chef Miguel", "recipe.png"));
         recipeService.newRecipe(new Recipe(10L, "Vegetable Lasagna", "Layers of pasta, vegetables, and cheesy goodness", "Chef Sofia", "recipe.png"));
-        recipeService.newRecipe(new Recipe(11L, "Mango Salsa Chicken", "Grilled chicken topped with fresh mango salsa", "Chef Miguel", "recipe.png"));
-        recipeService.newRecipe(new Recipe(12L, "Vegetable Lasagna", "Layers of pasta, vegetables, and cheesy goodness", "Chef Sofia", "recipe.png"));
+        recipeService.newRecipe(new Recipe(11L, "Spinach and Feta Stuffed Chicken", "Juicy chicken breasts stuffed with spinach and feta cheese", "Chef Elena", "recipe.png"));
+        recipeService.newRecipe(new Recipe(12L, "Blueberry Pancakes", "Fluffy pancakes filled with sweet blueberries", "Chef William", "recipe.png"));
+
 
         ingredientService.newIngredient("Pimiento", "Verde, fresco y ligeramente picante, perfecto para ensaladas.", "https://www.klarskovgartneri.dk/media/u3knpzlw/gul-peber.jpg?anchor=center&mode=crop&width=900&height=650&rnd=132577017043930000");
         ingredientService.newIngredient("Manzana", "Verde, fresco y ligeramente picante, perfecto para ensaladas.", "https://ecomercioagrario.com/wp-content/uploads/2020/07/produccion-peras-se-recupera-manzanas-bajan-cataluna-ecomercioagrario.jpg");

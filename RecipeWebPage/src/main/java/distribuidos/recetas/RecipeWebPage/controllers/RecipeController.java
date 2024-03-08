@@ -3,6 +3,8 @@ package distribuidos.recetas.RecipeWebPage.controllers;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.service.DatabaseInitializer;
 import distribuidos.recetas.RecipeWebPage.service.RecipeService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,13 +38,15 @@ public class RecipeController {
         model.addAttribute("title", "Nuestras Recetas");
         model.addAttribute("subtitle", "La mejor selección de recetas de toda la web");
         model.addAttribute("headerImg", "recipesHeader.png");
+        model.addAttribute("showButton", recipes.size()==RecipeService.PAGESIZE);
         return "RecipeList";
     }
     @GetMapping("/recipe/{id}")
-    public String showRecipe(@PathVariable Long id){
+    public String showRecipe(Model model, @PathVariable Long id){
         Recipe recipe = recipeService.getRecipeById(id);
+        model.addAttribute("recipe", recipe);
         //TODO: pass the recipe info to the model and return it
-        return "";
+        return "RecipeView";
     }
 
     @PostMapping("/recipe/{id}")
@@ -77,10 +81,12 @@ public class RecipeController {
     @ResponseBody
     public ResponseEntity<Collection<Recipe>> nextPage(@RequestParam("page") int pageNum){
         Collection<Recipe> page = recipeService.getPage(pageNum);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Is-Last-Page", String.valueOf(recipeService.isLastPage(pageNum)));
+
         if (page==null){
-            return ResponseEntity.status(204).body(null);
-        } else if (page.size()<RecipeService.PAGESIZE){
-            return ResponseEntity.status(206).body(page);
-        }   return ResponseEntity.status(200).body(page);
+            return new ResponseEntity<>(null, headers, 204); //204 No Content
+        }
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 }
