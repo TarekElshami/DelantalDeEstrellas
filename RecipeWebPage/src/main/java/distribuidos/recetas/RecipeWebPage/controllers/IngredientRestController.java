@@ -28,10 +28,12 @@ public class IngredientRestController {
     }
 
     @GetMapping("/ingredient/{id}")
-    public String showIngredient(@PathVariable Long id){
+    public ResponseEntity<Ingredient> showIngredient(@PathVariable Long id){
         Ingredient ingredient = ingredientService.getIngredientById(id);
-        //TODO: pass the ingredient info to the model and return it
-        return "";
+        if(ingredient == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(ingredient);
     }
 
     @PutMapping("/ingredient/{id}")

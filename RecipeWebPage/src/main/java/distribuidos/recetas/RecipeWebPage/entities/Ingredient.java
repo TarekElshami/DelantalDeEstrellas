@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 //@Entity
@@ -21,8 +22,8 @@ public class Ingredient {
     private String description;
     private String image;
 
-    private Collection<Ingredient> matchesWith;
-    private Collection<Recipe> bestRecipes;
+    private Collection<Ingredient> matchesWith = new ArrayList<>();
+    private Collection<Recipe> bestRecipes = new ArrayList<>();
 
     public Ingredient() {
     }

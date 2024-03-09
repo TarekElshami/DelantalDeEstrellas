@@ -38,30 +38,14 @@ public class IngredientController {
     }
 
     @GetMapping("/ingredient/{id}")
-    public String showIngredient(@PathVariable Long id){
+    public String showIngredient(Model model, @PathVariable Long id){
         Ingredient ingredient = ingredientService.getIngredientById(id);
-        //TODO: pass the ingredient info to the model and return it
-        return "";
+        if(ingredient != null) {
+            model.addAttribute("ingredient", ingredient);
+            return "Ingredient";
+        }
+        return "Error";
     }
 
-    @PutMapping("/ingredient/{id}")
-    public String substituteIngredient(@PathVariable Long id, @RequestParam Ingredient ingredient){
-        ingredientService.substitute(id, ingredient);
-        //TODO: return the correct view
-        return "";
-    }
 
-    @PatchMapping("/ingredient/{id}")
-    public String modifyIngredient(@PathVariable Long id, @RequestParam Ingredient ingredient){
-        ingredientService.modifyToMatch(id, ingredient);
-        //TODO: return the correct view
-        return "";
-    }
-
-    @DeleteMapping("/ingredient/{id}")
-    public String newIngredient(@PathVariable Long id){
-        ingredientService.delete(id);
-        //TODO: return the correct view
-        return "";
-    }
 }
