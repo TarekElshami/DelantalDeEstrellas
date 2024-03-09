@@ -22,7 +22,7 @@ public class ChefRestController {
     public Collection<Chef> showChefs(){
         return chefService.getAll();
     }
-    @GetMapping("/chefs/{id}")
+    @GetMapping("/chef/{id}")
     public ResponseEntity<Chef> showChef(@PathVariable Long id){
         Chef chef = chefService.getChefById(id);
         if (chef != null){
@@ -33,13 +33,13 @@ public class ChefRestController {
 
     }
 
-    @PostMapping("/chefs/new")
+    @PostMapping("/chef/new")
     public ResponseEntity<Chef> newChef(@RequestBody Chef chef){
         chefService.newChef(chef);
         return ResponseEntity.status(200).body(null);
     }
 
-    @PutMapping("/chefs/{id}")
+    @PutMapping("/chef/{id}")
     public ResponseEntity<Chef> substituteChef(@PathVariable Long id, @RequestBody Chef chef){
         Chef oldChef = chefService.getChefById(id);
         if (oldChef != null){
@@ -50,14 +50,17 @@ public class ChefRestController {
         return ResponseEntity.notFound().build();
     }
 
-    @PatchMapping("/chefs/{id}")
+    @PatchMapping("/chef/{id}")
     public ResponseEntity<Chef> modifyChef(@PathVariable Long id, @RequestBody Chef chef){
-        chefService.modifyToMatch(id, chef);
-        //TODO: return the correct view
-        return ResponseEntity.status(200).body(null);
+        Chef oldChef = chefService.getChefById(id);
+        if (oldChef != null){
+            return ResponseEntity.notFound().build();
+        }
+        chefService.modifyToMatch(id,chef);
+        return ResponseEntity.ok(chefService.getChefById(id));
     }
 
-    @DeleteMapping("/chefs/{id}")
+    @DeleteMapping("/chef/{id}")
     public ResponseEntity<Chef> newChef(@PathVariable Long id){
         Chef chef = chefService.getChefById(id);
         if (chef != null){

@@ -45,13 +45,16 @@ public class ChefService {
         Chef storedChef = chefMap.get(id);
         if (chef.getName() != null){
             storedChef.setName(chef.getName());
-        } if (chef.getDescription() != null){
+        } if (chef.getDescription() != null) {
             storedChef.setDescription(chef.getName());
+        } if (chef.getImage() != null) {
+            storedChef.setImage(chef.getImage());
             //} if (chef.getFavIng() != null){
             //    storedChef.setFavIng(chef.getFavIng());
             //} if (chef.getBestRecipes() != null){
             //    storedChef.setBestRecipes(chef.getBestRecipes());
         }
+        chefMap.put(id,storedChef);
     }
 
     public Chef delete(Long id) {

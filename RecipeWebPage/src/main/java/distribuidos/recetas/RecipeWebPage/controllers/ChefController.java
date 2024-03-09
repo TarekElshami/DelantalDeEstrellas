@@ -22,48 +22,51 @@ public class ChefController {
         return "ChefList";
     }
 
-    @GetMapping("/chefs/new")
+    @GetMapping("/chef/new")
     public String newChefForm(Model model){
         model.addAttribute("url", "new");
         model.addAttribute("FormBtn", "Añadir");
+        model.addAttribute("backBtn", "/chefs");
         return "NewChef";
     }
-    @PostMapping("/chefs/new")
+    @PostMapping("/chef/new")
     public String newChef(Chef chef){
         chefService.newChef(chef);
         return "redirect:/chefs";
     }
-    @GetMapping("/chefs/{id}")
+    @GetMapping("/chef/{id}")
     public String showChef(@PathVariable Long id, Model model){
         Chef chef = chefService.getChefById(id);
         model.addAttribute("chef", chef);
         return "Chef";
     }
 
-    @PostMapping("/chefs/{id}")
+    @PostMapping("/chef/{id}")
     public String newChef(@PathVariable Long id, @RequestParam Chef chef){
         chefService.newChef(chef);
         //TODO: return the correct view
         return "";
     }
 
-    @GetMapping("/chefs/{id}/update")
+    @GetMapping("/chef/{id}/update")
     public String showChefEdit(@PathVariable Long id, Model model){
         Chef chef = chefService.getChefById(id);
         model.addAttribute("FormBtn", "Guardar cambios");
         model.addAttribute("url", id+"/update");
         model.addAttribute("chef", chef);
+        model.addAttribute("recipeList", chef.getBestRecipes());
+        model.addAttribute("backBtn", "/chef/"+id);
         return "NewChef";
     }
 
-    @PostMapping("/chefs/{id}/update")
+    @PostMapping("/chef/{id}/update")
     public String editChef(@PathVariable Long id, Chef chef){
         chefService.substitute(id, chef);
 
-        return "redirect:/chefs/"+id;
+        return "redirect:/chef/"+id;
     }
 
-    @GetMapping("/chefs/{id}/deleted")
+    @GetMapping("/chef/{id}/deleted")
     public String deleteChef(@PathVariable Long id){
         chefService.delete(id);
         return "redirect:/chefs";

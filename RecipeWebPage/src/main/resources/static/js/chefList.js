@@ -32,7 +32,7 @@ closePopUpBtn.addEventListener("click", () => {
 
 popupBtn.addEventListener('click', () => {
     let id = popupBtn.getAttribute('data-id')
-    window.location.href = '/chefs/' + id;
+    window.location.href = '/chef/' + id;
 })
 
 window.addEventListener('click', (e) => {e.target === popup && closePopUp()})

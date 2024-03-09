@@ -27,7 +27,7 @@ public class Chef {
     private static Long currentId = 0L;
 
     //private Collection<Ingredient> favIng;
-    //private Collection<Recipe> bestRecipes;
+    private Collection<Recipe> bestRecipes;
 
 
     public Chef() {
