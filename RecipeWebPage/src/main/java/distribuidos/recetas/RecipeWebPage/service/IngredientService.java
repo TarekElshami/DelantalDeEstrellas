@@ -33,16 +33,19 @@ public class IngredientService {
     }
 
     public Ingredient newIngredient(Ingredient ingredient) {
-        if (ingredient.getId() == null) {
-            long id = currentId.incrementAndGet();
-            ingredient.setId(id);
-        }
+        long id = currentId.incrementAndGet();
+        ingredient.setId(id);
         ingredientMap.put(ingredient.getId(), ingredient);
         return ingredient;
     }
 
-    public void substitute(Long id, Ingredient ingredient) {
+    public Ingredient substitute(Long id, Ingredient ingredient) {
+        if(!ingredientMap.containsKey(id)){
+            return null;
+        }
+        ingredient.setId(id);
         ingredientMap.put(id, ingredient);
+        return ingredient;
     }
 
     public void modifyToMatch(Long id, Ingredient ingredient) {

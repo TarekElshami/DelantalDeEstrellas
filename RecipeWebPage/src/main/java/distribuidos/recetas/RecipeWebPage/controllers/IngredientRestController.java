@@ -17,16 +17,19 @@ public class IngredientRestController {
         this.ingredientService = IngredientService.getInstance();
     }
 
+    //Get All
     @GetMapping("/ingredients")
     public ResponseEntity<Collection<Ingredient>> getAllIngredients() {
         return ResponseEntity.ok(ingredientService.getAll());
     }
 
+    //Create Ingredient
     @PostMapping("/ingredient")
-    public ResponseEntity<?> createIngredient(@RequestBody Ingredient ingredient) {
+    public ResponseEntity<Ingredient> createIngredient(@RequestBody Ingredient ingredient) {
         return ResponseEntity.status(201).body(ingredientService.newIngredient(ingredient));
     }
 
+    //Get Ingredient by ID
     @GetMapping("/ingredient/{id}")
     public ResponseEntity<Ingredient> showIngredient(@PathVariable Long id){
         Ingredient ingredient = ingredientService.getIngredientById(id);
@@ -37,10 +40,12 @@ public class IngredientRestController {
     }
 
     @PutMapping("/ingredient/{id}")
-    public String substituteIngredient(@PathVariable Long id, @RequestParam Ingredient ingredient){
-        ingredientService.substitute(id, ingredient);
-        //TODO: return the correct view
-        return "";
+    public ResponseEntity<Ingredient> substituteIngredient(@PathVariable Long id, @RequestBody Ingredient ingredient){
+        Ingredient updateIngredient = ingredientService.substitute(id, ingredient);
+        if(updateIngredient == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updateIngredient);
     }
 
     @PatchMapping("/ingredient/{id}")
