@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear ingrediente</title>
+    <title>{{#ingredient.id}}Actualizar "{{ingredient.name}}"{{/ingredient.id}}{{^ingredient.id}}Añadir nuevo ingrediente{{/ingredient.id}}</title>
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
 </head>
@@ -12,7 +12,7 @@
 <section class="page-section" id="ingredient">
     <div class="container">
         <!-- Ingredient Section Heading -->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Crear ingrediente</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">{{#ingredient.id}}Actualizar "{{ingredient.name}}"{{/ingredient.id}}{{^ingredient.id}}Añadir nuevo ingrediente{{/ingredient.id}}</h2>
         <!-- Icon Divider -->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
@@ -23,24 +23,25 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-7">
                 <!-- Form to add ingredient -->
-                <form id="ingredientForm" method="post" action="/newIngredient">
+                <form id="ingredientForm" method="post" action="{{#ingredient.id}}/ingredient/update{{/ingredient.id}}{{^ingredient.id}}/newIngredient{{/ingredient.id}}">
                     <!-- Ingredient name input -->
+                    <input type="hidden" name="id" value="{{#ingredient.id}}{{ingredient.id}}{{/ingredient.id}}" />
                     <div class="form-floating mb-3">
-                        <input class="form-control" name="name" id="ingredientName" type="text" placeholder="Nombre" required/>
+                        <input class="form-control" name="name" id="ingredientName" type="text" placeholder="Nombre" value="{{#ingredient.id}}{{ingredient.name}}{{/ingredient.id}}" required/>
                         <label for="ingredientName">Nombre</label>
                     </div>
                     <!-- Description input -->
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" name="description" id="description" type="text" placeholder="Descripción" style="height: 10rem" required></textarea>
+                        <textarea class="form-control" name="description" id="description" type="text" placeholder="Descripción" style="height: 10rem" required>{{#ingredient.id}}{{ingredient.description}}{{/ingredient.id}}</textarea>
                         <label for="description">Descripción</label>
                     </div>
                     <!-- Image input -->
                     <div class="form-floating mb-3">
-                        <input class="form-control" name="image" id="imageString" type="text" placeholder="Imagen" required/>
+                        <input class="form-control" name="image" id="imageString" type="text" placeholder="Imagen" value="{{#ingredient.id}}{{ingredient.image}}{{/ingredient.id}}" required/>
                         <label for="imageString">Imagen</label>
                     </div>
                     <!-- Submit Button -->
-                    <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Añadir ingrediente</button>
+                    <button class="btn btn-primary btn-xl" id="submitButton" type="submit">{{#ingredient.id}}Actualizar "{{ingredient.name}}"{{/ingredient.id}}{{^ingredient.id}}Añadir nuevo ingrediente{{/ingredient.id}}</button>
                 </form>
             </div>
         </div>
@@ -51,6 +52,5 @@
 <script src="path/to/your/popper.min.js"></script>
 <script src="path/to/your/bootstrap.min.js"></script>
 
-<!-- Your custom scripts here -->
 </body>
 </html>

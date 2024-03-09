@@ -47,5 +47,20 @@ public class IngredientController {
         return "Error";
     }
 
+    @GetMapping("/ingredient/{id}/update")
+    public String showEditForm(Model model, @PathVariable Long id){
+        Ingredient ingredient = ingredientService.getIngredientById(id);
+        if(ingredient == null) {
+            return "Error";
+        }
+        model.addAttribute("ingredient", ingredient);
+        return "IngredientForm";
+    }
+
+    @PostMapping("/ingredient/update")
+    public String updateIngredient(Ingredient ingredient){
+        ingredientService.substitute(ingredient.getId(), ingredient);
+        return "redirect:/ingredients";
+    }
 
 }
