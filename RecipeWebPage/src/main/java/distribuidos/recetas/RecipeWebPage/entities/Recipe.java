@@ -32,12 +32,13 @@ public class Recipe {
     public Recipe(String name){
         this.name = name;
     }
-    public Recipe(Long id, String name, String description, String chef, String img){
+    public Recipe(Long id, String name, String description, Chef chef, List<String> steps, String img){
         this.name = name;
         this.img = img;
         this.id = id;
         this.description = description;
-        this.chef = new Chef(chef);
+        this.chef = chef;
+        this.steps = steps;
     }
 
 }

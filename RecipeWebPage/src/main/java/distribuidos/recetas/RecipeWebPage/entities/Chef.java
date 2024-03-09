@@ -24,6 +24,8 @@ public class Chef {
     private String description;
     private String image;
 
+    private static Long currentId = 0L;
+
     //private Collection<Ingredient> favIng;
     //private Collection<Recipe> bestRecipes;
 
@@ -39,5 +41,6 @@ public class Chef {
         this.name = name;
         this.description = description;
         this.image = image;
+        this.id = currentId++;
     }
 }

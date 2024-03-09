@@ -45,6 +45,9 @@ public class RecipeController {
     public String showRecipe(Model model, @PathVariable Long id){
         Recipe recipe = recipeService.getRecipeById(id);
         model.addAttribute("recipe", recipe);
+        model.addAttribute("chef", recipe.getChef());
+        model.addAttribute("showHighlightedRecipes", true);
+        model.addAttribute("highlightedRecipes", recipeService.getHighlighs(3));
         //TODO: pass the recipe info to the model and return it
         return "RecipeView";
     }

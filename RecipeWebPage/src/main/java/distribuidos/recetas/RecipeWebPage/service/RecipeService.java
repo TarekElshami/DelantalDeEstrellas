@@ -65,4 +65,18 @@ public class RecipeService {
     public boolean isLastPage(int pageNum) {
         return pageNum == Math.ceil((double) recipeMap.size() / (double) PAGESIZE);
     }
+
+    public Collection<Recipe> getHighlighs(int num) {
+        Collection<Recipe> collection = new ArrayList<>();
+        List<Recipe> values = new ArrayList<>(recipeMap.values());
+        Random rand = new Random();
+        while (collection.size()!=num && collection.size()!=values.size()) {
+            Recipe randomRecipe = values.get(rand.nextInt(recipeMap.size()));
+            if (!collection.contains(randomRecipe)){
+                collection.add(randomRecipe);
+            }
+        }
+        return collection;
+
+    }
 }

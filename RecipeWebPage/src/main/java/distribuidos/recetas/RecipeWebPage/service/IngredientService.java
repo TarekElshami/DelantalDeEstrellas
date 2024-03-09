@@ -11,7 +11,7 @@ public class IngredientService {
 
     private static IngredientService ingredientService = null;
     private final Map<Long, Ingredient> ingredientMap;
-    AtomicLong currentId = new AtomicLong();
+    private AtomicLong currentId = new AtomicLong(0);
 
     public static IngredientService getInstance(){
         if (ingredientService==null){

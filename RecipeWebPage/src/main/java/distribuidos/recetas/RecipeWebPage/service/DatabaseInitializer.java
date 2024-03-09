@@ -6,7 +6,9 @@ import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.sql.SQLException;
-
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 public class DatabaseInitializer {
 
@@ -16,24 +18,24 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void init() throws IOException, SQLException {
-        Recipe recipe = new Recipe(1L, "Spaghetti Bolognese", "Classic Italian pasta dish", "Chef Mario", "recipe.png");
-        recipeService.newRecipe(recipe);
-        recipeService.newRecipe(new Recipe(2L, "Chicken Alfredo", "Creamy Alfredo sauce with grilled chicken", "Chef Julia", "recipe.png"));
-        recipeService.newRecipe(new Recipe(3L, "Vegetarian Stir Fry", "Colorful mix of vegetables in soy sauce", "Chef Alex", "recipe.png"));
-        recipeService.newRecipe(new Recipe(4L, "Chocolate Lava Cake", "Decadent dessert with a gooey chocolate center", "Chef Carla", "recipe.png"));
-        recipeService.newRecipe(new Recipe(5L, "Greek Salad", "Refreshing salad with feta and olives", "Chef Nikos", "recipe.png"));
-        recipeService.newRecipe(new Recipe(6L, "Beef Tacos", "Tasty tacos with seasoned beef", "Chef Maria", "recipe.png"));
-        recipeService.newRecipe(new Recipe(7L, "Caprese Salad", "Simple salad with tomatoes, mozzarella, and basil", "Chef Luca", "recipe.png"));
-        recipeService.newRecipe(new Recipe(8L, "Shrimp Scampi", "Garlicky shrimp in a lemon butter sauce", "Chef Isabella", "recipe.png"));
-        recipeService.newRecipe(new Recipe(9L, "Mango Salsa Chicken", "Grilled chicken topped with fresh mango salsa", "Chef Miguel", "recipe.png"));
-        recipeService.newRecipe(new Recipe(10L, "Vegetable Lasagna", "Layers of pasta, vegetables, and cheesy goodness", "Chef Sofia", "recipe.png"));
-        recipeService.newRecipe(new Recipe(11L, "Spinach and Feta Stuffed Chicken", "Juicy chicken breasts stuffed with spinach and feta cheese", "Chef Elena", "recipe.png"));
-        recipeService.newRecipe(new Recipe(12L, "Blueberry Pancakes", "Fluffy pancakes filled with sweet blueberries", "Chef William", "recipe.png"));
+        recipeService.newRecipe(new Recipe(1L, "Spaghetti Bolognese", "Classic Italian pasta dish", null, List.of("Boil spaghetti", "Prepare Bolognese sauce", "Combine and serve"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(2L, "Chicken Alfredo", "Creamy Alfredo sauce with grilled chicken", null, List.of("Cook chicken", "Prepare Alfredo sauce", "Combine and serve"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(3L, "Vegetarian Stir Fry", "Colorful mix of vegetables in soy sauce", null, List.of("Chop vegetables", "Stir fry in soy sauce", "Serve hot"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(4L, "Chocolate Lava Cake", "Decadent dessert with a gooey chocolate center", null, List.of("Preheat oven", "Prepare chocolate batter", "Bake until gooey"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(5L, "Greek Salad", "Refreshing salad with feta and olives", null, List.of("Chop tomatoes, cucumbers, and olives", "Add feta cheese", "Drizzle with olive oil"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(6L, "Beef Tacos", "Tasty tacos with seasoned beef", null, List.of("Season and cook beef", "Assemble tacos with toppings", "Enjoy!"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(7L, "Caprese Salad", "Simple salad with tomatoes, mozzarella, and basil", null, List.of("Slice tomatoes and mozzarella", "Arrange in layers with basil", "Drizzle with balsamic glaze"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(8L, "Shrimp Scampi", "Garlicky shrimp in a lemon butter sauce", null, List.of("Sauté shrimp in garlic butter", "Add lemon juice", "Serve over pasta"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(9L, "Mango Salsa Chicken", "Grilled chicken topped with fresh mango salsa", null, List.of("Grill chicken", "Prepare mango salsa", "Top chicken with salsa"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(10L, "Vegetable Lasagna", "Layers of pasta, vegetables, and cheesy goodness", null, List.of("Layer pasta and vegetables", "Top with cheese", "Bake until bubbly"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(11L, "Spinach and Feta Stuffed Chicken", "Juicy chicken breasts stuffed with spinach and feta cheese", null, List.of("Stuff chicken with spinach and feta", "Bake until golden", "Serve hot"), "recipe.png"));
+        recipeService.newRecipe(new Recipe(12L, "Blueberry Pancakes", "Fluffy pancakes filled with sweet blueberries", null, List.of("Prepare pancake batter", "Fold in blueberries", "Cook until golden brown"), "recipe.png"));
+
 
         Ingredient ingredient = new Ingredient("Pimiento", "Verde, fresco y ligeramente picante, perfecto para ensaladas.", "https://www.klarskovgartneri.dk/media/u3knpzlw/gul-peber.jpg?anchor=center&mode=crop&width=900&height=650&rnd=132577017043930000");
         Ingredient ingredient2 = new Ingredient("Manzana", "Verde, fresco y ligeramente picante, perfecto para ensaladas.", "https://ecomercioagrario.com/wp-content/uploads/2020/07/produccion-peras-se-recupera-manzanas-bajan-cataluna-ecomercioagrario.jpg");
         ingredient.getMatchesWith().add(ingredient2);
-        ingredient.getBestRecipes().add(recipe);
+        ingredient.getBestRecipes().add(recipeService.getRecipeById(1L));
         ingredientService.newIngredient(ingredient);
         ingredientService.newIngredient(ingredient2);
 
@@ -42,6 +44,22 @@ public class DatabaseInitializer {
         chefService.newChef(new Chef("Pequeñin", "Cocinar puede que no, pero es demasiado mono", "https://www.shutterstock.com/shutterstock/photos/2092886932/display_1500/stock-vector-cute-kitten-wearing-a-chef-hat-2092886932.jpg"));
         chefService.newChef(new Chef("SuperChef", "Su nombre lo dice todo", "https://us.123rf.com/450wm/aprillrain/aprillrain2301/aprillrain230102062/197136034-caricatura-de-un-gato-cocinero-con-sombrero-de-chef-que-cocina-algo-en-la-cocina-caricatura.jpg?ver=6"));
         chefService.newChef(new Chef("Manchas", "5 estrellas michelin", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQCWLXiGp40ewzewy7i8p2Kk3LaLj3FQCG76yhdr5Pp9nqxUz4E35gIm_J6AENWVb-21c&usqp=CAU"));
-    
+
+        recipeService.getRecipeById(1L).setIngredients(ingredientService.getAll());
+        recipeService.getRecipeById(2L).setIngredients(Collections.singletonList(ingredientService.getIngredientById(1L)));
+        recipeService.getRecipeById(3L).setIngredients(Collections.singletonList(ingredientService.getIngredientById(2L)));
+
+        recipeService.getRecipeById(1L).setChef(chefService.getChefById(5L));
+        recipeService.getRecipeById(2L).setChef(chefService.getChefById(1L));
+        recipeService.getRecipeById(3L).setChef(chefService.getChefById(2L));
+        recipeService.getRecipeById(4L).setChef(chefService.getChefById(3L));
+        recipeService.getRecipeById(5L).setChef(chefService.getChefById(4L));
+        recipeService.getRecipeById(6L).setChef(chefService.getChefById(5L));
+        recipeService.getRecipeById(7L).setChef(chefService.getChefById(2L));
+        recipeService.getRecipeById(8L).setChef(chefService.getChefById(3L));
+        recipeService.getRecipeById(9L).setChef(chefService.getChefById(3L));
+        recipeService.getRecipeById(10L).setChef(chefService.getChefById(4L));
+        recipeService.getRecipeById(11L).setChef(chefService.getChefById(5L));
+        recipeService.getRecipeById(12L).setChef(chefService.getChefById(1L));
     }
 }
