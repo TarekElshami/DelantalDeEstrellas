@@ -52,13 +52,20 @@ public class IngredientService {
         Ingredient storedIngredient = ingredientMap.get(id);
         if (ingredient.getName() != null){
             storedIngredient.setName(ingredient.getName());
-        } if (ingredient.getDescription() != null){
-            storedIngredient.setDescription(ingredient.getName());
-        } if (ingredient.getMatchesWith() != null){
-            storedIngredient.setMatchesWith(ingredient.getMatchesWith());
-        } if (ingredient.getBestRecipes() != null){
-            storedIngredient.setBestRecipes(ingredient.getBestRecipes());
         }
+        if (ingredient.getDescription() != null){
+            storedIngredient.setDescription(ingredient.getDescription());
+        }
+        if(ingredient.getImage() != null){
+            storedIngredient.setImage(ingredient.getImage());
+        }
+        ingredientMap.put(id, storedIngredient);
+        /*if (ingredient.getMatchesWith() != null){
+            storedIngredient.setMatchesWith(ingredient.getMatchesWith());
+        }
+        if (ingredient.getBestRecipes() != null){
+            storedIngredient.setBestRecipes(ingredient.getBestRecipes());
+        }*/
     }
 
     public Ingredient delete(Long id) {

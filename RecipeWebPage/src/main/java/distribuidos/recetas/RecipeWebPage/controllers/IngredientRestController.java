@@ -49,10 +49,13 @@ public class IngredientRestController {
     }
 
     @PatchMapping("/ingredient/{id}")
-    public String modifyIngredient(@PathVariable Long id, @RequestParam Ingredient ingredient){
+    public ResponseEntity<Ingredient> modifyIngredient(@PathVariable Long id, @RequestBody Ingredient ingredient){
+        Ingredient existingIngredient = ingredientService.getIngredientById(id);
+        if (existingIngredient == null) {
+            return ResponseEntity.notFound().build();
+        }
         ingredientService.modifyToMatch(id, ingredient);
-        //TODO: return the correct view
-        return "";
+        return ResponseEntity.ok(ingredientService.getIngredientById(id));
     }
 
     @DeleteMapping("/ingredient/{id}")
