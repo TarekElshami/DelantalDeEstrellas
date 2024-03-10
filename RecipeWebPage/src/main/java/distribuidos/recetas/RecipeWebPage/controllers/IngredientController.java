@@ -44,6 +44,8 @@ public class IngredientController {
             model.addAttribute("ingredient", ingredient);
             return "Ingredient";
         }
+        String mensajeDeError = "No se puede ver el ingrediente de ID " + id + " porque no existe.";
+        model.addAttribute("errorMessage", mensajeDeError);
         return "Error";
     }
 
@@ -51,6 +53,8 @@ public class IngredientController {
     public String showEditForm(Model model, @PathVariable Long id){
         Ingredient ingredient = ingredientService.getIngredientById(id);
         if(ingredient == null) {
+            String mensajeDeError = "No se puede editar el ingrediente de ID " + id + " porque no existe.";
+            model.addAttribute("errorMessage", mensajeDeError);
             return "Error";
         }
         model.addAttribute("ingredient", ingredient);
