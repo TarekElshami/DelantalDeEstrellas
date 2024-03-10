@@ -1,0 +1,29 @@
+.centered-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.highlight-list li {
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.highlight-list li:hover {
+    background-color: #e0e0e0; /* Slightly darken on hover */
+}
+
+.highlight-list li.selected {
+    background-color: #1abc9c; /* Highlight in green when selected */
+}
+
+.underline-list li {
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.underline-list li:hover {
+    text-decoration: underline;
+}

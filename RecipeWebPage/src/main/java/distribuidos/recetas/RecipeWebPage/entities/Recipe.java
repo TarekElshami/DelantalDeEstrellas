@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @Setter
 //@NoArgsConstructor
 public class Recipe {
+    private static Long currentId = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,13 +34,20 @@ public class Recipe {
     public Recipe(String name){
         this.name = name;
     }
-    public Recipe(Long id, String name, String description, Chef chef, List<String> steps, String img){
+    public Recipe(String name, String description, Chef chef, List<String> steps, String img, Collection<Ingredient> ingredients){
+        this.id = currentId++;
         this.name = name;
-        this.img = img;
-        this.id = id;
         this.description = description;
-        this.chef = chef;
         this.steps = steps;
+        this.img = img;
+        this.chef = chef;
+
+        if (ingredients!=null){
+            this.ingredients = ingredients;
+        } else {
+            this.ingredients = new ArrayList<>();
+        }
     }
+
 
 }

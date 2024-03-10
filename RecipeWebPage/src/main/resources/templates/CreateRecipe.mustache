@@ -15,14 +15,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/css/styles.css" rel="stylesheet" />
-
-        <style>
-            .centered-list {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-        </style>
+        <link href="/css/CreateRecipe.css" rel="stylesheet" />
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -38,21 +31,29 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#ingredients">Ingredientes</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#prep">Preparación</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#chef">Chef</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#actions">Acciones</a></li>
-                        {{#showHighlightedRecipes}}
-                            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#otherRecipes">Otras Recetas</a></li>
-                        {{/showHighlightedRecipes}}
                     </ul>
                 </div>
             </div>
         </nav>
+
         <!-- Masthead-->
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
+
                 <!-- Masthead Avatar Image-->
-                <img class="mb-5" src="/img/recipe.png" alt="..." />
+                <label for="recipeImg" style="font-size: x-large">Foto de la receta: </label><input class="col-lg-4" type="text" id="recipeImg" placeholder="https://imagenes.20minutos.es/uploads/imagenes/2020/06/19/rick-astley-en-su-cancion-never-gonna-give-you-up.gif">
                 <!-- Masthead Heading-->
-                <h1 class="masthead-heading text-uppercase mb-0">{{recipe.name}}</h1>
+
+                <!--
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                    <label for="name">Full name</label>
+                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                </div>
+                -->
+
+                <br><label style="font-size: x-large" for="nameInput">Nombre: </label>
+                <h2 class="masthead-heading text-uppercase mb-0"><input type="text" id="nameInput" placeholder="Nombre de la Receta" required></h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
@@ -60,12 +61,12 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Masthead Subheading-->
-                <p class="masthead-subheading font-weight-light mb-0">{{recipe.description}}</p>
+                <label for="descriptionInput" style="font-size: x-large">Descripción: </label><textarea class="col-lg-6" id="descriptionInput" placeholder="Descripción de la Receta"></textarea>
             </div>
         </header>
         <!-- Ingredients Section-->
         <section class="page-section" id="ingredients">
-            <div class="container">
+            <div class="container text-center">
                 <!-- Portfolio Section Heading-->
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Ingredientes</h2>
                 <!-- Icon Divider-->
@@ -74,13 +75,12 @@
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
-            </div>
-            <div class="centered-list">
-                <ol>
-                {{#recipe.ingredients}}
-                    <li class="lead"><a href="/ingredient/{{id}}">{{name}}</a></li>
-                {{/recipe.ingredients}}
-                </ol>
+                <p>Haz click sobre un ingrediente para eliminarlo de la receta</p>
+                <div class="centered-list underline-list">
+                    <ol id="ingList">
+                    </ol>
+                </div>
+                <button class="btn btn-primary btn-xl" data-bs-toggle="modal" data-bs-target="#addIngModal">Añadir ingrediente</button>
             </div>
         </section>
         <!-- Prep Section-->
@@ -94,13 +94,12 @@
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
-                <div class="centered-list">
-                    <ol>
-                    {{#recipe.steps}}
-                        <li class="lead">{{.}}</li>
-                    {{/recipe.steps}}
+                <p>Haz click sobre un paso para editarlo o eliminarlo</p>
+                <div class="centered-list underline-list">
+                    <ol id="stepsList">
                     </ol>
                 </div>
+                <button class="btn btn-primary btn-outline-light btn-xl" data-bs-toggle="modal" data-bs-target="#addStepModal">Añadir Paso</button>
             </div>
         </section>
         <!-- Chef Section-->
@@ -116,7 +115,16 @@
                 </div>
                 <!-- About Section Content-->
                 <div class="row">
-                    <div class="col-lg-6 offset-lg-3"><p class="lead">Esta es una receta de {{chef.name}}. <a href="/chef/{{chef.id}}">Sobre {{chef.name}}</a>: {{chef.description}}</p></div>
+                    <div class="col-lg-6 offset-lg-3">
+                        <p class="lead">Esta es una receta de
+                            <select id="chefInput" onchange="updateChefContent(this.value)">
+                                <option id="chefnoChef" value="noChef" data-description="No existe" selected>Sin Chef</option>
+                                {{#chefs}}
+                                    <option id="chef{{id}}" value="{{id}}" data-description="{{description}}">{{name}}</option>
+                                {{/chefs}}
+                            </select>
+                            . <a id="chefLink" href="/chefs">Sobre <span id="chefName">Sin Chef</span></a>: <span id="chefDescription"></span></p>
+                    </div>
                 </div>
                 <!-- About Section Button-->
 
@@ -135,43 +143,16 @@
                 </div>
                 <div class="text-center mt-4">
 
-                    <a class="btn btn-xl btn-outline-light" href="/recipe/{{id}}/update"><i class="fas fa-edit me-2"></i><b>Editar Receta</b></a>
-                    <form action="/recipe/{{id}}/delete" method="POST" style="display: inline;">
-                        <button type="submit" class="btn btn-xl btn-outline-danger">
-                            <i class="fas fa-trash-alt me-2"></i> <b>Borrar Receta</b>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
-        <!-- Other Recipes section-->
-        {{#showHighlightedRecipes}}
-            <section class="page-section portfolio" id="otherRecipes">
-                <div class="container">
-                    <!-- Portfolio Section Heading-->
-                    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Otras Recetas Destacadas</h2>
-                    <!-- Icon Divider-->
-                    <div class="divider-custom">
-                        <div class="divider-custom-line"></div>
-                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                        <div class="divider-custom-line"></div>
-                    </div>
+                    <button type="submit" class="btn btn-xl btn-outline-light" onclick="validateAndSendForm('/recipe/newRecipe')"><i class="fas fa-edit me-2"></i><b>Guardar Cambios</b></button>
+                    <!-- /recipe/{ {id}}/update -->
+                    <a class="btn btn-xl btn-outline-danger" href="/recipes"> <!-- /recipe/{ {id}} -->
+                        <i class="fas fa-xmark me-2"></i> <b>Cancelar</b>
+                    </a>
 
-                <div class="row justify-content-center">
-                    {{#highlightedRecipes}}
-                        <div class="col-md-6 col-lg-4 mb-5" onclick="window.location.href='/recipe/{{id}}'">
-                            <div class="portfolio-item mx-auto">
-                                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100" style="/*background-color: rgba(26, 188, 156, 0.5);*/">
-                                    <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"> <!--style="color:rgba(26, 188, 156, 0.9);"--></i></div>
-                                </div>
-                                <img class="img-fluid" src="/img/{{img}}" alt="..." />
-                            </div>
-                        </div>
-                    {{/highlightedRecipes}}
                 </div>
             </div>
         </section>
-        {{/showHighlightedRecipes}}
+
         <!-- Footer-->
         <footer class="footer text-center">
             <div class="container">
@@ -209,9 +190,8 @@
         <div class="copyright py-4 text-center text-white">
             <div class="container"><small>Copyright &copy; Your Website 2023</small></div>
         </div>
-        <!-- Portfolio Modals-->
-        <!-- Portfolio Modal 1-->
-        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+        <!-- Modals-->
+        <div class="portfolio-modal modal fade" id="addIngModal" tabindex="-1" aria-labelledby="addIngModal" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
@@ -220,20 +200,110 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Log Cabin</h2>
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Añade un Ingrediente</h2>
                                     <!-- Icon Divider-->
                                     <div class="divider-custom">
                                         <div class="divider-custom-line"></div>
                                         <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                         <div class="divider-custom-line"></div>
                                     </div>
-                                    <!-- Portfolio Modal - Image-->
-                                    <img class="img-fluid rounded mb-5" src="/assets/img/portfolio/cabin.png" alt="..." />
-                                    <!-- Portfolio Modal - Text-->
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                    <form>
+
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="ingredientInput" type="text" placeholder="Ingrediente: " data-sb-validations="required" oninput="filterIngredients()"/>
+                                            <label for="ingredientInput">Ingrediente: </label>
+                                        </div>
+
+                                    </form>
+                                    <ul class="centered-list highlight-list" id="matchingIngredientsList" data-selected="1">
+                                    </ul>
+                                    <button class="btn btn-primary" id="addIngButton" onclick="addIngredient()" data-bs-dismiss="modal" disabled>
+                                        <i class="fas fa-solid fa-plus fa-fw"></i>
+                                        Añadir Ingrediente
+                                    </button>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
-                                        Close Window
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portfolio-modal modal fade" id="addStepModal" tabindex="-1" aria-labelledby="addStepModal" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body text-center pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Añade un Paso</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <form>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="stepInput" type="text" placeholder="Paso... " data-sb-validations="required"/>
+                                            <label for="stepInput">Paso: </label>
+                                        </div>
+
+                                    </form>
+                                    <button class="btn btn-primary" id="addStepButton" onclick="addStep()" data-bs-dismiss="modal">
+                                        <i class="fas fa-solid fa-plus fa-fw"></i>
+                                        Añadir Paso
+                                    </button>
+                                    <button class="btn btn-primary" data-bs-dismiss="modal">
+                                        <i class="fas fa-xmark fa-fw"></i>
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portfolio-modal modal fade" id="editStepModal" tabindex="-1" aria-labelledby="editStepModal" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body text-center pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Edita un Paso</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <form>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="editStepInput" type="text" placeholder="Paso... " data-sb-validations="required"/>
+                                            <label for="editStepInput">Paso: </label>
+                                        </div>
+                                    </form>
+
+                                    <button class="btn btn-primary" id="editStepButton" onclick="saveEditedStep()" data-bs-dismiss="modal">
+                                        <i class="fas fa-solid fa-floppy-disk fa-fw"></i>
+                                        Guardar Cambios
+                                    </button>
+                                    <button class="btn btn-danger" id="deleteStepButton" onclick="deleteStep()" data-bs-dismiss="modal">
+                                        <i class="fas fa-solid fa-trash fa-fw"></i>
+                                        Eliminar Paso
+                                    </button>
+                                    <button class="btn btn-primary" data-bs-dismiss="modal">
+                                        <i class="fas fa-xmark fa-fw"></i>
+                                        Cancelar
                                     </button>
                                 </div>
                             </div>
@@ -246,6 +316,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="/js/scripts.js"></script>
+        <script src="/js/CreateRecipe.js"></script>
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <!-- * *                               SB Forms JS                               * *-->
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->

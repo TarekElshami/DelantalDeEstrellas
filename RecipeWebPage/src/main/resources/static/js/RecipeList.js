@@ -4,7 +4,7 @@ function loadMore(page){
     button.onclick = function () {loadMore(page+1)};
     fetch("/NextRecipePage?page="+page)
         .then(response => {
-            if (response.status===204 || response.headers.get("X-Is-Last-Page")){
+            if (response.status===204 || response.headers.get("X-Is-Last-Page") === "true"){
                 button.style.display = "none"
             }
             return response.json()
