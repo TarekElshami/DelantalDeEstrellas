@@ -4,12 +4,11 @@ import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import jakarta.annotation.PostConstruct;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 
+@Service
 public class DatabaseInitializer {
 
     private final RecipeService recipeService = RecipeService.getInstance();
@@ -17,7 +16,7 @@ public class DatabaseInitializer {
     private final IngredientService ingredientService = IngredientService.getInstance();
 
     @PostConstruct
-    public void init() throws IOException, SQLException {
+    public void init() {
         recipeService.newRecipe(new Recipe(1L, "Spaghetti Bolognese", "Classic Italian pasta dish", null, List.of("Boil spaghetti", "Prepare Bolognese sauce", "Combine and serve"), "recipe.png"));
         recipeService.newRecipe(new Recipe(2L, "Chicken Alfredo", "Creamy Alfredo sauce with grilled chicken", null, List.of("Cook chicken", "Prepare Alfredo sauce", "Combine and serve"), "recipe.png"));
         recipeService.newRecipe(new Recipe(3L, "Vegetarian Stir Fry", "Colorful mix of vegetables in soy sauce", null, List.of("Chop vegetables", "Stir fry in soy sauce", "Serve hot"), "recipe.png"));

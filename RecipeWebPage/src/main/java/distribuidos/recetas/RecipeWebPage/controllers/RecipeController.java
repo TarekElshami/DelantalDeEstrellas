@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Collection;
 
 
@@ -22,13 +20,6 @@ public class RecipeController {
 
     public RecipeController() {
         this.recipeService = RecipeService.getInstance();
-        try {
-            new DatabaseInitializer().init();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @GetMapping("/recipes")
