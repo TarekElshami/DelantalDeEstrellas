@@ -33,8 +33,6 @@ public class DatabaseInitializer {
 
         Ingredient ingredient = new Ingredient("Pimiento", "Verde, fresco y ligeramente picante, perfecto para ensaladas.", "https://www.klarskovgartneri.dk/media/u3knpzlw/gul-peber.jpg?anchor=center&mode=crop&width=900&height=650&rnd=132577017043930000");
         Ingredient ingredient2 = new Ingredient("Manzana", "Verde, fresco y ligeramente picante, perfecto para ensaladas.", "https://ecomercioagrario.com/wp-content/uploads/2020/07/produccion-peras-se-recupera-manzanas-bajan-cataluna-ecomercioagrario.jpg");
-        ingredient.getTrueMatchesWith().add(ingredient2.getId());
-        ingredient.getTrueBestRecipes().add(1L);
         ingredientService.newIngredient(ingredient);
         ingredientService.newIngredient(ingredient2);
 

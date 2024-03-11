@@ -5,7 +5,6 @@ import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.service.ChefService;
-import distribuidos.recetas.RecipeWebPage.service.DatabaseInitializer;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
 import distribuidos.recetas.RecipeWebPage.service.RecipeService;
 import org.springframework.http.HttpHeaders;
@@ -52,13 +51,13 @@ public class RecipeController {
         model.addAttribute("showHighlightedRecipes", true);
         model.addAttribute("highlightedRecipes", recipeService.getHighlighs(3));
         //TODO: pass the recipe info to the model and return it
-        return "RecipeView";
+        return "Recipe";
     }
 
     @GetMapping("/recipe/newRecipe")
     public String newRecipe(Model model) {
         model.addAttribute("chefs", ChefService.getInstance().getAll());
-        return "CreateRecipe";
+        return "RecipeForm";
     }
 
     @PostMapping("/recipe/newRecipe")
@@ -102,7 +101,7 @@ public class RecipeController {
         //model.addAttribute("showHighlightedRecipes", true);
         //model.addAttribute("highlightedRecipes", recipeService.getHighlighs(3));
         model.addAttribute("chefs", ChefService.getInstance().getAll());
-        return "CreateRecipe";
+        return "RecipeForm";
     }
 
     @PostMapping("/recipe/{id}/update")

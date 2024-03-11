@@ -19,8 +19,6 @@ import java.util.Collection;
 //@NoArgsConstructor
 public class Ingredient {
 
-    private static Long currentId = 0L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +36,6 @@ public class Ingredient {
         this.name = name;
         this.description = description;
         this.image = imageUrl;
-        this.id = ++currentId;
     }
 
     @JsonIgnore

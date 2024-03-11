@@ -27,7 +27,7 @@ public class ChefController {
         model.addAttribute("url", "new");
         model.addAttribute("FormBtn", "Añadir");
         model.addAttribute("backBtn", "/chefs");
-        return "NewChef";
+        return "ChefForm";
     }
     @PostMapping("/chef/new")
     public String newChef(Chef chef){
@@ -56,7 +56,7 @@ public class ChefController {
         model.addAttribute("chef", chef);
         model.addAttribute("recipeList", chef.getBestRecipes());
         model.addAttribute("backBtn", "/chef/"+id);
-        return "NewChef";
+        return "ChefForm";
     }
 
     @PostMapping("/chef/{id}/update")
