@@ -97,16 +97,20 @@ public class RecipeController {
     public String updateRecipeView(Model model, @PathVariable Long id){
         Recipe recipe = recipeService.getRecipeById(id);
         model.addAttribute("recipe", recipe);
-        model.addAttribute("chef", recipe.getChef());
+        //model.addAttribute("chef", recipe.getChef());
         //model.addAttribute("showHighlightedRecipes", true);
         //model.addAttribute("highlightedRecipes", recipeService.getHighlighs(3));
         model.addAttribute("chefs", ChefService.getInstance().getAll());
-        return "RecipeForm";
+        //should call js updateStepIds when the file is rendered
+        return "RecipeUpdateForm";
     }
 
     @PostMapping("/recipe/{id}/update")
-    public String updateRecipeSend(@PathVariable Long id, @RequestBody String body){
-
+    @ResponseBody
+    public ResponseEntity<Recipe> updateRecipeSend(@PathVariable Long id, @RequestBody String body){
+        if (recipeService.getRecipeById(id)==null){
+            return ResponseEntity.notFound().build();
+        }
         try {
             ObjectMapper objectMapper = new ObjectMapper();
 
@@ -119,25 +123,28 @@ public class RecipeController {
             String image = (String) anonRecipe.get("image");
             List<String> stepsList = (List<String>) anonRecipe.get("steps");
 
-            List<Long> ingredientsIdList = (List<Long>) anonRecipe.get("ingredients");
-            Long chefId = (Long) anonRecipe.get("chef");
+            List<String> ingredientsIdList = (List<String>) anonRecipe.get("ingredients");
+            Long chefId = Long.parseLong( (String) anonRecipe.get("chef"));
             Chef chef = chefService.getChefById(chefId);
 
             List<Ingredient> ingredients = new ArrayList<>();
-            for (Long ingId : ingredientsIdList){
-                ingredients.add(ingredientService.getIngredientById(ingId));
+            for (String ingId : ingredientsIdList){
+                ingredients.add(ingredientService.getIngredientById(Long.parseLong(ingId)));
             }
 
             Recipe recipe = new Recipe(name, description, chef, stepsList, image, ingredients);
 
-            recipeService.substitute(id, recipe);
+            Recipe substitute = recipeService.substitute(id, recipe);
+            if (substitute!= null) {
+                return ResponseEntity.ok(recipe);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (Exception e) {
             System.out.println("A string that was expected to be JSON was not JSON");
             e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
         }
-
-
-        return "";
     }
 
     //@PatchMapping("/recipe/{id}")

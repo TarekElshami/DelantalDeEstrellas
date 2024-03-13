@@ -41,7 +41,7 @@
             <div class="container d-flex align-items-center flex-column">
 
                 <!-- Masthead Avatar Image-->
-                <label for="recipeImg" style="font-size: x-large">Foto de la receta: </label><input class="col-lg-4" type="text" id="recipeImg" placeholder="https://imagenes.20minutos.es/uploads/imagenes/2020/06/19/rick-astley-en-su-cancion-never-gonna-give-you-up.gif">
+                <label for="recipeImg" style="font-size: x-large">Foto de la receta: </label><input class="col-lg-4" type="text" id="recipeImg" value="{{recipe.img}}" placeholder="https://imagenes.20minutos.es/uploads/imagenes/2020/06/19/rick-astley-en-su-cancion-never-gonna-give-you-up.gif">
                 <!-- Masthead Heading-->
 
                 <!--
@@ -53,7 +53,9 @@
                 -->
 
                 <br><label style="font-size: x-large" for="nameInput">Nombre: </label>
-                <h2 class="masthead-heading text-uppercase mb-0"><input type="text" id="nameInput" placeholder="Nombre de la Receta" required></h2>
+                <h2 class="masthead-heading text-uppercase mb-0">
+                    <input type="text" id="nameInput" value="{{recipe.name}}" placeholder="Nombre de la Receta" required>
+                </h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
@@ -61,7 +63,8 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Masthead Subheading-->
-                <label for="descriptionInput" style="font-size: x-large">Descripción: </label><textarea class="col-lg-6" id="descriptionInput" placeholder="Descripción de la Receta"></textarea>
+                <label for="descriptionInput" style="font-size: x-large">Descripción: </label>
+                <textarea class="col-lg-6" id="descriptionInput" placeholder="Descripción de la Receta">{{recipe.description}}</textarea>
             </div>
         </header>
         <!-- Ingredients Section-->
@@ -78,6 +81,9 @@
                 <p>Haz click sobre un ingrediente para eliminarlo de la receta</p>
                 <div class="centered-list underline-list">
                     <ol id="ingList">
+                        {{#recipe.ingredients}}
+                            <li id="ing{{id}}" data-id="{{id}}" onclick="removeIngredient({{id}})">{{name}}</li>
+                        {{/recipe.ingredients}}
                     </ol>
                 </div>
                 <button class="btn btn-primary btn-xl" data-bs-toggle="modal" data-bs-target="#addIngModal">Añadir ingrediente</button>
@@ -97,6 +103,9 @@
                 <p>Haz click sobre un paso para editarlo o eliminarlo</p>
                 <div class="centered-list underline-list">
                     <ol id="stepsList">
+                        {{#recipe.steps}}
+                            <li class="lead" data-bs-toggle="modal" data-bs-target="#editStepModal">{{.}}</li>
+                        {{/recipe.steps}}
                     </ol>
                 </div>
                 <button class="btn btn-primary btn-outline-light btn-xl" data-bs-toggle="modal" data-bs-target="#addStepModal">Añadir Paso</button>
@@ -105,7 +114,7 @@
         <!-- Chef Section-->
         <section class="page-section" id="chef">
             <div class="container">
-                <!-- About Section Heading-->
+                <!-- Chef Section Heading-->
                 <h2 class="page-section-heading text-center text-uppercase">Chef</h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom">
@@ -113,17 +122,17 @@
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
-                <!-- About Section Content-->
+                <!-- Chef Section Content-->
                 <div class="row">
                     <div class="col-lg-6 offset-lg-3">
                         <p class="lead">Esta es una receta de
-                            <select id="chefInput" onchange="updateChefContent(this.value)">
-                                <option id="chefnoChef" value="noChef" data-description="No existe" selected>Sin Chef</option>
+                            <select id="chefInput" data-original-chef="{{recipe.chef.id}}" onchange="updateChefContent(this.value)">
+                                <option id="chefnoChef" value="noChef" data-description="No existe">Sin Chef</option>
                                 {{#chefs}}
                                     <option id="chef{{id}}" value="{{id}}" data-description="{{description}}">{{name}}</option>
                                 {{/chefs}}
                             </select>
-                            . <a id="chefLink" href="/chefs">Sobre <span id="chefName">Sin Chef</span></a>: <span id="chefDescription"></span></p>
+                            . <a id="chefLink" href="/chef/{{recipe.chef.id}}">Sobre <span id="chefName">{{recipe.chef.name}}</span></a>: <span id="chefDescription">{{recipe.chef.description}}</span></p>
                     </div>
                 </div>
                 <!-- About Section Button-->
@@ -143,7 +152,7 @@
                 </div>
                 <div class="text-center mt-4">
 
-                    <button type="submit" class="btn btn-xl btn-outline-light" onclick="validateAndSendForm('/recipe/newRecipe')"><i class="fas fa-plus me-2"></i><b>Crear Receta</b></button>
+                    <button type="submit" class="btn btn-xl btn-outline-light" onclick="validateAndSendForm('/recipe/{{recipe.id}}/update')"><i class="fas fa-edit me-2"></i><b>Guardar Cambios</b></button>
                     <!-- /recipe/{ {id}}/update -->
                     <a class="btn btn-xl btn-outline-danger" href="/recipes"> <!-- /recipe/{ {id}} -->
                         <i class="fas fa-xmark me-2"></i> <b>Cancelar</b>

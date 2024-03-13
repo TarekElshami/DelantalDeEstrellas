@@ -31,8 +31,14 @@ public class RecipeService {
         recipeMap.put(recipe.getId(), recipe);
     }
 
-    public void substitute(Long id, Recipe recipe) {
+    public Recipe substitute(Long id, Recipe recipe) {
+        if (!recipeMap.containsKey(id)) {
+            return null;
+        }
+        recipe.setId(id);
         recipeMap.put(id, recipe);
+        return recipe;
+
     }
 
     public void modifyToMatch(Long id, Recipe recipe) {

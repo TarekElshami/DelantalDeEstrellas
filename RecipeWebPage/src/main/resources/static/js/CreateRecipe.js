@@ -99,9 +99,15 @@ function saveEditedStep(num){
 
 function deleteStep(num){
     document.getElementById("step"+num).remove();
+    updateStepIds()
+}
+
+function updateStepIds() {
     let i= 0;
     for (let child of document.getElementById("stepsList").children){
-        child.setAttribute("id", i);
+        let j = i;
+        child.setAttribute("id", "step"+j.toString());
+        child.onclick = function() {editStep(j)}
         i++;
     }
 }
@@ -120,9 +126,20 @@ function sendForm(body, URL) {
         },
         body: JSON.stringify(body)
     })
-        .then(response =>
-            response.json() //if there was an error, say there was an error, else, say recipe created and redirect
-        )
+        .then(response => {
+            //if there was an error, say there was an error, else, say recipe created and redirect
+            if (response.status === 200) {
+                if (URL.includes("update")) {
+                    alert("Receta editada correctamente");
+                    window.location.href = URL.split("/").slice(0,-1).join("/");
+                } else {
+                    alert("Receta creada correctamente");
+                    window.location.href = "/recipes";
+                }
+            } else {
+                alert("Lo sentimos, ha habido un error. No ha habido cambios en al información almacenada")
+            }
+        })
         .then(data => {
             // Handle the response from the server
             console.log('Server response:', data);
@@ -195,3 +212,11 @@ function assembleBody() {
 document.getElementById('ingredientInput').addEventListener('keydown', event => {if (event.key === "Enter") event.preventDefault();})
 document.getElementById('stepInput').addEventListener('keydown', event => {if (event.key === "Enter") event.preventDefault();})
 document.getElementById("addIngModal").addEventListener("hidden.bs.modal", function () {emptyIngredientModal();})
+document.addEventListener('DOMContentLoaded', function() {
+    updateStepIds();
+    let id = document.getElementById("chefInput").getAttribute("data-original-chef");
+    for (let child of document.getElementById("chefInput").children){
+        child.removeAttribute("selected");
+    }
+    document.getElementById("chef"+id).setAttribute("selected", "selected");
+})
