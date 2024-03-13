@@ -198,7 +198,7 @@
 
             <a class="btn btn-xl btn-outline-primary" href="/ingredient/{{id}}/update"><i class="fas fa-edit me-2"></i>Editar ingrediente</a>
             <form action="/ingredient/{{id}}/delete" method="post" style="display: inline;">
-                <button type="submit" class="btn btn-xl btn-outline-danger">
+                <button type="submit" class="btn btn-xl btn-outline-danger" onclick="return confirmDelete()">
                     <i class="fas fa-trash-alt me-2"></i> Borrar ingrediente
                 </button>
             </form>
@@ -211,5 +211,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/scripts.js"></script>
+<script src="/js/ingredient.js"></script>
+
 </body>
 </html>

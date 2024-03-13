@@ -64,7 +64,7 @@ public class IngredientController {
     @PostMapping("/ingredient/update")
     public String updateIngredient(Ingredient ingredient){
         if(ingredientService.substitute(ingredient.getId(), ingredient) == null) return "Error";
-        return "redirect:/ingredients";
+        return "redirect:/ingredient/" + ingredient.getId();
     }
 
     @PostMapping("/ingredient/{id}/delete")
