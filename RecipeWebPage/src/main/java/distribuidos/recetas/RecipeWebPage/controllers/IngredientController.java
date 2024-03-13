@@ -63,7 +63,7 @@ public class IngredientController {
 
     @PostMapping("/ingredient/update")
     public String updateIngredient(Ingredient ingredient){
-        ingredientService.substitute(ingredient.getId(), ingredient);
+        if(ingredientService.substitute(ingredient.getId(), ingredient) == null) return "Error";
         return "redirect:/ingredients";
     }
 
