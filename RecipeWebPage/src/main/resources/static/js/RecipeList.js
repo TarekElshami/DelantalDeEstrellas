@@ -36,7 +36,7 @@ function loadMore(page){
                                         <div class="divider-custom-line"></div>
                                     </div>
                                     <!-- Portfolio Modal - Image-->
-                                    <img class="img-fluid rounded mb-5" src=`${recipe.img}` alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="${recipe.img}" alt="..." />
                                     <!-- Portfolio Modal - Text-->
                                     <p class="mb-4">${recipe.description}</p>
                                     <a class="btn btn-primary"  href="/recipe/${recipe.id}">

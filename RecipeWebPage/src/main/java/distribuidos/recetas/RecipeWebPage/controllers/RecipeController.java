@@ -46,11 +46,14 @@ public class RecipeController {
     @GetMapping("/recipe/{id}")
     public String showRecipe(Model model, @PathVariable Long id){
         Recipe recipe = recipeService.getRecipeById(id);
+        if (recipe==null){
+            model.addAttribute("errorMessage", "No existe una receta con la id indicada");
+            return "Error";
+        }
         model.addAttribute("recipe", recipe);
         model.addAttribute("chef", recipe.getChef());
         model.addAttribute("showHighlightedRecipes", true);
         model.addAttribute("highlightedRecipes", recipeService.getHighlighs(3));
-        //TODO: pass the recipe info to the model and return it
         return "Recipe";
     }
 
@@ -157,7 +160,6 @@ public class RecipeController {
     @PostMapping("/recipe/{id}/delete")
     public String deleteRecipe(@PathVariable Long id){
         recipeService.delete(id);
-        //TODO: return the correct view
         return "redirect:/recipes";
     }
 
