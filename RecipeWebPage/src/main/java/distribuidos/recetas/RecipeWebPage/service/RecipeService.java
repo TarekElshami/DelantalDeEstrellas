@@ -44,8 +44,10 @@ public class RecipeService {
 
     }
 
-    public void modifyToMatch(Long id, Recipe recipe) {
+    public Recipe modifyToMatch(Long id, Recipe recipe) {
         Recipe storedRecipe = recipeMap.get(id);
+        if (storedRecipe==null)
+            return null;
         if (recipe.getName() != null){
             storedRecipe.setName(recipe.getName());
         } if (recipe.getDescription() != null){
@@ -57,6 +59,7 @@ public class RecipeService {
         } if (recipe.getSteps() != null){
             storedRecipe.setSteps(recipe.getSteps());
         }
+        return storedRecipe;
     }
 
     public Recipe delete(Long id) {

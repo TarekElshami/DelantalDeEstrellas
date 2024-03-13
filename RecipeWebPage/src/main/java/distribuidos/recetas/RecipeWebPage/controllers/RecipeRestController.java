@@ -6,8 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.List;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/recipe")
 public class RecipeRestController {
 
     private RecipeService recipeService;
@@ -15,39 +18,49 @@ public class RecipeRestController {
     public RecipeRestController() {
         this.recipeService = RecipeService.getInstance();
     }
-    
-    @GetMapping("/recipe/{id}")
-    public ResponseEntity<Recipe> showRecipe(@PathVariable Long id){
+
+    @GetMapping("/all")
+    public ResponseEntity<Collection<Recipe>> getAllRecipes(){
+        return ResponseEntity.ok(recipeService.getAll());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Recipe> getRecipe(@PathVariable Long id){
         Recipe recipe = recipeService.getRecipeById(id);
-        //TODO: pass the recipe info to the model and return it
-        return ResponseEntity.status(200).body(null);
+        if (recipe==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(recipe);
     }
 
-    @PostMapping("/recipe/{id}")
-    public ResponseEntity<Recipe> newRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
+    @PostMapping("/new")
+    public ResponseEntity<Recipe> newRecipe(@RequestBody Recipe recipe){
         recipeService.newRecipe(recipe);
-        //TODO: return the correct view
-        return ResponseEntity.status(200).body(null);
+        return ResponseEntity.status(201).body(recipe);
     }
 
-    @PutMapping("/recipe/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Recipe> substituteRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
-        recipeService.substitute(id, recipe);
-        //TODO: return the correct view
-        return ResponseEntity.status(200).body(null);
+        if (recipeService.substitute(id, recipe) == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(null);
     }
 
-    @PatchMapping("/recipe/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Recipe> modifyRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
-        recipeService.modifyToMatch(id, recipe);
-        //TODO: return the correct view
-        return ResponseEntity.status(200).body(null);
+        Recipe storedRecipe = recipeService.modifyToMatch(id, recipe);
+        if (storedRecipe == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(storedRecipe);
     }
 
-    @DeleteMapping("/recipe/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Recipe> newRecipe(@PathVariable Long id){
-        recipeService.delete(id);
-        //TODO: return the correct view
-        return ResponseEntity.status(200).body(null);
+        Recipe deletedRecipe = recipeService.delete(id);
+        if (deletedRecipe == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(deletedRecipe);
     }
 }
