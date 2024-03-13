@@ -17,18 +17,18 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void init() {
-        recipeService.newRecipe(new Recipe(/*1L,*/ "Spaghetti Bolognese", "Classic Italian pasta dish", null, List.of("Boil spaghetti", "Prepare Bolognese sauce", "Combine and serve"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*2L,*/ "Chicken Alfredo", "Creamy Alfredo sauce with grilled chicken", null, List.of("Cook chicken", "Prepare Alfredo sauce", "Combine and serve"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*3L,*/ "Vegetarian Stir Fry", "Colorful mix of vegetables in soy sauce", null, List.of("Chop vegetables", "Stir fry in soy sauce", "Serve hot"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*4L,*/ "Chocolate Lava Cake", "Decadent dessert with a gooey chocolate center", null, List.of("Preheat oven", "Prepare chocolate batter", "Bake until gooey"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*5L,*/ "Greek Salad", "Refreshing salad with feta and olives", null, List.of("Chop tomatoes, cucumbers, and olives", "Add feta cheese", "Drizzle with olive oil"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*6L,*/ "Beef Tacos", "Tasty tacos with seasoned beef", null, List.of("Season and cook beef", "Assemble tacos with toppings", "Enjoy!"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*7L,*/ "Caprese Salad", "Simple salad with tomatoes, mozzarella, and basil", null, List.of("Slice tomatoes and mozzarella", "Arrange in layers with basil", "Drizzle with balsamic glaze"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*8L,*/ "Shrimp Scampi", "Garlicky shrimp in a lemon butter sauce", null, List.of("Sauté shrimp in garlic butter", "Add lemon juice", "Serve over pasta"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*9L,*/ "Mango Salsa Chicken", "Grilled chicken topped with fresh mango salsa", null, List.of("Grill chicken", "Prepare mango salsa", "Top chicken with salsa"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*10L,*/ "Vegetable Lasagna", "Layers of pasta, vegetables, and cheesy goodness", null, List.of("Layer pasta and vegetables", "Top with cheese", "Bake until bubbly"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*11L,*/ "Spinach and Feta Stuffed Chicken", "Juicy chicken breasts stuffed with spinach and feta cheese", null, List.of("Stuff chicken with spinach and feta", "Bake until golden", "Serve hot"), "recipe.png", null));
-        recipeService.newRecipe(new Recipe(/*12L,*/ "Blueberry Pancakes", "Fluffy pancakes filled with sweet blueberries", null, List.of("Prepare pancake batter", "Fold in blueberries", "Cook until golden brown"), "recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*1L,*/ "Spaghetti Bolognese", "Classic Italian pasta dish", null, List.of("Boil spaghetti", "Prepare Bolognese sauce", "Combine and serve"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*2L,*/ "Chicken Alfredo", "Creamy Alfredo sauce with grilled chicken", null, List.of("Cook chicken", "Prepare Alfredo sauce", "Combine and serve"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*3L,*/ "Vegetarian Stir Fry", "Colorful mix of vegetables in soy sauce", null, List.of("Chop vegetables", "Stir fry in soy sauce", "Serve hot"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*4L,*/ "Chocolate Lava Cake", "Decadent dessert with a gooey chocolate center", null, List.of("Preheat oven", "Prepare chocolate batter", "Bake until gooey"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*5L,*/ "Greek Salad", "Refreshing salad with feta and olives", null, List.of("Chop tomatoes, cucumbers, and olives", "Add feta cheese", "Drizzle with olive oil"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*6L,*/ "Beef Tacos", "Tasty tacos with seasoned beef", null, List.of("Season and cook beef", "Assemble tacos with toppings", "Enjoy!"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*7L,*/ "Caprese Salad", "Simple salad with tomatoes, mozzarella, and basil", null, List.of("Slice tomatoes and mozzarella", "Arrange in layers with basil", "Drizzle with balsamic glaze"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*8L,*/ "Shrimp Scampi", "Garlicky shrimp in a lemon butter sauce", null, List.of("Sauté shrimp in garlic butter", "Add lemon juice", "Serve over pasta"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*9L,*/ "Mango Salsa Chicken", "Grilled chicken topped with fresh mango salsa", null, List.of("Grill chicken", "Prepare mango salsa", "Top chicken with salsa"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*10L,*/ "Vegetable Lasagna", "Layers of pasta, vegetables, and cheesy goodness", null, List.of("Layer pasta and vegetables", "Top with cheese", "Bake until bubbly"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*11L,*/ "Spinach and Feta Stuffed Chicken", "Juicy chicken breasts stuffed with spinach and feta cheese", null, List.of("Stuff chicken with spinach and feta", "Bake until golden", "Serve hot"), "/img/recipe.png", null));
+        recipeService.newRecipe(new Recipe(/*12L,*/ "Blueberry Pancakes", "Fluffy pancakes filled with sweet blueberries", null, List.of("Prepare pancake batter", "Fold in blueberries", "Cook until golden brown"), "/img/recipe.png", null));
 
 
         Ingredient ingredient = new Ingredient("Pimiento", "Verde, fresco y ligeramente picante, perfecto para ensaladas.", "https://www.klarskovgartneri.dk/media/u3knpzlw/gul-peber.jpg?anchor=center&mode=crop&width=900&height=650&rnd=132577017043930000");

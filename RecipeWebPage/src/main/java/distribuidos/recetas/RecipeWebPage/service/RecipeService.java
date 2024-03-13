@@ -3,12 +3,14 @@ package distribuidos.recetas.RecipeWebPage.service;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class RecipeService {
 
     public static final int PAGESIZE = 6;
     private static RecipeService recipeService = null;
     private final Map<Long, Recipe> recipeMap;
+    private AtomicLong currentId = new AtomicLong(0);
 
     public static RecipeService getInstance(){
         if (recipeService==null){
@@ -28,6 +30,7 @@ public class RecipeService {
     }
 
     public void newRecipe(Recipe recipe) {
+        recipe.setId(currentId.incrementAndGet());
         recipeMap.put(recipe.getId(), recipe);
     }
 
@@ -69,7 +72,7 @@ public class RecipeService {
     }
 
     public boolean isLastPage(int pageNum) {
-        return pageNum == Math.ceil((double) recipeMap.size() / (double) PAGESIZE);
+        return pageNum == (Math.ceil((double) recipeMap.size() / (double) PAGESIZE)-1);
     }
 
     public Collection<Recipe> getHighlighs(int num) {

@@ -17,7 +17,6 @@ import java.util.List;
 @Setter
 //@NoArgsConstructor
 public class Recipe {
-    private static Long currentId = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,14 +27,13 @@ public class Recipe {
     //private Blob image;
     private String img;
 
-    private Collection<Ingredient> ingredients; //cómo hacemos el tema cantidades? Para que pueda ser  por ejemplo 5g de mejorana
+    private Collection<Ingredient> ingredients;
     private Chef chef;
 
     public Recipe(String name){
         this.name = name;
     }
     public Recipe(String name, String description, Chef chef, List<String> steps, String img, Collection<Ingredient> ingredients){
-        this.id = currentId++;
         this.name = name;
         this.description = description;
         this.steps = steps;
