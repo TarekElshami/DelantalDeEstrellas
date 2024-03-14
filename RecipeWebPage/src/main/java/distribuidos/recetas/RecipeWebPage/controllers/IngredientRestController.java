@@ -1,6 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.controllers;
 
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
+import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -58,8 +59,11 @@ public class IngredientRestController {
     }
 
     @DeleteMapping("/ingredient/{id}")
-    public ResponseEntity<Void> deleteIngredient(@PathVariable Long id){
-        ingredientService.delete(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Ingredient> deleteIngredient(@PathVariable Long id){
+        Ingredient deletedIngredient = ingredientService.delete(id);
+        if (deletedIngredient == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(deletedIngredient);
     }
 }

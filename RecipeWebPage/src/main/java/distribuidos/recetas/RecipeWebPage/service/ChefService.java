@@ -28,8 +28,15 @@ public class ChefService {
         chefMap.put(id, chef);
     }
 
-    public void substitute(Long id, Chef chef) {
+    public Chef substitute(Long id, Chef chef) {
+
+        if(!chefMap.containsKey(id)){
+            return null;
+        }
+        chef.setId(id);
         chefMap.put(id, chef);
+        return chef;
+
     }
 
     public void modifyToMatch(Long id, Chef chef) {
@@ -37,7 +44,7 @@ public class ChefService {
         if (chef.getName() != null){
             storedChef.setName(chef.getName());
         } if (chef.getDescription() != null) {
-            storedChef.setDescription(chef.getName());
+            storedChef.setDescription(chef.getDescription());
         } if (chef.getImage() != null) {
             storedChef.setImage(chef.getImage());
             //} if (chef.getFavIng() != null){
