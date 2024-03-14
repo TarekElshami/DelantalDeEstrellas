@@ -55,18 +55,18 @@
                 <!-- Name input-->
                 <div class="form-floating mb-3">
                     <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name..."
-                           data-sb-validations="required" value="{{#chef}}{{name}}{{/chef}}"/>
+                           data-sb-validations="required" required value="{{#chef}}{{name}}{{/chef}}"/>
                     <label for="name">Nombre</label>
                 </div>
                 <!-- Description input-->
                 <div class="form-floating mb-3">
-                    <input class="form-control" id="description" name="description" type="text" placeholder="descripcion" value="{{#chef}}{{description}}{{/chef}}"/>
+                    <input class="form-control" id="description" name="description" type="text" placeholder="descripcion" required value="{{#chef}}{{description}}{{/chef}}"/>
                     <label for="description">Descripción</label>
                 </div>
 
                 <!-- Image URL -->
                 <div class="form-floating mb-3">
-                    <input class="form-control" id="image" name="image" type="text" placeholder="URL de la imagen" value="{{#chef}}{{image}}{{/chef}}"/>
+                    <input class="form-control" id="image" name="image" type="text" placeholder="URL de la imagen" required value="{{#chef}}{{image}}{{/chef}}"/>
                     <label for="image">Imagen</label>
                 </div>
 

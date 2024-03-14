@@ -22,10 +22,11 @@ public class ChefService {
         return chefMap.get(id);
     }
 
-    public void newChef(Chef chef) {
+    public Chef newChef(Chef chef) {
         long id = nextId.incrementAndGet();
         chef.setId(id);
         chefMap.put(id, chef);
+        return chef;
     }
 
     public Chef substitute(Long id, Chef chef) {

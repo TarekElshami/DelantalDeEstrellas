@@ -1,6 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.controllers;
 
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
+import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.service.ChefService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,27 +27,23 @@ public class ChefRestController {
         Chef chef = chefService.getChefById(id);
         if (chef != null) {
             return ResponseEntity.status(200).body(chef);
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
 
     }
 
     @PostMapping("/chef/new")
     public ResponseEntity<Chef> newChef(@RequestBody Chef chef) {
-        if (chef.getId() != null) {
-            return ResponseEntity.badRequest().build();
-        }
-        chefService.newChef(chef);
-        return ResponseEntity.status(200).body(null);
+        return ResponseEntity.status(201).body(chefService.newChef(chef));
     }
 
     @PutMapping("/chef/{id}")
     public ResponseEntity<Chef> substituteChef(@PathVariable Long id, @RequestBody Chef chef) {
-        if (chefService.substitute(id, chef) == null) {
+        Chef updateChef = chefService.substitute(id, chef);
+        if(updateChef == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(updateChef);
     }
 
     @PatchMapping("/chef/{id}")
@@ -62,11 +59,10 @@ public class ChefRestController {
 
     @DeleteMapping("/chef/{id}")
     public ResponseEntity<Chef> newChef(@PathVariable Long id) {
-        Chef chef = chefService.getChefById(id);
-        if (chef != null) {
-            chefService.delete(id);
-            return ResponseEntity.ok(chef);
+        Chef deletedChef = chefService.delete(id);
+        if (deletedChef == null) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(deletedChef);
     }
 }
