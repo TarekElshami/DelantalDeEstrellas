@@ -14,10 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -51,7 +48,7 @@ public class RecipeController {
             return "Error";
         }
         model.addAttribute("recipe", recipe);
-        model.addAttribute("chef", recipe.getChef());
+        model.addAttribute("chef", recipe.getChef()!=null ? recipe.getChef() : new Chef("Sin Chef", "Este Chef no existe", "noImg"));
         model.addAttribute("showHighlightedRecipes", true);
         model.addAttribute("highlightedRecipes", recipeService.getHighlighs(3));
         return "Recipe";
@@ -78,8 +75,14 @@ public class RecipeController {
             List<String> stepsList = (List<String>) anonRecipe.get("steps");
 
             List<String> ingredientsIdList = (List<String>) anonRecipe.get("ingredients");
-            Long chefId = Long.parseLong((String) anonRecipe.get("chef"));
-            Chef chef = chefService.getChefById(chefId);
+            String chefString = (String) anonRecipe.get("chef");
+            Chef chef;
+            if ("noChef".equals(chefString)){
+                chef = null;
+            } else {
+                Long chefId = Long.parseLong( (String) anonRecipe.get("chef"));
+                chef = chefService.getChefById(chefId);
+            }
 
             List<Ingredient> ingredients = new ArrayList<>();
             for (String ingId : ingredientsIdList){
@@ -127,8 +130,15 @@ public class RecipeController {
             List<String> stepsList = (List<String>) anonRecipe.get("steps");
 
             List<String> ingredientsIdList = (List<String>) anonRecipe.get("ingredients");
-            Long chefId = Long.parseLong( (String) anonRecipe.get("chef"));
-            Chef chef = chefService.getChefById(chefId);
+            String chefString = (String) anonRecipe.get("chef");
+            Chef chef;
+            if (!"noChef".equals(chefString)){
+                chef = null;
+            } else {
+                Long chefId = Long.parseLong( (String) anonRecipe.get("chef"));
+                chef = chefService.getChefById(chefId);
+            }
+
 
             List<Ingredient> ingredients = new ArrayList<>();
             for (String ingId : ingredientsIdList){
