@@ -48,7 +48,7 @@ public class RecipeService {
         if (recipe.getName() != null){
             storedRecipe.setName(recipe.getName());
         } if (recipe.getDescription() != null){
-            storedRecipe.setDescription(recipe.getName());
+            storedRecipe.setDescription(recipe.getDescription());
         } if (recipe.getIngredients() != null){
             storedRecipe.setIngredients(recipe.getIngredients());
         } if (recipe.getChef() != null){
@@ -64,11 +64,15 @@ public class RecipeService {
     }
 
     public Collection<Recipe> getPage(int page) {
+        return getPage(page, PAGESIZE);
+    }
+
+    public Collection<Recipe> getPage(int page, int pageSize) {
         ArrayList<Recipe> recipes = new ArrayList<>(recipeMap.values());
-        if (recipes.size()<page*PAGESIZE){
+        if (recipes.size()<page*pageSize){
             return null;
         }
-        return recipes.subList(page*PAGESIZE, Math.min(recipes.size(), (page + 1) * PAGESIZE));
+        return recipes.subList(page*pageSize, Math.min(recipes.size(), (page + 1) * pageSize));
     }
 
     public boolean isLastPage(int pageNum) {
@@ -86,7 +90,6 @@ public class RecipeService {
             }
         }
         return collection;
-
     }
 
     public List<Recipe> getFirst3(){

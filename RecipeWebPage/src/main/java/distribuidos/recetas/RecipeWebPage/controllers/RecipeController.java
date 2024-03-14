@@ -28,10 +28,12 @@ public class RecipeController {
     @Autowired
     private ChefService chefService;
 
-    public RecipeController() {
+    public RecipeController(){}
 
+    @GetMapping("/")
+    public String home(){
+        return "redirect:/home";
     }
-
     @GetMapping("/recipes")
     public String showAllRecipes(Model model){
         Collection<Recipe> recipes = recipeService.getPage(0);
