@@ -7,6 +7,7 @@ import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.service.ChefService;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
 import distribuidos.recetas.RecipeWebPage.service.RecipeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,15 @@ import java.util.*;
 @Controller
 public class RecipeController {
 
+    @Autowired
     private RecipeService recipeService;
+    @Autowired
     private IngredientService ingredientService;
+    @Autowired
     private ChefService chefService;
 
     public RecipeController() {
-        this.recipeService = RecipeService.getInstance();
-        this.ingredientService = IngredientService.getInstance();
-        this.chefService = ChefService.getInstance();
+
     }
 
     @GetMapping("/recipes")
@@ -56,7 +58,7 @@ public class RecipeController {
 
     @GetMapping("/recipe/newRecipe")
     public String newRecipe(Model model) {
-        model.addAttribute("chefs", ChefService.getInstance().getAll());
+        model.addAttribute("chefs", chefService.getAll());
         return "RecipeForm";
     }
 
@@ -106,7 +108,7 @@ public class RecipeController {
         //model.addAttribute("chef", recipe.getChef());
         //model.addAttribute("showHighlightedRecipes", true);
         //model.addAttribute("highlightedRecipes", recipeService.getHighlighs(3));
-        model.addAttribute("chefs", ChefService.getInstance().getAll());
+        model.addAttribute("chefs", chefService.getAll());
         //should call js updateStepIds when the file is rendered
         return "RecipeUpdateForm";
     }

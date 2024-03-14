@@ -37,7 +37,7 @@ public class Ingredient {
         this.description = description;
         this.image = imageUrl;
     }
-
+ /*
     @JsonIgnore
     public Collection<Ingredient> getMatchesWith() {
         Collection<Ingredient> ingMatchesWith = new ArrayList<>();
@@ -58,12 +58,13 @@ public class Ingredient {
     @JsonIgnore
     public Collection<Recipe> getBestRecipes() {
         Collection<Recipe> recipeBestRecipes = new ArrayList<>();
-        RecipeService recipeService = RecipeService.getInstance();
         for (Long id: matchesWith){
             recipeBestRecipes.add(recipeService.getRecipeById(id));
         }
         return recipeBestRecipes;
     }
+
+  */
 
     public void setBestRecipes(Collection<Recipe> bestRecipes) {
         this.bestRecipes.clear();

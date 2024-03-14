@@ -1,24 +1,17 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
+import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
-
+@Service
 public class IngredientService {
 
-    private static IngredientService ingredientService = null;
     private final Map<Long, Ingredient> ingredientMap;
     private AtomicLong currentId = new AtomicLong(0);
-
-    public static IngredientService getInstance(){
-        if (ingredientService==null){
-            ingredientService = new IngredientService();
-        }
-        return ingredientService;
-    }
 
     private IngredientService(){
         ingredientMap = new HashMap<>();
@@ -70,5 +63,17 @@ public class IngredientService {
 
     public Ingredient delete(Long id) {
         return ingredientMap.remove(id);
+    }
+
+    public List<Ingredient> getFirst3(){
+        int i, aux;
+        List<Ingredient> answer = new ArrayList<>();
+        if (ingredientMap.size() < 4)
+            aux = ingredientMap.size();
+        else aux = 4;
+        for (i=1;i<aux ;i++){
+            answer.add(ingredientMap.get((long) i));
+        }
+        return answer;
     }
 }

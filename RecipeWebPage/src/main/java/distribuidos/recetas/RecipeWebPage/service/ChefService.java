@@ -1,25 +1,16 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
+import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
-
+@Service
 public class ChefService {
-
-    private static ChefService chefService = null;
     private final Map<Long, Chef> chefMap;
 
     AtomicLong nextId = new AtomicLong();
 
-    public static ChefService getInstance(){
-        if (chefService==null){
-            chefService = new ChefService();
-        }
-        return chefService;
-    }
     private ChefService(){
         chefMap = new HashMap<>();
     }
@@ -59,5 +50,17 @@ public class ChefService {
 
     public Chef delete(Long id) {
         return chefMap.remove(id);
+    }
+
+    public List<Chef> getFirst3(){
+        int i, aux;
+        List<Chef> answer = new ArrayList<>();
+        if (chefMap.size() < 4)
+            aux = chefMap.size();
+        else aux = 4;
+        for (i=1;i<aux ;i++){
+            answer.add(chefMap.get((long) i));
+        }
+        return answer;
     }
 }

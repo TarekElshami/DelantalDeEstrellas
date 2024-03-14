@@ -2,6 +2,7 @@ package distribuidos.recetas.RecipeWebPage.controllers;
 
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +12,9 @@ import java.util.Collection;
 @RequestMapping("/api")
 public class IngredientRestController {
 
+    @Autowired
     private IngredientService ingredientService;
 
-    public IngredientRestController() {
-        this.ingredientService = IngredientService.getInstance();
-    }
 
     //Get All
     @GetMapping("/ingredients")
