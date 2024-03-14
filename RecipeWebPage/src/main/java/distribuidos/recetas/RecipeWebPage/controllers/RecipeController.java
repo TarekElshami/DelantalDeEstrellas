@@ -121,7 +121,7 @@ public class RecipeController {
         if (recipeService.getRecipeById(id)==null){
             return ResponseEntity.notFound().build();
         }
-        try {
+        try { //should be replaced with a DTO
             ObjectMapper objectMapper = new ObjectMapper();
 
             @SuppressWarnings("unchecked")

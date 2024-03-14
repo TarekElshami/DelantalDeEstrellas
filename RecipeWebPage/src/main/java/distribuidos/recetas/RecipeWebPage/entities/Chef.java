@@ -1,6 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.entities;
 
 
+import distribuidos.recetas.RecipeWebPage.DTO.ChefDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +16,7 @@ import java.util.Collection;
 //@Entity
 @Getter
 @Setter
-//@NoArgsConstructor
+@NoArgsConstructor
 public class Chef {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,14 +25,8 @@ public class Chef {
     private String description;
     private String image;
 
-    private static Long currentId = 0L;
-
-    //private Collection<Ingredient> favIng;
+    private Collection<Ingredient> favIng;
     private Collection<Recipe> bestRecipes;
-
-
-    public Chef() {
-    }
 
     public Chef(String name) {
         this.name = name;
@@ -41,6 +36,11 @@ public class Chef {
         this.name = name;
         this.description = description;
         this.image = image;
-        this.id = currentId++;
+    }
+
+    public Chef(ChefDTO dto) {
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.image = dto.getImage();
     }
 }

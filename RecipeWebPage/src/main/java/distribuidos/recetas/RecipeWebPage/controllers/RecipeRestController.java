@@ -1,6 +1,10 @@
 package distribuidos.recetas.RecipeWebPage.controllers;
 
+import distribuidos.recetas.RecipeWebPage.DTO.RecipeDTO;
+import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
+import distribuidos.recetas.RecipeWebPage.service.ChefService;
+import distribuidos.recetas.RecipeWebPage.service.IngredientService;
 import distribuidos.recetas.RecipeWebPage.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,49 +20,65 @@ public class RecipeRestController {
 
     @Autowired
     private RecipeService recipeService;
+    @Autowired
+    private ChefService chefService;
+    @Autowired
+    private IngredientService ingredientService;
 
     @GetMapping("/all")
     public ResponseEntity<Collection<Recipe>> getAllRecipes(){
         return ResponseEntity.ok(recipeService.getAll());
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Recipe> getRecipe(@PathVariable Long id){
+    public ResponseEntity<RecipeDTO> getRecipe(@PathVariable Long id){
         Recipe recipe = recipeService.getRecipeById(id);
         if (recipe==null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(recipe);
+        return ResponseEntity.ok(new RecipeDTO(recipe));
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Recipe> newRecipe(@RequestBody Recipe recipe){
-        recipeService.newRecipe(recipe);
-        return ResponseEntity.status(201).body(recipe);
+    public ResponseEntity<RecipeDTO> newRecipe(@RequestBody RecipeDTO recipeDTO){
+        Recipe recipe = new Recipe(recipeDTO);
+        recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
+        recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+
+        return ResponseEntity.status(201).body(new RecipeDTO(recipeService.newRecipe(recipe)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> substituteRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
-        if (recipeService.substitute(id, recipe) == null){
+    public ResponseEntity<RecipeDTO> substituteRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
+        Recipe recipe = new Recipe(recipeDTO);
+        recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
+        recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+
+        Recipe substitute = recipeService.substitute(id, recipe);
+        if (substitute == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(new RecipeDTO(substitute));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Recipe> modifyRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
+    public ResponseEntity<RecipeDTO> modifyRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
+        Recipe recipe = new Recipe(recipeDTO);
+        recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
+        recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+
         Recipe storedRecipe = recipeService.modifyToMatch(id, recipe);
         if (storedRecipe == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(storedRecipe);
+        return ResponseEntity.ok(new RecipeDTO(storedRecipe));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Recipe> newRecipe(@PathVariable Long id){
+    public ResponseEntity<RecipeDTO> newRecipe(@PathVariable Long id){
         Recipe deletedRecipe = recipeService.delete(id);
         if (deletedRecipe == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(deletedRecipe);
+        return ResponseEntity.ok(new RecipeDTO(deletedRecipe));
     }
 }

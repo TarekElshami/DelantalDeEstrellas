@@ -25,6 +25,14 @@ public class IngredientService {
         return ingredientMap.get(id);
     }
 
+    public Collection<Ingredient> getIngredientById(Collection<Long> ids) {
+        List<Ingredient> result = new ArrayList<>();
+        for (Long id : ids) {
+            result.add(ingredientMap.get(id));
+        }
+        return result;
+    }
+
     public Ingredient newIngredient(Ingredient ingredient) {
         long id = currentId.incrementAndGet();
         ingredient.setId(id);

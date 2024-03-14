@@ -22,6 +22,14 @@ public class ChefService {
         return chefMap.get(id);
     }
 
+    public Collection<Chef> getChefById(Collection<Long> ids) {
+        List<Chef> result = new ArrayList<>();
+        for (Long id : ids) {
+            result.add(chefMap.get(id));
+        }
+        return result;
+    }
+
     public Chef newChef(Chef chef) {
         long id = nextId.incrementAndGet();
         chef.setId(id);

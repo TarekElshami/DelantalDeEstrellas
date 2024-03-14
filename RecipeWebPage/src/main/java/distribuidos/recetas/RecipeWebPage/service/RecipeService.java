@@ -26,9 +26,17 @@ public class RecipeService {
         return recipeMap.get(id);
     }
 
-    public void newRecipe(Recipe recipe) {
+    public Collection<Recipe> getRecipeById(Collection<Long> ids) {
+        List<Recipe> result = new ArrayList<>();
+        for (Long id : ids) {
+            result.add(recipeMap.get(id));
+        }
+        return result;
+    }
+
+    public Recipe newRecipe(Recipe recipe) {
         recipe.setId(currentId.incrementAndGet());
-        recipeMap.put(recipe.getId(), recipe);
+        return recipeMap.put(recipe.getId(), recipe);
     }
 
     public Recipe substitute(Long id, Recipe recipe) {

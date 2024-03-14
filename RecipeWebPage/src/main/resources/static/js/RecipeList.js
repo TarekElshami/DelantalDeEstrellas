@@ -16,7 +16,7 @@ function loadMore(page){
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <img class="img-fluid" src="${recipe.img}" alt="..." />
+                            <img class="img-fluid" src="${recipe.image}" alt="..." />
                         </div>
                     </div>`
                 let secondFragment = `<div class="portfolio-modal modal fade" id="portfolioModal${recipe.id}" tabindex="-1" aria-labelledby="portfolioModal${recipe.id}" aria-hidden="true">
@@ -36,7 +36,7 @@ function loadMore(page){
                                         <div class="divider-custom-line"></div>
                                     </div>
                                     <!-- Portfolio Modal - Image-->
-                                    <img class="img-fluid rounded mb-5" src="${recipe.img}" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="${recipe.image}" alt="..." />
                                     <!-- Portfolio Modal - Text-->
                                     <p class="mb-4">${recipe.description}</p>
                                     <a class="btn btn-primary"  href="/recipe/${recipe.id}">
