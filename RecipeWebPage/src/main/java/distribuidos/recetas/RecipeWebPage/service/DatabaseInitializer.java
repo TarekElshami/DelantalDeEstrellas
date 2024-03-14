@@ -4,6 +4,7 @@ import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,9 +12,12 @@ import java.util.*;
 @Service
 public class DatabaseInitializer {
 
-    private final RecipeService recipeService = RecipeService.getInstance();
-    private final ChefService chefService = ChefService.getInstance();
-    private final IngredientService ingredientService = IngredientService.getInstance();
+    @Autowired
+    private RecipeService recipeService;
+    @Autowired
+    private ChefService chefService;
+    @Autowired
+    private IngredientService ingredientService;
 
     @PostConstruct
     public void init() {

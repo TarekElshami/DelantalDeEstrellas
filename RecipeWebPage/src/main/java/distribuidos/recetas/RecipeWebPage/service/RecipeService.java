@@ -1,23 +1,20 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
+import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Service
 public class RecipeService {
 
     public static final int PAGESIZE = 6;
-    private static RecipeService recipeService = null;
     private final Map<Long, Recipe> recipeMap;
     private AtomicLong currentId = new AtomicLong(0);
 
-    public static RecipeService getInstance(){
-        if (recipeService==null){
-            recipeService = new RecipeService();
-        }
-        return recipeService;
-    }
+
     private RecipeService(){
         recipeMap = new LinkedHashMap<>();
     }
@@ -90,5 +87,17 @@ public class RecipeService {
         }
         return collection;
 
+    }
+
+    public List<Recipe> getFirst3(){
+        int i, aux;
+        List<Recipe> answer = new ArrayList<>();
+        if (recipeMap.size() < 4)
+            aux = recipeMap.size();
+        else aux = 4;
+        for (i=1;i<aux ;i++){
+            answer.add(recipeMap.get((long) i));
+        }
+        return answer;
     }
 }

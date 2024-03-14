@@ -4,6 +4,7 @@ const popupTitle = document.getElementById('chef-name');
 const popupDescription = document.getElementById('chef-description');
 const popupImage = document.getElementById('chef-image');
 const popupBtn = document.getElementById('popup-btn');
+const closeBtn = document.getElementById('clsBtn');
 
 const closePopUp = () => {
     popup.style.display = "none"
@@ -27,6 +28,10 @@ for (const chefItem of chefItems) {
 
 const closePopUpBtn = document.getElementById("close-popup");
 closePopUpBtn.addEventListener("click", () => {
+    closePopUp();
+})
+
+closeBtn.addEventListener('click', () => {
     closePopUp();
 })
 
