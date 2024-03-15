@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
     <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/ingredient.css" rel="stylesheet" />
+
 </head>
 <body id="page-top">
 <!-- Navigation-->
@@ -105,19 +107,20 @@
             {{/ingredient.matchesWith}}
         </div>
 
-        <!-- combination button -->
+        <!-- combination button
         <div class="text-center mt-4">
             <a class="btn btn-primary btn-xl" href="/addCombination/{{ingredient.id}}">
                 <i class="fa-solid fa-gear"></i>Configurar Combinaciones
             </a>
         </div>
+        -->
     </div>
 </section>
 
 <section class="page-section bg-primary text-white mb-0 portfolio" id="recipes-using-ingredient">
     <div class="container">
         <h2 class="page-section-heading text-center text-uppercase text-white">Recetas que lo Usan</h2>
-        <div class="divider-custom">
+        <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon"><i class="fas fa-book-open"></i></div>
             <div class="divider-custom-line"></div>
@@ -130,7 +133,7 @@
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
-                    <img class="img-fluid" src="/img/{{image}}" alt="..." />
+                    <img class="img-fluid" src="/img/{{image}}" alt="{{name}}" />
                 </div>
             </div>
             <div class="portfolio-modal modal fade" id="portfolioModal{{id}}" tabindex="-1" aria-labelledby="portfolioModal{{id}}" aria-hidden="true">
@@ -150,7 +153,7 @@
                                             <div class="divider-custom-line"></div>
                                         </div>
                                         <!-- Portfolio Modal - Image-->
-                                        <img class="img-fluid rounded mb-5" src="/img/{{image}}" alt="..." />
+                                        <img class="img-fluid rounded mb-5" src="/img/{{image}}" alt="{{name}}" />
                                         <!-- Portfolio Modal - Text-->
                                         <p class="mb-4">{{description}}</p>
                                         <a class="btn btn-primary"  href="/recipe/{{id}}">
@@ -173,13 +176,14 @@
             <p class="text-center">No hay recetas registradas que usen este ingrediente.</p>
         {{/ingredient.bestRecipes}}
         </div>
-        <!-- config recipes -->
+        <!-- config recipes
 
         <div class="text-center mt-4">
             <a class="btn btn-xl btn-outline-light" href="/addRecipe/{{ingredient.id}}">
                 <i class="fa-solid fa-gear"></i>Configurar recetas
             </a>
         </div>
+        -->
     </div>
 </section>
 
@@ -198,9 +202,9 @@
 
         <div class="text-center mt-4">
 
-            <a class="btn btn-xl btn-outline-primary" href="/ingredient/{{id}}/update"><i class="fas fa-edit me-2"></i>Editar ingrediente</a>
+            <a class="btn btn-xl btn-green" href="/ingredient/{{id}}/update"><i class="fas fa-edit me-2"></i>Editar ingrediente</a>
             <form action="/ingredient/{{id}}/delete" method="post" style="display: inline;">
-                <button type="submit" class="btn btn-xl btn-outline-danger" onclick="return confirmDelete()">
+                <button type="submit" class="btn btn-xl btn-danger" onclick="return confirmDelete()">
                     <i class="fas fa-trash-alt me-2"></i> Borrar ingrediente
                 </button>
             </form>
