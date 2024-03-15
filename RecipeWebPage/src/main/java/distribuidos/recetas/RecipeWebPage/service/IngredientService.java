@@ -1,7 +1,9 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
+import distribuidos.recetas.RecipeWebPage.DTO.IngredientDTO;
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
+import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -87,5 +89,13 @@ public class IngredientService {
             answer.add(ingredientMap.get((long) i));
         }
         return answer;
+    }
+
+    public boolean isValidRecipe(IngredientDTO ingredient) {
+        String name = ingredient.getName();
+        String description = ingredient.getDescription();
+        if (name == null || name.isEmpty() ||
+            description == null || description.isEmpty()) return false;
+        return true;
     }
 }

@@ -31,6 +31,7 @@ public class IngredientRestController {
     //Create Ingredient
     @PostMapping("/ingredient")
     public ResponseEntity<IngredientDTO> createIngredient(@RequestBody IngredientDTO ingredientDTO) {
+        if(!ingredientService.isValidRecipe(ingredientDTO)) return ResponseEntity.badRequest().build();
         Ingredient ingredient = new Ingredient(ingredientDTO);
         ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
         ingredient.setMatchesWith(ingredientService.getIngredientById(ingredientDTO.getMatchesWith()));
@@ -50,6 +51,7 @@ public class IngredientRestController {
 
     @PutMapping("/ingredient/{id}")
     public ResponseEntity<IngredientDTO> substituteIngredient(@PathVariable Long id, @RequestBody IngredientDTO ingredientDTO){
+        if(!ingredientService.isValidRecipe(ingredientDTO)) return ResponseEntity.badRequest().build();
         Ingredient ingredient = new Ingredient(ingredientDTO);
         ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
         ingredient.setMatchesWith(ingredientService.getIngredientById(ingredientDTO.getMatchesWith()));
