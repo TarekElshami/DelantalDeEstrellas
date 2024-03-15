@@ -1,6 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
+import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import org.springframework.stereotype.Service;
 
@@ -28,15 +29,20 @@ public class RecipeService {
 
     public Collection<Recipe> getRecipeById(Collection<Long> ids) {
         List<Recipe> result = new ArrayList<>();
+        if (ids==null || ids.isEmpty()) return result;
         for (Long id : ids) {
-            result.add(recipeMap.get(id));
+            Recipe recipe = recipeMap.get(id);
+            if (recipe != null) {
+                result.add(recipe);
+            }
         }
         return result;
     }
 
     public Recipe newRecipe(Recipe recipe) {
         recipe.setId(currentId.incrementAndGet());
-        return recipeMap.put(recipe.getId(), recipe);
+        recipeMap.put(recipe.getId(), recipe);
+        return recipe;
     }
 
     public Recipe substitute(Long id, Recipe recipe) {
@@ -63,6 +69,8 @@ public class RecipeService {
             storedRecipe.setChef(recipe.getChef());
         } if (recipe.getSteps() != null){
             storedRecipe.setSteps(recipe.getSteps());
+        } if (recipe.getImage() != null) {
+            storedRecipe.setImage(recipe.getImage());
         }
         return storedRecipe;
     }
@@ -110,5 +118,13 @@ public class RecipeService {
             answer.add(recipeMap.get((long) i));
         }
         return answer;
+    }
+
+    public boolean isValidRecipe(Recipe recipe) {
+        String name = recipe.getName();
+        String description = recipe.getDescription();
+        if (name == null || name.isEmpty()) return false;
+        if (description == null || description.isEmpty()) return false;
+        return true;
     }
 }

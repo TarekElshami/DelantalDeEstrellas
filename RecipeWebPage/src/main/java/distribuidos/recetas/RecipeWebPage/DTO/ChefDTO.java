@@ -34,10 +34,14 @@ public class ChefDTO {
         this.favIng = new ArrayList<>();
         this.bestRecipes = new ArrayList<>();
         for (Ingredient ingredient : chef.getFavIng()) {
-            this.favIng.add(ingredient.getId());
+            if (ingredient!=null){
+                this.favIng.add(ingredient.getId());
+            }
         }
         for (Recipe recipe : chef.getBestRecipes()) {
-            this.bestRecipes.add(recipe.getId());
+            if (recipe!=null){
+                this.bestRecipes.add(recipe.getId());
+            }
         }
     }
 

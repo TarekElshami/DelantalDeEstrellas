@@ -1,6 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
+import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -24,8 +25,12 @@ public class ChefService {
 
     public Collection<Chef> getChefById(Collection<Long> ids) {
         List<Chef> result = new ArrayList<>();
+        if (ids==null || ids.isEmpty()) return result;
         for (Long id : ids) {
-            result.add(chefMap.get(id));
+            Chef chef = chefMap.get(id);
+            if (chef != null) {
+                result.add(chef);
+            }
         }
         return result;
     }

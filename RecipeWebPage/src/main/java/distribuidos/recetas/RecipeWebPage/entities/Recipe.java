@@ -49,6 +49,7 @@ public class Recipe {
     public Recipe(RecipeDTO dto) {
         this.name = dto.getName();
         this.description = dto.getDescription();
+        this.image = dto.getImage();
         this.steps = dto.getSteps();
         //this.chef = dto.getChef();
         //this.ingredients = dto.getIngredients();

@@ -34,10 +34,14 @@ public class IngredientDTO {
         this.matchesWith = new ArrayList<>();
         this.bestRecipes = new ArrayList<>();
         for (Ingredient ing : ingredient.getMatchesWith()) {
-            this.matchesWith.add(ing.getId());
+            if (ing!=null){
+                this.matchesWith.add(ing.getId());
+            }
         }
         for (Recipe recipe : ingredient.getBestRecipes()) {
-            this.bestRecipes.add(recipe.getId());
+            if (recipe!=null) {
+                this.bestRecipes.add(recipe.getId());
+            }
         }
     }
 

@@ -34,10 +34,12 @@ public class RecipeDTO {
         this.description = recipe.getDescription();
         this.steps = recipe.getSteps();
         this.image = recipe.getImage();
-        this.chef = recipe.getChef().getId();
+        this.chef = (recipe.getChef()!=null ? recipe.getChef().getId():null);
         this.ingredients = new ArrayList<>();
         for (Ingredient ingredient : recipe.getIngredients()) {
-            this.ingredients.add(ingredient.getId());
+            if (ingredient!=null){
+                this.ingredients.add(ingredient.getId());
+            }
         }
     }
 

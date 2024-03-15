@@ -27,8 +27,12 @@ public class IngredientService {
 
     public Collection<Ingredient> getIngredientById(Collection<Long> ids) {
         List<Ingredient> result = new ArrayList<>();
+        if (ids==null || ids.isEmpty()) return result;
         for (Long id : ids) {
-            result.add(ingredientMap.get(id));
+            Ingredient ing = ingredientMap.get(id);
+            if (ing!=null) {
+                result.add(ing);
+            }
         }
         return result;
     }
