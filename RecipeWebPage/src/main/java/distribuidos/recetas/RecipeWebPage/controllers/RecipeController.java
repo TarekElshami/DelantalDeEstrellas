@@ -51,8 +51,15 @@ public class RecipeController {
             model.addAttribute("errorMessage", "No existe una receta con la id indicada");
             return "Error";
         }
+        Chef chef;
+        if (recipe.getChef() != null) {
+            chef = recipe.getChef();
+        } else {
+            chef = new Chef("Sin Chef", "Este Chef no existe", "noImg");
+            chef.setId(-1L);
+        }
         model.addAttribute("recipe", recipe);
-        model.addAttribute("chef", recipe.getChef()!=null ? recipe.getChef() : new Chef("Sin Chef", "Este Chef no existe", "noImg"));
+        model.addAttribute("chef", chef);
         model.addAttribute("showHighlightedRecipes", true);
         model.addAttribute("highlightedRecipes", recipeService.getHighlighs(3));
         return "Recipe";
