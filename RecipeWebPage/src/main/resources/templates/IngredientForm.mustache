@@ -9,12 +9,25 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
 </head>
-<body>
+<body id="page-top" style="height: auto">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/">Delantal de Estrellas</a>
+        <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+
+    </div>
+</nav>
 <!-- Ingredient Section -->
-<section class="page-section" id="ingredient">
+<section class="page-section" id="ingredient" style="height: auto; margin: 10% auto">
     <div class="container">
         <!-- Ingredient Section Heading -->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">{{#ingredient.id}}Actualizar "{{ingredient.name}}"{{/ingredient.id}}{{^ingredient.id}}Añadir nuevo ingrediente{{/ingredient.id}}</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0" style="padding-top: 5%">{{#ingredient.id}}Actualizar "{{ingredient.name}}"{{/ingredient.id}}{{^ingredient.id}}Añadir nuevo ingrediente{{/ingredient.id}}</h2>
         <!-- Icon Divider -->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
@@ -52,6 +65,7 @@
         </div>
     </div>
 </section>
+{{>Footer}}
 
 <script src="path/to/your/jquery.slim.min.js"></script>
 <script src="path/to/your/popper.min.js"></script>

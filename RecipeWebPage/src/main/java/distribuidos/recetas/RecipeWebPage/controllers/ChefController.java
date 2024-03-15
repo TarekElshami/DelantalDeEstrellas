@@ -42,6 +42,7 @@ public class ChefController {
         model.addAttribute("url", "new");
         model.addAttribute("FormBtn", "Añadir");
         model.addAttribute("backBtn", "/chefs");
+        model.addAttribute("title", "Crear chef");
         return "ChefForm";
     }
     @PostMapping("/chef/new")
@@ -70,6 +71,7 @@ public class ChefController {
         model.addAttribute("FormBtn", "Guardar cambios");
         model.addAttribute("url", id+"/update");
         model.addAttribute("chef", chef);
+        model.addAttribute("title", "Editar chef");
         model.addAttribute("recipeList", chef.getBestRecipes());
         model.addAttribute("backBtn", "/chef/"+id);
         return "ChefForm";
