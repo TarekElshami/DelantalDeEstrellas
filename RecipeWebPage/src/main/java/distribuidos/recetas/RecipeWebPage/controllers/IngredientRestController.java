@@ -24,8 +24,8 @@ public class IngredientRestController {
 
     //Get All
     @GetMapping("/ingredients")
-    public ResponseEntity<Collection<Ingredient>> getAllIngredients() {
-        return ResponseEntity.ok(ingredientService.getAll());
+    public ResponseEntity<Collection<IngredientDTO>> getAllIngredients() {
+        return ResponseEntity.ok(IngredientDTO.toDTO(ingredientService.getAll()));
     }
 
     //Create Ingredient

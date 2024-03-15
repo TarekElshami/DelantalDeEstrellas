@@ -26,8 +26,8 @@ public class RecipeRestController {
     private IngredientService ingredientService;
 
     @GetMapping("/all")
-    public ResponseEntity<Collection<Recipe>> getAllRecipes(){
-        return ResponseEntity.ok(recipeService.getAll());
+    public ResponseEntity<Collection<RecipeDTO>> getAllRecipes(){
+        return ResponseEntity.ok(RecipeDTO.toDTO(recipeService.getAll()));
     }
     @GetMapping("/{id}")
     public ResponseEntity<RecipeDTO> getRecipe(@PathVariable Long id){
