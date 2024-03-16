@@ -38,7 +38,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-7">
                 <!-- Form to add ingredient -->
-                <form id="ingredientForm" method="post" action="{{#ingredient.id}}/ingredient/update{{/ingredient.id}}{{^ingredient.id}}/newIngredient{{/ingredient.id}}">
+                <form id="ingredientForm" method="post" action="{{#ingredient.id}}/ingredient/{{ingredient.id}}/update{{/ingredient.id}}{{^ingredient.id}}/ingredient/new{{/ingredient.id}}">
                     <!-- Ingredient name input -->
                     <input type="hidden" name="id" value="{{#ingredient.id}}{{ingredient.id}}{{/ingredient.id}}" />
                     <div class="form-floating mb-3">

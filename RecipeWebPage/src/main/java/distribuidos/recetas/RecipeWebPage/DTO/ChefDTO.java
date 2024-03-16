@@ -33,14 +33,18 @@ public class ChefDTO {
         this.image = chef.getImage();
         this.favIng = new ArrayList<>();
         this.bestRecipes = new ArrayList<>();
-        for (Ingredient ingredient : chef.getFavIng()) {
-            if (ingredient!=null){
-                this.favIng.add(ingredient.getId());
+        if (chef.getFavIng()!=null){
+            for (Ingredient ingredient : chef.getFavIng()) {
+                if (ingredient!=null){
+                    this.favIng.add(ingredient.getId());
+                }
             }
         }
-        for (Recipe recipe : chef.getBestRecipes()) {
-            if (recipe!=null){
-                this.bestRecipes.add(recipe.getId());
+        if (chef.getFavIng()!=null) {
+            for (Recipe recipe : chef.getBestRecipes()) {
+                if (recipe!=null){
+                    this.bestRecipes.add(recipe.getId());
+                }
             }
         }
     }

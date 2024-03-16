@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/recipe")
+@RequestMapping("/api")
 public class RecipeRestController {
 
     @Autowired
@@ -25,11 +25,11 @@ public class RecipeRestController {
     @Autowired
     private IngredientService ingredientService;
 
-    @GetMapping("/all")
+    @GetMapping("/recipes")
     public ResponseEntity<Collection<RecipeDTO>> getAllRecipes(){
         return ResponseEntity.ok(RecipeDTO.toDTO(recipeService.getAll()));
     }
-    @GetMapping("/{id}")
+    @GetMapping("/recipe/{id}")
     public ResponseEntity<RecipeDTO> getRecipe(@PathVariable Long id){
         Recipe recipe = recipeService.getRecipeById(id);
         if (recipe==null){
@@ -38,7 +38,7 @@ public class RecipeRestController {
         return ResponseEntity.ok(new RecipeDTO(recipe));
     }
 
-    @PostMapping("/new")
+    @PostMapping("/recipe")
     public ResponseEntity<RecipeDTO> newRecipe(@RequestBody RecipeDTO recipeDTO){
         if (recipeDTO.getName()==null || recipeDTO.getName().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getDescription()==null || recipeDTO.getDescription().isEmpty()) return ResponseEntity.badRequest().build();
@@ -49,7 +49,7 @@ public class RecipeRestController {
         return ResponseEntity.status(201).body(new RecipeDTO(recipeService.newRecipe(recipe)));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/recipe/{id}")
     public ResponseEntity<RecipeDTO> substituteRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
         Recipe recipe = new Recipe(recipeDTO);
         recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
@@ -62,7 +62,7 @@ public class RecipeRestController {
         return ResponseEntity.ok(new RecipeDTO(substitute));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/recipe/{id}")
     public ResponseEntity<RecipeDTO> modifyRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
         if (recipeDTO.getName()!=null && recipeDTO.getName().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getDescription()!=null && recipeDTO.getDescription().isEmpty()) return ResponseEntity.badRequest().build();
@@ -77,7 +77,7 @@ public class RecipeRestController {
         return ResponseEntity.ok(new RecipeDTO(storedRecipe));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/recipe/{id}")
     public ResponseEntity<RecipeDTO> newRecipe(@PathVariable Long id){
         Recipe deletedRecipe = recipeService.delete(id);
         if (deletedRecipe == null) {

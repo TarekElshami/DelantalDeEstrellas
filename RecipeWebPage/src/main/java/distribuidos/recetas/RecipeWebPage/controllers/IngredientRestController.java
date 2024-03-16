@@ -28,6 +28,16 @@ public class IngredientRestController {
         return ResponseEntity.ok(IngredientDTO.toDTO(ingredientService.getAll()));
     }
 
+    //Get Ingredient by ID
+    @GetMapping("/ingredient/{id}")
+    public ResponseEntity<IngredientDTO> showIngredient(@PathVariable Long id){
+        Ingredient ingredient = ingredientService.getIngredientById(id);
+        if(ingredient == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new IngredientDTO(ingredient));
+    }
+
     //Create Ingredient
     @PostMapping("/ingredient")
     public ResponseEntity<IngredientDTO> createIngredient(@RequestBody IngredientDTO ingredientDTO) {
@@ -37,16 +47,6 @@ public class IngredientRestController {
         ingredient.setMatchesWith(ingredientService.getIngredientById(ingredientDTO.getMatchesWith()));
 
         return ResponseEntity.status(201).body(new IngredientDTO(ingredientService.newIngredient(ingredient)));
-    }
-
-    //Get Ingredient by ID
-    @GetMapping("/ingredient/{id}")
-    public ResponseEntity<IngredientDTO> showIngredient(@PathVariable Long id){
-        Ingredient ingredient = ingredientService.getIngredientById(id);
-        if(ingredient == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(new IngredientDTO(ingredient));
     }
 
     @PutMapping("/ingredient/{id}")

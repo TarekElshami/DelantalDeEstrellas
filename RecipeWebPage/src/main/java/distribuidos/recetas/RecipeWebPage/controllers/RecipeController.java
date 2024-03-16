@@ -61,13 +61,13 @@ public class RecipeController {
         return "Recipe";
     }
 
-    @GetMapping("/recipe/newRecipe")
+    @GetMapping("/recipe/new")
     public String newRecipe(Model model) {
         model.addAttribute("chefs", chefService.getAll());
         return "RecipeForm";
     }
 
-    @PostMapping("/recipe/newRecipe")
+    @PostMapping("/recipe/new")
     public String newRecipeSend(@RequestBody String body){
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -166,13 +166,6 @@ public class RecipeController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
-    //@PatchMapping("/recipe/{id}")
-    //public String modifyRecipe(@PathVariable Long id, @RequestParam Recipe recipe){
-    //    recipeService.modifyToMatch(id, recipe);
-    //    //TODO: return the correct view
-    //    return "";
-    //}
 
     @PostMapping("/recipe/{id}/delete")
     public String deleteRecipe(@PathVariable Long id){

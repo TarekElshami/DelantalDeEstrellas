@@ -38,7 +38,7 @@ public class ChefRestController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/chef/new")
+    @PostMapping("/chef")
     public ResponseEntity<ChefDTO> newChef(@RequestBody ChefDTO chefDTO) {
         if (!chefService.isValidChef(chefDTO)) return ResponseEntity.badRequest().build();
         Chef chef = new Chef(chefDTO);
@@ -64,7 +64,7 @@ public class ChefRestController {
     @PatchMapping("/chef/{id}")
     public ResponseEntity<ChefDTO> modifyChef(@PathVariable Long id, @RequestBody ChefDTO chefDTO) {
         Chef oldChef = chefService.getChefById(id);
-        if (oldChef != null) {
+        if (oldChef == null) {
             return ResponseEntity.notFound().build();
         }
         Chef chef = new Chef(chefDTO);

@@ -24,13 +24,13 @@ public class IngredientController {
         return "IngredientList";
     }
 
-    @GetMapping("/newIngredient")
+    @GetMapping("/ingredient/new")
     public String showCreateForm(Model model) {
         model.addAttribute("ingredient", new Ingredient());
         return "IngredientForm";
     }
 
-    @PostMapping("/newIngredient")
+    @PostMapping("/ingredient/new")
     public String saveIngredient(Ingredient ingredient) {
         ingredientService.newIngredient(ingredient);
         return "redirect:/ingredients";
@@ -60,9 +60,9 @@ public class IngredientController {
         return "IngredientForm";
     }
 
-    @PostMapping("/ingredient/update")
-    public String updateIngredient(Ingredient ingredient){
-        if(ingredientService.substitute(ingredient.getId(), ingredient) == null) return "Error";
+    @PostMapping("/ingredient/{id}/update")
+    public String updateIngredient(@PathVariable Long id, Ingredient ingredient){
+        if(ingredientService.substitute(id, ingredient) == null) return "Error";
         return "redirect:/ingredient/" + ingredient.getId();
     }
 
