@@ -1,5 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
+import distribuidos.recetas.RecipeWebPage.DTO.ChefDTO;
+import distribuidos.recetas.RecipeWebPage.DTO.IngredientDTO;
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import org.springframework.stereotype.Service;
@@ -96,5 +98,13 @@ public class ChefService {
             }
         }
         return collection;
+    }
+
+    public boolean isValidChef(ChefDTO chef) {
+        String name = chef.getName();
+        String description = chef.getDescription();
+        if (name == null || name.isEmpty() ||
+                description == null || description.isEmpty()) return false;
+        return true;
     }
 }

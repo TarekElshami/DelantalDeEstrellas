@@ -40,6 +40,7 @@ public class ChefRestController {
 
     @PostMapping("/chef/new")
     public ResponseEntity<ChefDTO> newChef(@RequestBody ChefDTO chefDTO) {
+        if (!chefService.isValidChef(chefDTO)) return ResponseEntity.badRequest().build();
         Chef chef = new Chef(chefDTO);
         chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
         chef.setFavIng(ingredientService.getIngredientById(chefDTO.getFavIng()));
