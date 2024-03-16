@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Recetas</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/css/styles.css" rel="stylesheet" />
+
+        <style>
+            .image-container {
+                position: relative;
+                display: inline-block;
+            }
+
+            .overlay-text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background to make text more readable */
+                padding: 10px;
+            }
+
+            .img-fluid-new {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        </style>
+
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="/">Delantal de Estrellas</a>
+                <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#recipes">Recetas</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#chefs">Chefs</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#ingredients">Ingredientes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead bg-primary text-white text-center">
+            <div class="container d-flex align-items-center flex-column">
+                <div class="image-container">
+                    <!-- Masthead Avatar Image-->
+                    <img class="mb-5" src="https://cdn.pixabay.com/photo/2022/04/30/19/12/cooking-banner-7166200_1280.jpg" alt="..." /><!--/assets/img/avataaars.svg-->
+                    <!-- Masthead Heading-->
+                    <div class="overlay-text">
+                        <h1 class="masthead-heading text-uppercase mb-0">Delantal de Estrellas</h1>
+                        <!-- Icon Divider-->
+                        <div class="divider-custom divider-light">
+                            <div class="divider-custom-line"></div>
+                            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                            <div class="divider-custom-line"></div>
+                        </div>
+                        <!-- Masthead Subheading-->
+                        <p class="masthead-subheading font-weight-light mb-0">La merjor colección de recetas de la web, diseñadas por los mejores y más variados Chefs</p>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+        <!-- Recipe Section-->
+        <section class="page-section portfolio" id="recipes">
+            <div class="container">
+                <!-- Recipe Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Nuestras Recetas</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Recipe Grid Items-->
+                <div class="row justify-content-center">
+                    {{#recipeList}}
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#recipeModal{{id}}">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid img-fluid-new" src="{{image}}" alt="..." />
+                        </div>
+                    </div>
+                    {{/recipeList}}
+                    <a href="/recipes" class="btn btn-primary btn-xl col-md-6 col-lg-4 mb-5">Ver Más Recetas </a>
+                </div>
+                <!--
+                <div class="row justify-content-center">
+                    <a href="/recipes" class="btn btn-primary btn-xl col-md-6 col-lg-4 mb-5">Ver más</a>
+                </div>
+                -->
+            </div>
+        </section>
+        <!-- Chef Section-->
+        <section class="page-section portfolio bg-primary text-white" id="chefs">
+            <div class="container">
+                <!-- Chef Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-white mb-0">Nuestros Chefs</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Chef Grid Items-->
+                <div class="row justify-content-center">
+                    {{#chefList}}
+                        <div class="col-md-6 col-lg-4 mb-5">
+                            <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#chefModal{{id}}">
+                                <div class="portfolio-item-caption portfolio-item-caption-inverse d-flex align-items-center justify-content-center h-100 w-100">
+                                    <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid img-fluid-new" src="{{image}}" alt="..." />
+                            </div>
+                        </div>
+                    {{/chefList}}
+                    <a href="/chefs" class="btn btn-primary btn-outline-light btn-xl col-md-6 col-lg-4 mb-5">Ver Más Chefs</a>
+                </div>
+                <!--
+                <div class="row justify-content-center">
+                    <a href="/chefs" class="btn btn-primary btn-xl col-md-6 col-lg-4 mb-5">Ver más</a>
+                </div>
+                -->
+            </div>
+        </section>
+        <!-- Ingredients Section-->
+        <section class="page-section portfolio" id="ingredients">
+            <div class="container">
+                <!-- Ingredients Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Nuestros Ingredientes</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Ingredients Grid Items-->
+                <div class="row justify-content-center">
+                    {{#ingredientList}}
+                        <div class="col-md-6 col-lg-4 mb-5">
+                            <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#ingredientModal{{id}}">
+                                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                    <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid img-fluid-new" src="{{image}}" alt="..." />
+                            </div>
+                        </div>
+                    {{/ingredientList}}
+                    <a href="/ingredients" class="btn btn-primary btn-xl col-md-6 col-lg-4 mb-5">Ver Más Ingredientes</a>
+                </div>
+                <!--
+                <div class="row justify-content-center">
+                    <a href="/ingredients" class="btn btn-primary btn-xl col-md-6 col-lg-4 mb-5">Ver más</a>
+                </div>
+                -->
+            </div>
+        </section>
+        {{>Footer}}
+
+
+        <!-- Modals-->
+        <!-- Recipe Modals-->
+        {{#recipeList}}
+        <div class="portfolio-modal modal fade" id="recipeModal{{id}}" tabindex="-1" aria-labelledby="recipeModal{{id}}" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body text-center pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Recipe Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">{{name}}</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Recipe Modal - Image-->
+                                    <img class="img-fluid rounded mb-5" src="{{image}}" alt="..." />
+                                    <!-- Recipe Modal - Text-->
+                                    <p class="mb-4">{{description}}</p>
+                                    <a class="btn btn-primary"  href="/recipe/{{id}}">
+                                        <i class="fas fa-plus me-2"></i>
+                                        Más Información
+                                    </a>
+                                    <button class="btn btn-primary" data-bs-dismiss="modal">
+                                        <i class="fas fa-xmark fa-fw"></i>
+                                        Cerrar Ventana
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/recipeList}}
+        <div id="recipeInfoMarker" class="hidden"></div>
+        <!-- Chef Modals-->
+        {{#chefList}}
+            <div class="portfolio-modal modal fade" id="chefModal{{id}}" tabindex="-1" aria-labelledby="chefModal{{id}}" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                        <div class="modal-body text-center pb-5">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <!-- Chef Modal - Title-->
+                                        <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">{{name}}</h2>
+                                        <!-- Icon Divider-->
+                                        <div class="divider-custom">
+                                            <div class="divider-custom-line"></div>
+                                            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                            <div class="divider-custom-line"></div>
+                                        </div>
+                                        <!-- Chef Modal - Image-->
+                                        <img class="img-fluid rounded mb-5" src="{{image}}" alt="..." />
+                                        <!-- Chef Modal - Text-->
+                                        <p class="mb-4">{{description}}</p>
+                                        <a class="btn btn-primary"  href="/chef/{{id}}">
+                                            <i class="fas fa-plus me-2"></i>
+                                            Más Información
+                                        </a>
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Cerrar Ventana
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/chefList}}
+        <div id="recipeInfoMarker" class="hidden"></div>
+        <!-- Ingredient Modals-->
+        {{#ingredientList}}
+            <div class="portfolio-modal modal fade" id="ingredientModal{{id}}" tabindex="-1" aria-labelledby="ingredientModal{{id}}" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                        <div class="modal-body text-center pb-5">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <!-- Ingredient Modal - Title-->
+                                        <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">{{name}}</h2>
+                                        <!-- Icon Divider-->
+                                        <div class="divider-custom">
+                                            <div class="divider-custom-line"></div>
+                                            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                            <div class="divider-custom-line"></div>
+                                        </div>
+                                        <!-- Ingredient Modal - Image-->
+                                        <img class="img-fluid rounded mb-5" src="{{image}}" alt="..." />
+                                        <!-- Ingredient Modal - Text-->
+                                        <p class="mb-4">{{description}}</p>
+                                        <a class="btn btn-primary"  href="/ingredient/{{id}}">
+                                            <i class="fas fa-plus me-2"></i>
+                                            Más Información
+                                        </a>
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Cerrar Ventana
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/ingredientList}}
+        <div id="recipeInfoMarker" class="hidden"></div>
+
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script src="js/RecipeList.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>

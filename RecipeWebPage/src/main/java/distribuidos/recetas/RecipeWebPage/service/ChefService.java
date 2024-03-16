@@ -84,4 +84,17 @@ public class ChefService {
         }
         return answer;
     }
+
+    public Collection<Chef> getHighlights(int num) {
+        Collection<Chef> collection = new ArrayList<>();
+        List<Chef> values = new ArrayList<>(chefMap.values());
+        Random rand = new Random();
+        while (collection.size()!=num && collection.size()!=values.size()) {
+            Chef randomChef = values.get(rand.nextInt(chefMap.size()));
+            if (!collection.contains(randomChef)){
+                collection.add(randomChef);
+            }
+        }
+        return collection;
+    }
 }

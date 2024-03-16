@@ -98,4 +98,17 @@ public class IngredientService {
             description == null || description.isEmpty()) return false;
         return true;
     }
+
+    public Collection<Ingredient> getHighlights(int num) {
+        Collection<Ingredient> collection = new ArrayList<>();
+        List<Ingredient> values = new ArrayList<>(ingredientMap.values());
+        Random rand = new Random();
+        while (collection.size()!=num && collection.size()!=values.size()) {
+            Ingredient randomIngredient = values.get(rand.nextInt(ingredientMap.size()));
+            if (!collection.contains(randomIngredient)){
+                collection.add(randomIngredient);
+            }
+        }
+        return collection;
+    }
 }

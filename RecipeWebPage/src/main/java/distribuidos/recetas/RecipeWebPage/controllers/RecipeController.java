@@ -30,10 +30,6 @@ public class RecipeController {
 
     public RecipeController(){}
 
-    @GetMapping("/")
-    public String home(){
-        return "redirect:/home";
-    }
     @GetMapping("/recipes")
     public String showAllRecipes(Model model){
         Collection<Recipe> recipes = recipeService.getPage(0);
@@ -61,7 +57,7 @@ public class RecipeController {
         model.addAttribute("recipe", recipe);
         model.addAttribute("chef", chef);
         model.addAttribute("showHighlightedRecipes", true);
-        model.addAttribute("highlightedRecipes", recipeService.getHighlighs(3));
+        model.addAttribute("highlightedRecipes", recipeService.getHighlights(3));
         return "Recipe";
     }
 

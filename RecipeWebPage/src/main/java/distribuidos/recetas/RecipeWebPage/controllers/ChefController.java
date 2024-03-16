@@ -20,7 +20,19 @@ public class ChefController {
     @Autowired
     private IngredientService ingredientService;
 
+    @GetMapping("/")
+    public String home(Model model){
+        model.addAttribute("chefList", chefService.getHighlights(3));
+        model.addAttribute("ingredientList", ingredientService.getHighlights(3));
+        model.addAttribute("recipeList", recipeService.getHighlights(3));
 
+        model.addAttribute("title", "Nuestras Recetas");
+        model.addAttribute("subtitle", "La mejor selección de recetas de toda la web");
+        model.addAttribute("headerImg", "recipesHeader.png");
+        model.addAttribute("showButton", true);
+
+        return "Index";
+    }
     @GetMapping("/home")
     public String showHome(Model model){
 

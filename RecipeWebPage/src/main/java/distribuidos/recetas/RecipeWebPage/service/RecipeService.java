@@ -1,7 +1,5 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
-import distribuidos.recetas.RecipeWebPage.entities.Chef;
-import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import org.springframework.stereotype.Service;
 
@@ -95,7 +93,7 @@ public class RecipeService {
         return pageNum == (Math.ceil((double) recipeMap.size() / (double) PAGESIZE)-1);
     }
 
-    public Collection<Recipe> getHighlighs(int num) {
+    public Collection<Recipe> getHighlights(int num) {
         Collection<Recipe> collection = new ArrayList<>();
         List<Recipe> values = new ArrayList<>(recipeMap.values());
         Random rand = new Random();
