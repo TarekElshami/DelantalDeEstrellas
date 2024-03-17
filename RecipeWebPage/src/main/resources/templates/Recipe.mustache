@@ -137,7 +137,7 @@
 
                     <a class="btn btn-xl btn-outline-light" href="/recipe/{{id}}/update"><i class="fas fa-edit me-2"></i><b>Editar Receta</b></a>
                     <form action="/recipe/{{id}}/delete" method="POST" style="display: inline;">
-                        <button type="submit" class="btn btn-xl btn-outline-danger">
+                        <button type="submit" class="btn btn-xl btn-outline-danger" onclick="return confirm('¿Seguro que quieres borrar esta receta?')">
                             <i class="fas fa-trash-alt me-2"></i> <b>Borrar Receta</b>
                         </button>
                     </form>
