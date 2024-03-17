@@ -94,8 +94,11 @@ public class IngredientService {
     public boolean isValidRecipe(IngredientDTO ingredient) {
         String name = ingredient.getName();
         String description = ingredient.getDescription();
+        String image = ingredient.getImage();
         if (name == null || name.isEmpty() ||
-            description == null || description.isEmpty()) return false;
+            description == null || description.isEmpty() ||
+            image == null || image.isEmpty()
+        ) return false;
         return true;
     }
 
