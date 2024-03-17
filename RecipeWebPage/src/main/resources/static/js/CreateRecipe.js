@@ -140,14 +140,6 @@ function sendForm(body, URL) {
                 alert("Lo sentimos, ha habido un error. No ha habido cambios en al información almacenada")
             }
         })
-        .then(data => {
-            // Handle the response from the server
-            console.log('Server response:', data);
-        })
-        .catch(error => {
-            // Handle any errors that occurred during the fetch
-            console.error('Fetch error:', error);
-        });
 }
 
 function validateForm(URL) {
@@ -188,6 +180,7 @@ function assembleBody() {
     let ingredientsList = document.getElementById("ingList");
     let stepsList = document.getElementById("stepsList");
     let chef = document.getElementById("chefInput").value;
+    if (chef==="noChef") chef = "-1"
 
     let ingredients = [];
     for(let child of ingredientsList.children){
@@ -197,6 +190,8 @@ function assembleBody() {
     for(let child of stepsList.children){
         steps.push(child.innerText);
     }
+
+
 
     return {
         name: name,

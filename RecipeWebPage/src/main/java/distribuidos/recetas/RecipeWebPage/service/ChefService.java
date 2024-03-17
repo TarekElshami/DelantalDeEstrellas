@@ -107,4 +107,10 @@ public class ChefService {
                 description == null || description.isEmpty()) return false;
         return true;
     }
+
+    public Chef getEmptyChef(){
+        Chef chef = new Chef("Sin Chef", "Este Chef se le asigna a recetas que todavía no tienen un chef válido asignado.", "noImg");
+        chef.setId(-1L);
+        return chef;
+    }
 }

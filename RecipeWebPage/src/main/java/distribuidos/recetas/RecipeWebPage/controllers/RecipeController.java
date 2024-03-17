@@ -1,6 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import distribuidos.recetas.RecipeWebPage.DTO.RecipeDTO;
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
@@ -51,8 +52,7 @@ public class RecipeController {
         if (recipe.getChef() != null) {
             chef = recipe.getChef();
         } else {
-            chef = new Chef("Sin Chef", "Este Chef no existe", "noImg");
-            chef.setId(-1L);
+            chef = chefService.getEmptyChef();
         }
         model.addAttribute("recipe", recipe);
         model.addAttribute("chef", chef);
@@ -68,41 +68,15 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe/new")
-    public String newRecipeSend(@RequestBody String body){
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            @SuppressWarnings("unchecked")
-            Map<String, Object> anonRecipe = objectMapper.readValue(body, Map.class);
-
-            // Access attributes
-            String name = (String) anonRecipe.get("name");
-            String description = (String) anonRecipe.get("description");
-            String image = (String) anonRecipe.get("image");
-            List<String> stepsList = (List<String>) anonRecipe.get("steps");
-
-            List<String> ingredientsIdList = (List<String>) anonRecipe.get("ingredients");
-            String chefString = (String) anonRecipe.get("chef");
-            Chef chef;
-            if ("noChef".equals(chefString)){
-                chef = null;
-            } else {
-                Long chefId = Long.parseLong( (String) anonRecipe.get("chef"));
-                chef = chefService.getChefById(chefId);
-            }
-
-            List<Ingredient> ingredients = new ArrayList<>();
-            for (String ingId : ingredientsIdList){
-                ingredients.add(ingredientService.getIngredientById(Long.parseLong(ingId)));
-            }
-
-            Recipe recipe = new Recipe(name, description, chef, stepsList, image, ingredients);
-
-            recipeService.newRecipe(recipe);
-        } catch (Exception e) {
-            System.out.println("A string that was expected to be JSON was not JSON");
-            e.printStackTrace();
+    public String newRecipeSend(@RequestBody RecipeDTO recipeDTO){
+        Recipe recipe = new Recipe(recipeDTO);
+        Chef chef = chefService.getChefById(recipeDTO.getChef());
+        if (chef==null){
+            chef = chefService.getEmptyChef();
         }
+        recipe.setChef(chef);
+        recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+        recipeService.newRecipe(recipe);
         return "redirect:/recipes";
     }
 
@@ -120,51 +94,25 @@ public class RecipeController {
 
     @PostMapping("/recipe/{id}/update")
     @ResponseBody
-    public ResponseEntity<Recipe> updateRecipeSend(@PathVariable Long id, @RequestBody String body){
+    public ResponseEntity<Recipe> updateRecipeSend(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
         if (recipeService.getRecipeById(id)==null){
             return ResponseEntity.notFound().build();
         }
-        try { //should be replaced with a DTO
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            @SuppressWarnings("unchecked")
-            Map<String, Object> anonRecipe = objectMapper.readValue(body, Map.class);
-
-            // Access attributes
-            String name = (String) anonRecipe.get("name");
-            String description = (String) anonRecipe.get("description");
-            String image = (String) anonRecipe.get("image");
-            List<String> stepsList = (List<String>) anonRecipe.get("steps");
-
-            List<String> ingredientsIdList = (List<String>) anonRecipe.get("ingredients");
-            String chefString = (String) anonRecipe.get("chef");
-            Chef chef;
-            if (!"noChef".equals(chefString)){
-                chef = null;
-            } else {
-                Long chefId = Long.parseLong( (String) anonRecipe.get("chef"));
-                chef = chefService.getChefById(chefId);
-            }
-
-
-            List<Ingredient> ingredients = new ArrayList<>();
-            for (String ingId : ingredientsIdList){
-                ingredients.add(ingredientService.getIngredientById(Long.parseLong(ingId)));
-            }
-
-            Recipe recipe = new Recipe(name, description, chef, stepsList, image, ingredients);
-
-            Recipe substitute = recipeService.substitute(id, recipe);
-            if (substitute!= null) {
-                return ResponseEntity.ok(recipe);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            System.out.println("A string that was expected to be JSON was not JSON");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
+        Recipe recipe = new Recipe(recipeDTO);
+        Chef chef = chefService.getChefById(recipeDTO.getChef());
+        if (chef==null){
+            chef = chefService.getEmptyChef();
         }
+        recipe.setChef(chef);
+        recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+
+        Recipe substitute = recipeService.substitute(id, recipe);
+        if (substitute!= null) {
+            return ResponseEntity.ok(recipe);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @PostMapping("/recipe/{id}/delete")
