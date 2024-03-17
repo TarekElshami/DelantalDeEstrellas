@@ -40,12 +40,11 @@ public class RecipeRestController {
 
     @PostMapping("/recipe")
     public ResponseEntity<RecipeDTO> newRecipe(@RequestBody RecipeDTO recipeDTO){
-        if (recipeDTO.getName()==null || recipeDTO.getName().isEmpty()) return ResponseEntity.badRequest().build();
-        if (recipeDTO.getDescription()==null || recipeDTO.getDescription().isEmpty()) return ResponseEntity.badRequest().build();
         Recipe recipe = new Recipe(recipeDTO);
         recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
 
+        if (!recipeService.isValidRecipe(recipe)) return ResponseEntity.badRequest().build();
         return ResponseEntity.status(201).body(new RecipeDTO(recipeService.newRecipe(recipe)));
     }
 
@@ -54,7 +53,9 @@ public class RecipeRestController {
         Recipe recipe = new Recipe(recipeDTO);
         recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+
         if (!recipeService.isValidRecipe(recipe)) return ResponseEntity.badRequest().build();
+
         Recipe substitute = recipeService.substitute(id, recipe);
         if (substitute == null){
             return ResponseEntity.notFound().build();
@@ -66,6 +67,8 @@ public class RecipeRestController {
     public ResponseEntity<RecipeDTO> modifyRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
         if (recipeDTO.getName()!=null && recipeDTO.getName().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getDescription()!=null && recipeDTO.getDescription().isEmpty()) return ResponseEntity.badRequest().build();
+        if (recipeDTO.getSteps()!=null && recipeDTO.getSteps().isEmpty()) return ResponseEntity.badRequest().build();
+
         Recipe recipe = new Recipe(recipeDTO);
         recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));

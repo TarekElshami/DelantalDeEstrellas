@@ -1,6 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -121,8 +122,10 @@ public class RecipeService {
     public boolean isValidRecipe(Recipe recipe) {
         String name = recipe.getName();
         String description = recipe.getDescription();
+        List<String> steps = recipe.getSteps();
         if (name == null || name.isEmpty()) return false;
         if (description == null || description.isEmpty()) return false;
+        if (steps==null || steps.isEmpty()) return false;
         return true;
     }
 }
