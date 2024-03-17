@@ -123,9 +123,11 @@ public class RecipeService {
         String name = recipe.getName();
         String description = recipe.getDescription();
         List<String> steps = recipe.getSteps();
+        String image = recipe.getImage();
         if (name == null || name.isEmpty()) return false;
         if (description == null || description.isEmpty()) return false;
         if (steps==null || steps.isEmpty()) return false;
+        if (image==null || image.isEmpty()) return false;
         return true;
     }
 }
