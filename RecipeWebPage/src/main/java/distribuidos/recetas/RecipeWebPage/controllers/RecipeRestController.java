@@ -41,7 +41,10 @@ public class RecipeRestController {
     @PostMapping("/recipe")
     public ResponseEntity<RecipeDTO> newRecipe(@RequestBody RecipeDTO recipeDTO){
         Recipe recipe = new Recipe(recipeDTO);
-        recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
+        if(recipeDTO.getChef() != null)
+            recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
+        else
+            recipe.setChef(chefService.getEmptyChef());
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
 
         if (!recipeService.isValidRecipe(recipe)) return ResponseEntity.badRequest().build();
@@ -51,7 +54,10 @@ public class RecipeRestController {
     @PutMapping("/recipe/{id}")
     public ResponseEntity<RecipeDTO> substituteRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
         Recipe recipe = new Recipe(recipeDTO);
-        recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
+        if(recipeDTO.getChef() != null)
+            recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
+        else
+            recipe.setChef(chefService.getEmptyChef());
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
 
         if (!recipeService.isValidRecipe(recipe)) return ResponseEntity.badRequest().build();
