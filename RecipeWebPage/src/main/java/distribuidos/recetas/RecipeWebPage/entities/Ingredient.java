@@ -28,7 +28,6 @@ public class Ingredient {
     private String description;
     private String image;
 
-    private Collection<Ingredient> matchesWith = new ArrayList<>();
     private Collection<Recipe> bestRecipes = new ArrayList<>();
 
     public Ingredient(String name, String description, String imageUrl) {

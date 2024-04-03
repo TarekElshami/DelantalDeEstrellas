@@ -44,7 +44,6 @@ public class IngredientRestController {
         if(!ingredientService.isValidRecipe(ingredientDTO)) return ResponseEntity.badRequest().build();
         Ingredient ingredient = new Ingredient(ingredientDTO);
         ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
-        ingredient.setMatchesWith(ingredientService.getIngredientById(ingredientDTO.getMatchesWith()));
 
         return ResponseEntity.status(201).body(new IngredientDTO(ingredientService.newIngredient(ingredient)));
     }
@@ -54,7 +53,6 @@ public class IngredientRestController {
         if(!ingredientService.isValidRecipe(ingredientDTO)) return ResponseEntity.badRequest().build();
         Ingredient ingredient = new Ingredient(ingredientDTO);
         ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
-        ingredient.setMatchesWith(ingredientService.getIngredientById(ingredientDTO.getMatchesWith()));
 
         Ingredient updateIngredient = ingredientService.substitute(id, ingredient);
         if(updateIngredient == null){
@@ -71,7 +69,6 @@ public class IngredientRestController {
         }
         Ingredient ingredient = new Ingredient(ingredientDTO);
         ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
-        ingredient.setMatchesWith(ingredientService.getIngredientById(ingredientDTO.getMatchesWith()));
 
         ingredientService.modifyToMatch(id, ingredient);
         return ResponseEntity.ok(new IngredientDTO(ingredientService.getIngredientById(id)));

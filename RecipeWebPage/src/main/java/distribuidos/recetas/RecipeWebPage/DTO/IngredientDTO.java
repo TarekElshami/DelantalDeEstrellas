@@ -23,7 +23,6 @@ public class IngredientDTO {
     private String description;
     private String image;
 
-    private Collection<Long> matchesWith;
     private Collection<Long> bestRecipes;
 
     public IngredientDTO(Ingredient ingredient) {
@@ -31,13 +30,7 @@ public class IngredientDTO {
         this.name = ingredient.getName();
         this.description = ingredient.getDescription();
         this.image = ingredient.getImage();
-        this.matchesWith = new ArrayList<>();
         this.bestRecipes = new ArrayList<>();
-        for (Ingredient ing : ingredient.getMatchesWith()) {
-            if (ing!=null){
-                this.matchesWith.add(ing.getId());
-            }
-        }
         for (Recipe recipe : ingredient.getBestRecipes()) {
             if (recipe!=null) {
                 this.bestRecipes.add(recipe.getId());

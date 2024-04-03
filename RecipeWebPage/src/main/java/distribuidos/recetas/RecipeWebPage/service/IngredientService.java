@@ -67,12 +67,6 @@ public class IngredientService {
             storedIngredient.setImage(ingredient.getImage());
         }
         ingredientMap.put(id, storedIngredient);
-        /*if (ingredient.getMatchesWith() != null){
-            storedIngredient.setMatchesWith(ingredient.getMatchesWith());
-        }
-        if (ingredient.getBestRecipes() != null){
-            storedIngredient.setBestRecipes(ingredient.getBestRecipes());
-        }*/
     }
 
     public Ingredient delete(Long id) {
