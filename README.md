@@ -6,7 +6,7 @@
 
 1. [Team Members](#team-members)
 2. [Database Diagram](#database-diagram)
-3. [DataBase Config](#databaseconfig)
+3. [Database Configuration](#database-configuration)
 
 ## Team Members
 
@@ -21,7 +21,7 @@
 
 *DataBase Diagram*
 
-## DataBase Config
+## Database Configuration
 
 Follow these steps to configure your MySQL database for Delantal de Estrellas:
 
