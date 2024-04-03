@@ -25,7 +25,6 @@ public class Chef {
     private String description;
     private String image;
 
-    private Collection<Ingredient> favIng;
     private Collection<Recipe> bestRecipes;
 
     public Chef(String name) {

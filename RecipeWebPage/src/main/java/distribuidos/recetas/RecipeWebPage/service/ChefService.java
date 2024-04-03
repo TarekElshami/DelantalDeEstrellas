@@ -63,10 +63,6 @@ public class ChefService {
             storedChef.setDescription(chef.getDescription());
         } if (chef.getImage() != null) {
             storedChef.setImage(chef.getImage());
-            //} if (chef.getFavIng() != null){
-            //    storedChef.setFavIng(chef.getFavIng());
-            //} if (chef.getBestRecipes() != null){
-            //    storedChef.setBestRecipes(chef.getBestRecipes());
         }
         chefMap.put(id,storedChef);
     }

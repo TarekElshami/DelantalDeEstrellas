@@ -23,7 +23,6 @@ public class ChefDTO {
     private String description;
     private String image;
 
-    private Collection<Long> favIng;
     private Collection<Long> bestRecipes;
 
     public ChefDTO(Chef chef) {
@@ -31,16 +30,8 @@ public class ChefDTO {
         this.name = chef.getName();
         this.description = chef.getDescription();
         this.image = chef.getImage();
-        this.favIng = new ArrayList<>();
         this.bestRecipes = new ArrayList<>();
-        if (chef.getFavIng()!=null){
-            for (Ingredient ingredient : chef.getFavIng()) {
-                if (ingredient!=null){
-                    this.favIng.add(ingredient.getId());
-                }
-            }
-        }
-        if (chef.getFavIng()!=null) {
+        if (chef.getBestRecipes()!=null) {
             for (Recipe recipe : chef.getBestRecipes()) {
                 if (recipe!=null){
                     this.bestRecipes.add(recipe.getId());

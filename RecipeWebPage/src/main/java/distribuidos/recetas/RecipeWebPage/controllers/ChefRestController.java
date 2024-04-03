@@ -43,7 +43,6 @@ public class ChefRestController {
         if (!chefService.isValidChef(chefDTO)) return ResponseEntity.badRequest().build();
         Chef chef = new Chef(chefDTO);
         chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
-        chef.setFavIng(ingredientService.getIngredientById(chefDTO.getFavIng()));
 
         return ResponseEntity.status(201).body(new ChefDTO(chefService.newChef(chef)));
     }
@@ -52,7 +51,6 @@ public class ChefRestController {
     public ResponseEntity<ChefDTO> substituteChef(@PathVariable Long id, @RequestBody ChefDTO chefDTO) {
         Chef chef = new Chef(chefDTO);
         chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
-        chef.setFavIng(ingredientService.getIngredientById(chefDTO.getFavIng()));
 
         Chef updateChef = chefService.substitute(id, chef);
         if (updateChef == null) {
@@ -69,7 +67,6 @@ public class ChefRestController {
         }
         Chef chef = new Chef(chefDTO);
         chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
-        chef.setFavIng(ingredientService.getIngredientById(chefDTO.getFavIng()));
 
         chefService.modifyToMatch(id, chef);
         return ResponseEntity.ok(new ChefDTO(chefService.getChefById(id)));
