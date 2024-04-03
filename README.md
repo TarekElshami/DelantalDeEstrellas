@@ -6,6 +6,7 @@
 
 1. [Team Members](#team-members)
 2. [Database Diagram](#database-diagram)
+3. [DataBase Config](#databaseconfig)
 
 ## Team Members
 
@@ -19,3 +20,20 @@
 ![Database Diagram](delantal%20de%20estrellas.drawio.svg)
 
 *DataBase Diagram*
+
+## DataBase Config
+
+Follow these steps to configure your MySQL database for Delantal de Estrellas:
+
+1. **Download MySQL**: Version 8.0.36.0 from the [official site](https://dev.mysql.com/downloads/installer/).
+2. **Configuration**: Use the following settings during installation:
+   
+   | Section    | Value      |
+   | :--------: | :--------: |
+   | Port       | `3306`     |
+   | User name  | `Admin`    |
+   | Password   | `password` |
+
+3. **Windows Service**: Configure MySQL Server as a Windows Service.
+4. **User Permissions**: Grant full access to the user.
+5. **Schema Creation**: Create a new Schema named `delantaldeestrellas` in the server using MySQL Workbench.
