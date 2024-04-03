@@ -1,9 +1,6 @@
 package distribuidos.recetas.RecipeWebPage.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import distribuidos.recetas.RecipeWebPage.DTO.IngredientDTO;
-import distribuidos.recetas.RecipeWebPage.service.IngredientService;
-import distribuidos.recetas.RecipeWebPage.service.RecipeService;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
