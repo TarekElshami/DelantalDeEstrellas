@@ -1,32 +1,34 @@
 package distribuidos.recetas.RecipeWebPage.entities;
 
 import distribuidos.recetas.RecipeWebPage.DTO.RecipeDTO;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-//@Entity
+@Entity
 @Getter
 @Setter
-//@NoArgsConstructor
+@NoArgsConstructor
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
+    @ElementCollection
     private List<String> steps;
     private boolean complete; //true if the recipe is complete. Since one can be created with only its name, this attribute is used to know if it is complete enough to show.
     //private Blob image;
     private String image;
 
+    @ManyToMany
     private Collection<Ingredient> ingredients;
+    @ManyToOne
     private Chef chef;
 
     public Recipe(String name){

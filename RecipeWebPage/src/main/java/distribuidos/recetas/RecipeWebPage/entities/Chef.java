@@ -2,10 +2,7 @@ package distribuidos.recetas.RecipeWebPage.entities;
 
 
 import distribuidos.recetas.RecipeWebPage.DTO.ChefDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +10,7 @@ import lombok.Setter;
 import java.sql.Blob;
 import java.util.Collection;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,6 +22,7 @@ public class Chef {
     private String description;
     private String image;
 
+    @OneToMany(mappedBy = "chef")
     private Collection<Recipe> bestRecipes;
 
     public Chef(String name) {

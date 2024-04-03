@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import distribuidos.recetas.RecipeWebPage.DTO.IngredientDTO;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
 import distribuidos.recetas.RecipeWebPage.service.RecipeService;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +12,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.Collection;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,6 +25,7 @@ public class Ingredient {
     private String description;
     private String image;
 
+    @ManyToMany(mappedBy = "ingredients")
     private Collection<Recipe> bestRecipes = new ArrayList<>();
 
     public Ingredient(String name, String description, String imageUrl) {
