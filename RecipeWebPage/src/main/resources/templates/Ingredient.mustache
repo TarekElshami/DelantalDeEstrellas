@@ -49,10 +49,10 @@
     </div>
 </header>
 
-<section class="page-section bg-primary text-white mb-0 portfolio" id="recipes-using-ingredient">
+<section class="page-section portfolio" id="recipes-using-ingredient">
     <div class="container">
-        <h2 class="page-section-heading text-center text-uppercase text-white">Recetas que lo Usan</h2>
-        <div class="divider-custom divider-light">
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Recetas que lo Usan</h2>
+        <div class="divider-custom">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon"><i class="fas fa-book-open"></i></div>
             <div class="divider-custom-line"></div>
@@ -65,7 +65,7 @@
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
-                    <img class="img-fluid" src="/img/{{image}}" alt="{{name}}" />
+                    <img class="img-fluid" src="{{image}}" alt="{{name}}" />
                 </div>
             </div>
             <div class="portfolio-modal modal fade" id="portfolioModal{{id}}" tabindex="-1" aria-labelledby="portfolioModal{{id}}" aria-hidden="true">
@@ -85,12 +85,12 @@
                                             <div class="divider-custom-line"></div>
                                         </div>
                                         <!-- Portfolio Modal - Image-->
-                                        <img class="img-fluid rounded mb-5" src="/img/{{image}}" alt="{{name}}" />
+                                        <img class="img-fluid rounded mb-5" src="{{image}}" alt="{{name}}" />
                                         <!-- Portfolio Modal - Text-->
                                         <p class="mb-4">{{description}}</p>
                                         <a class="btn btn-primary"  href="/recipe/{{id}}">
                                             <i class="fas fa-plus me-2"></i>
-                                            Más información
+                                            Más Información
                                         </a>
                                         <button class="btn btn-primary" data-bs-dismiss="modal">
                                             <i class="fas fa-xmark fa-fw"></i>
@@ -120,23 +120,18 @@
 </section>
 
 <!-- Ingredient Details Section -->
-<section class="page-section" id="actions">
+<section class="page-section bg-primary text-white mb-0 portfolio" id="actions">
     <div class="container">
-        <div class="text-center">
-            <h2 class="page-section-heading d-inline-block text-secondary">Acciones</h2>
-        </div>
-
-        <div class="divider-custom">
+        <h2 class="page-section-heading text-center text-uppercase text-secondary text-white mb-0">Acciones</h2>
+        <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
             <div class="divider-custom-line"></div>
         </div>
-
         <div class="text-center mt-4">
-
-            <a class="btn btn-xl btn-green" href="/ingredient/{{id}}/update"><i class="fas fa-edit me-2"></i>Editar ingrediente</a>
+            <a class="btn btn-xl btn-outline-light"  href="/ingredient/{{id}}/update"><i class="fas fa-edit me-2"></i>Editar ingrediente</a>
             <form action="/ingredient/{{id}}/delete" method="post" style="display: inline;">
-                <button type="submit" class="btn btn-xl btn-danger" onclick="return confirmDelete()">
+                <button type="submit" class="btn btn-xl btn-outline-danger" onclick="return confirmDelete()">
                     <i class="fas fa-trash-alt me-2"></i> Borrar ingrediente
                 </button>
             </form>
