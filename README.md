@@ -17,7 +17,7 @@
 | Ángel Marqués García  | a.marquesg.2021@alumnos.urjc.es   | [@AngelMarquesGarcia](https://github.com/AngelMarquesGarcia) |
 
 ## Database Diagram
-![Database Diagram](delantal%20de%20estrellas.drawio.svg)
+![Database Diagram](Database%20design.svg)
 
 *DataBase Diagram*
 
