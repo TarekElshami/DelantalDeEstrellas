@@ -6,7 +6,9 @@ import distribuidos.recetas.RecipeWebPage.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,29 +34,36 @@ public class IngredientService {
     }
 
     public Ingredient substitute(Long id, Ingredient ingredient) {
-        return ingredientRepository.findById(id)
-                .map(existingIngredient -> {
-                    ingredient.setId(id);
-                    return ingredientRepository.save(ingredient);
-                }).orElse(null);
+        Optional<Ingredient> existingIngredientOptional = ingredientRepository.findById(id);
+        if (existingIngredientOptional.isPresent()) {
+            ingredient.setId(id);
+            return ingredientRepository.save(ingredient);
+        } else {
+            return null;
+        }
     }
 
     public void modifyToMatch(Long id, Ingredient ingredient) {
-        ingredientRepository.findById(id)
-                .ifPresent(existingIngredient -> {
-                    if (ingredient.getName() != null) existingIngredient.setName(ingredient.getName());
-                    if (ingredient.getDescription() != null) existingIngredient.setDescription(ingredient.getDescription());
-                    if (ingredient.getImage() != null) existingIngredient.setImage(ingredient.getImage());
-                    ingredientRepository.save(existingIngredient);
-                });
+        Optional<Ingredient> existingIngredientOptional = ingredientRepository.findById(id);
+        if (existingIngredientOptional.isPresent()) {
+            Ingredient existingIngredient = existingIngredientOptional.get();
+            if (ingredient.getName() != null) existingIngredient.setName(ingredient.getName());
+            if (ingredient.getDescription() != null) existingIngredient.setDescription(ingredient.getDescription());
+            if (ingredient.getImage() != null) existingIngredient.setImage(ingredient.getImage());
+            ingredientRepository.save(existingIngredient);
+        }
     }
 
     public Ingredient delete(Long id) {
-        return ingredientRepository.findById(id)
-                .map(ingredient -> {
-                    ingredientRepository.delete(ingredient);
-                    return ingredient;
-                }).orElse(null);
+        Optional<Ingredient> ingredientOptional = ingredientRepository.findById(id);
+        if (ingredientOptional.isPresent()) {
+            Ingredient ingredient = ingredientOptional.get();
+            ingredientRepository.delete(id);
+            ingredientRepository.delete(ingredient);
+            return ingredient;
+        } else {
+            return null;
+        }
     }
 
     public List<Ingredient> getFirst3(){
@@ -62,7 +71,7 @@ public class IngredientService {
         return allIngredients.stream().limit(3).collect(Collectors.toList());
     }
 
-    public boolean isValidRecipe(IngredientDTO ingredientDTO) {
+    public boolean isValidIngredient(IngredientDTO ingredientDTO) {
         String name = ingredientDTO.getName();
         String description = ingredientDTO.getDescription();
         String image = ingredientDTO.getImage();

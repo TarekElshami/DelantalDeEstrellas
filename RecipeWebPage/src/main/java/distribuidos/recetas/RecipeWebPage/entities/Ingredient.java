@@ -21,20 +21,21 @@ public class Ingredient {
     private String name;
     private String description;
     private String image;
-
-    @ManyToMany(mappedBy = "ingredients")
-    private Collection<Recipe> bestRecipes = new ArrayList<>();
+    @ManyToMany(mappedBy = "ingredients", fetch = FetchType.EAGER)
+    private Collection<Recipe> bestRecipes;
 
     public Ingredient(String name, String description, String imageUrl) {
         this.name = name;
         this.description = description;
         this.image = imageUrl;
+        bestRecipes = new ArrayList<>();
     }
 
     public Ingredient(IngredientDTO dto) {
         this.name = dto.getName();
         this.description = dto.getDescription();
         this.image = dto.getImage();
+        bestRecipes = new ArrayList<>();
     }
 
 

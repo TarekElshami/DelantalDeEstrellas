@@ -1,9 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.controllers;
 
 import distribuidos.recetas.RecipeWebPage.DTO.IngredientDTO;
-import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
-import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
 import distribuidos.recetas.RecipeWebPage.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +39,7 @@ public class IngredientRestController {
     //Create Ingredient
     @PostMapping("/ingredient")
     public ResponseEntity<IngredientDTO> createIngredient(@RequestBody IngredientDTO ingredientDTO) {
-        if(!ingredientService.isValidRecipe(ingredientDTO)) return ResponseEntity.badRequest().build();
+        if(!ingredientService.isValidIngredient(ingredientDTO)) return ResponseEntity.badRequest().build();
         Ingredient ingredient = new Ingredient(ingredientDTO);
         ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
 
@@ -50,7 +48,7 @@ public class IngredientRestController {
 
     @PutMapping("/ingredient/{id}")
     public ResponseEntity<IngredientDTO> substituteIngredient(@PathVariable Long id, @RequestBody IngredientDTO ingredientDTO){
-        if(!ingredientService.isValidRecipe(ingredientDTO)) return ResponseEntity.badRequest().build();
+        if(!ingredientService.isValidIngredient(ingredientDTO)) return ResponseEntity.badRequest().build();
         Ingredient ingredient = new Ingredient(ingredientDTO);
         ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
 
