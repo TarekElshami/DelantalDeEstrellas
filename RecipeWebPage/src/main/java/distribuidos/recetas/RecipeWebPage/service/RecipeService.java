@@ -1,7 +1,8 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
-import org.springframework.http.ResponseEntity;
+import distribuidos.recetas.RecipeWebPage.repository.RecipeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,6 +15,9 @@ public class RecipeService {
     private final Map<Long, Recipe> recipeMap;
     private AtomicLong currentId = new AtomicLong(0);
 
+
+    @Autowired
+    private RecipeRepository recipeRepository;
 
     private RecipeService(){
         recipeMap = new LinkedHashMap<>();
@@ -39,6 +43,7 @@ public class RecipeService {
     }
 
     public Recipe newRecipe(Recipe recipe) {
+        recipeRepository.save(recipe);
         recipe.setId(currentId.incrementAndGet());
         recipeMap.put(recipe.getId(), recipe);
         return recipe;

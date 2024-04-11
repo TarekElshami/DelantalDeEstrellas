@@ -27,7 +27,7 @@ public class ChefController {
     @GetMapping("/home")
     public String showHome(Model model){
         model.addAttribute("chefList", chefService.getHighlights(3));
-        model.addAttribute("ingredientList", ingredientService.getHighlights(3));
+        model.addAttribute("ingredientList", ingredientService.getFirst3());
         model.addAttribute("recipeList", recipeService.getHighlights(3));
 
         return "Index";
