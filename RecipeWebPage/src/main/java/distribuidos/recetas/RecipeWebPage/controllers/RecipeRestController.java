@@ -42,7 +42,7 @@ public class RecipeRestController {
     public ResponseEntity<RecipeDTO> newRecipe(@RequestBody RecipeDTO recipeDTO){
         Recipe recipe = new Recipe(recipeDTO);
         if(recipeDTO.getChef() != null)
-            recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
+            recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
         else
             recipe.setChef(chefService.getEmptyChef());
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
@@ -55,7 +55,7 @@ public class RecipeRestController {
     public ResponseEntity<RecipeDTO> substituteRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
         Recipe recipe = new Recipe(recipeDTO);
         if(recipeDTO.getChef() != null)
-            recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
+            recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
         else
             recipe.setChef(chefService.getEmptyChef());
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
@@ -76,7 +76,7 @@ public class RecipeRestController {
         if (recipeDTO.getSteps()!=null && recipeDTO.getSteps().isEmpty()) return ResponseEntity.badRequest().build();
 
         Recipe recipe = new Recipe(recipeDTO);
-        recipe.setChef(chefService.getChefById(recipeDTO.getChef()));
+        recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
 
         Recipe storedRecipe = recipeService.modifyToMatch(id, recipe);

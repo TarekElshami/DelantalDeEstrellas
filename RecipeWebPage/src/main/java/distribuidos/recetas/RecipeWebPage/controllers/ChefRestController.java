@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Optional;
 
 
 @RestController
@@ -31,9 +32,9 @@ public class ChefRestController {
 
     @GetMapping("/chef/{id}")
     public ResponseEntity<ChefDTO> showChef(@PathVariable Long id) {
-        Chef chef = chefService.getChefById(id);
-        if (chef != null) {
-            return ResponseEntity.status(200).body(new ChefDTO(chef));
+        Optional<Chef> chef = chefService.getChefById(id);
+        if (chef.isPresent()) {
+            return ResponseEntity.status(200).body(new ChefDTO(chef.get()));
         }
         return ResponseEntity.notFound().build();
     }
@@ -61,15 +62,15 @@ public class ChefRestController {
 
     @PatchMapping("/chef/{id}")
     public ResponseEntity<ChefDTO> modifyChef(@PathVariable Long id, @RequestBody ChefDTO chefDTO) {
-        Chef oldChef = chefService.getChefById(id);
-        if (oldChef == null) {
+        Optional<Chef> oldChef = chefService.getChefById(id);
+        if (!oldChef.isPresent()) {
             return ResponseEntity.notFound().build();
         }
         Chef chef = new Chef(chefDTO);
         chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
 
         chefService.modifyToMatch(id, chef);
-        return ResponseEntity.ok(new ChefDTO(chefService.getChefById(id)));
+        return ResponseEntity.ok(new ChefDTO(chefService.getChefById(id).get()));
     }
 
 

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @Controller
 public class ChefController {
@@ -26,7 +28,7 @@ public class ChefController {
     }
     @GetMapping("/home")
     public String showHome(Model model){
-        model.addAttribute("chefList", chefService.getHighlights(3));
+        model.addAttribute("chefList", chefService.getFirst3());
         model.addAttribute("ingredientList", ingredientService.getFirst3());
         model.addAttribute("recipeList", recipeService.getHighlights(3));
 
@@ -54,19 +56,19 @@ public class ChefController {
     }
     @GetMapping("/chef/{id}")
     public String showChef(@PathVariable Long id, Model model){
-        Chef chef = chefService.getChefById(id);
-        if (chef == null){
+        Optional<Chef> chef = chefService.getChefById(id);
+        if (!chef.isPresent()){
             model.addAttribute("errorMessage", "No existe el chef con la id " +id);
             return "Error";
         }
-        model.addAttribute("chef", chef);
+        model.addAttribute("chef", chef.get());
         return "Chef";
     }
 
     @GetMapping("/chef/{id}/update")
     public String showChefEdit(@PathVariable Long id, Model model){
-        Chef chef = chefService.getChefById(id);
-        if (chef == null){
+        Optional<Chef> chef = chefService.getChefById(id);
+        if (!chef.isPresent()){
             model.addAttribute("errorMessage", "No existe el chef con la id " +id);
             return "Error";
         }
@@ -74,7 +76,7 @@ public class ChefController {
         model.addAttribute("url", id+"/update");
         model.addAttribute("chef", chef);
         model.addAttribute("title", "Editar chef");
-        model.addAttribute("recipeList", chef.getBestRecipes());
+        model.addAttribute("recipeList", chef.get().getBestRecipes());
         model.addAttribute("backBtn", "/chef/"+id);
         return "ChefForm";
     }
@@ -88,8 +90,8 @@ public class ChefController {
 
     @GetMapping("/chef/{id}/delete")
     public String deleteChef(@PathVariable Long id, Model model){
-        Chef chef = chefService.getChefById(id);
-        if (chef == null){
+        Optional<Chef> chef = chefService.getChefById(id);
+        if (!chef.isPresent()){
             model.addAttribute("errorMessage", "No existe el chef con la id " +id);
             return "Error";
         }

@@ -70,11 +70,14 @@ public class RecipeController {
     @PostMapping("/recipe/new")
     public String newRecipeSend(@RequestBody RecipeDTO recipeDTO){
         Recipe recipe = new Recipe(recipeDTO);
-        Chef chef = chefService.getChefById(recipeDTO.getChef());
-        if (chef==null){
-            chef = chefService.getEmptyChef();
+        Optional<Chef> chef = chefService.getChefById(recipeDTO.getChef());
+        Chef chef1;
+        if (!chef.isPresent()){
+            chef1 = chefService.getEmptyChef();
+        } else{
+            chef1 = chef.get();
         }
-        recipe.setChef(chef);
+        recipe.setChef(chef1);
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
         recipeService.newRecipe(recipe);
         return "redirect:/recipes";
@@ -99,11 +102,14 @@ public class RecipeController {
             return ResponseEntity.notFound().build();
         }
         Recipe recipe = new Recipe(recipeDTO);
-        Chef chef = chefService.getChefById(recipeDTO.getChef());
-        if (chef==null){
-            chef = chefService.getEmptyChef();
+        Optional<Chef> chef = chefService.getChefById(recipeDTO.getChef());
+        Chef chef1;
+        if (!chef.isPresent()){
+            chef1 = chefService.getEmptyChef();
+        } else {
+            chef1 = chef.get();
         }
-        recipe.setChef(chef);
+        recipe.setChef(chef1);
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
 
         Recipe substitute = recipeService.substitute(id, recipe);

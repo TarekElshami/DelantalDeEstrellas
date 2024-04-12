@@ -1,15 +1,22 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
 import distribuidos.recetas.RecipeWebPage.DTO.ChefDTO;
-import distribuidos.recetas.RecipeWebPage.DTO.IngredientDTO;
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
-import distribuidos.recetas.RecipeWebPage.entities.Recipe;
+
+import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
+import distribuidos.recetas.RecipeWebPage.repository.ChefRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+
 @Service
 public class ChefService {
+
+    @Autowired
+    private ChefRepository chefRepository;
     private final Map<Long, Chef> chefMap;
 
     AtomicLong nextId = new AtomicLong();
@@ -19,44 +26,33 @@ public class ChefService {
     }
 
     public Collection<Chef> getAll(){
-        return chefMap.values();
+        return chefRepository.findAll();
     }
-    public Chef getChefById(Long id) {
-        return chefMap.get(id);
+    public Optional<Chef> getChefById(Long id) {
+        return chefRepository.findById(id);
     }
 
-    public Collection<Chef> getChefById(Collection<Long> ids) {
-        List<Chef> result = new ArrayList<>();
-        if (ids==null || ids.isEmpty()) return result;
-        for (Long id : ids) {
-            Chef chef = chefMap.get(id);
-            if (chef != null) {
-                result.add(chef);
-            }
-        }
-        return result;
-    }
 
     public Chef newChef(Chef chef) {
-        long id = nextId.incrementAndGet();
-        chef.setId(id);
-        chefMap.put(id, chef);
-        return chef;
+        return chefRepository.save(chef);
     }
 
     public Chef substitute(Long id, Chef chef) {
-
-        if(!chefMap.containsKey(id)){
+        Optional<Chef> chef1 = chefRepository.findById(id);
+        if(!chef1.isPresent()){
             return null;
         }
         chef.setId(id);
-        chefMap.put(id, chef);
-        return chef;
+        return chefRepository.save(chef);
 
     }
 
     public void modifyToMatch(Long id, Chef chef) {
-        Chef storedChef = chefMap.get(id);
+        Optional<Chef> storedChef1 = chefRepository.findById(id);
+        Chef storedChef = new Chef();
+        if (storedChef1.isPresent()){
+            storedChef = storedChef1.get();
+        }
         if (chef.getName() != null){
             storedChef.setName(chef.getName());
         } if (chef.getDescription() != null) {
@@ -64,36 +60,26 @@ public class ChefService {
         } if (chef.getImage() != null) {
             storedChef.setImage(chef.getImage());
         }
-        chefMap.put(id,storedChef);
+        storedChef.setId(id);
+        chefRepository.save(storedChef);
     }
 
     public Chef delete(Long id) {
-        return chefMap.remove(id);
+        Optional<Chef> chefOptional = chefRepository.findById(id);
+        if (chefOptional.isPresent()) {
+            Chef chef = chefOptional.get();
+            chefRepository.delete(chef);
+            return chef;
+        } else {
+            return null;
+        }
     }
+
+
 
     public List<Chef> getFirst3(){
-        int i, aux;
-        List<Chef> answer = new ArrayList<>();
-        if (chefMap.size() < 4)
-            aux = chefMap.size();
-        else aux = 4;
-        for (i=1;i<aux ;i++){
-            answer.add(chefMap.get((long) i));
-        }
-        return answer;
-    }
-
-    public Collection<Chef> getHighlights(int num) {
-        Collection<Chef> collection = new ArrayList<>();
-        List<Chef> values = new ArrayList<>(chefMap.values());
-        Random rand = new Random();
-        while (collection.size()!=num && collection.size()!=values.size()) {
-            Chef randomChef = values.get(rand.nextInt(chefMap.size()));
-            if (!collection.contains(randomChef)){
-                collection.add(randomChef);
-            }
-        }
-        return collection;
+        List<Chef> allChefs = chefRepository.findAll();
+        return allChefs.stream().limit(3).collect(Collectors.toList());
     }
 
     public boolean isValidChef(ChefDTO chef) {
