@@ -68,7 +68,7 @@
             <div class="divider-custom-line"></div>
         </div>
         <!-- Portfolio Grid Items-->
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" id="chef-container">
             <!-- Portfolio Item 1-->
             {{#chef}}
                 <div class="col-md-6 col-lg-4 mb-5">
@@ -82,8 +82,12 @@
                     </div>
                 </div>
             {{/chef}}
-
         </div>
+        {{#loadMoreOption}}
+        <div class="text-center">
+            <button class="btn btn-primary btn-xl col-md-6 col-lg-4 mb-5" id="showMore" data-nextPage="1">Ver más</button>
+        </div>
+        {{/loadMoreOption}}
     </div>
 </section>
 

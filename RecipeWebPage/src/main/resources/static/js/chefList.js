@@ -5,6 +5,7 @@ const popupDescription = document.getElementById('chef-description');
 const popupImage = document.getElementById('chef-image');
 const popupBtn = document.getElementById('popup-btn');
 const closeBtn = document.getElementById('clsBtn');
+const showMore = document.getElementById('showMore');
 
 const closePopUp = () => {
     popup.style.display = "none"
@@ -42,5 +43,18 @@ popupBtn.addEventListener('click', () => {
 
 window.addEventListener('click', (e) => {e.target === popup && closePopUp()})
 
+showMore.addEventListener('click', () => {
+    let page = showMore.getAttribute('data-nextPage');
+    fetch(`/loadMoreChefs?page=`+page)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('chef-container').insertAdjacentHTML('beforeend', html);
+        });
+    if (!(document.getElementById('noMore') === null)){
+        showMore.style.display = "none";
+    }
+    let nextPage = parseInt(page,10) + 1;
+    showMore.setAttribute("data-nextPage",nextPage);
+})
 
 

@@ -6,10 +6,10 @@ import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.repository.ChefRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,16 +17,19 @@ public class ChefService {
 
     @Autowired
     private ChefRepository chefRepository;
-    private final Map<Long, Chef> chefMap;
 
-    AtomicLong nextId = new AtomicLong();
-
-    private ChefService(){
-        chefMap = new HashMap<>();
-    }
+    private int pageSize = 3;
 
     public Collection<Chef> getAll(){
         return chefRepository.findAll();
+    }
+
+    public Collection<Chef> getAll(int page){
+        return chefRepository.findAll(PageRequest.of(page, pageSize)).getContent();
+    }
+
+    public int MaxPage(){
+        return chefRepository.findAll(PageRequest.of(0,pageSize)).getTotalPages();
     }
     public Optional<Chef> getChefById(Long id) {
         return chefRepository.findById(id);
@@ -77,9 +80,10 @@ public class ChefService {
 
 
 
-    public List<Chef> getFirst3(){
+    public List<Chef> getRandomN(int n){
         List<Chef> allChefs = chefRepository.findAll();
-        return allChefs.stream().limit(3).collect(Collectors.toList());
+        Collections.shuffle(allChefs);
+        return allChefs.stream().limit(n).collect(Collectors.toList());
     }
 
     public boolean isValidChef(ChefDTO chef) {

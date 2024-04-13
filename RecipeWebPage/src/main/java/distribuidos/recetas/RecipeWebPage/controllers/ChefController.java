@@ -28,7 +28,7 @@ public class ChefController {
     }
     @GetMapping("/home")
     public String showHome(Model model){
-        model.addAttribute("chefList", chefService.getFirst3());
+        model.addAttribute("chefList", chefService.getRandomN(3));
         model.addAttribute("ingredientList", ingredientService.getRandomN(3));
         model.addAttribute("recipeList", recipeService.getHighlights(3));
 
@@ -36,9 +36,26 @@ public class ChefController {
     }
 
     @GetMapping("/chefs")
-    public String showChefs(Model model){
-        model.addAttribute("chef", chefService.getAll());
+    public String showChefs(Model model, @RequestParam("page") int page){
+        int maxPage = chefService.MaxPage();
+        if (maxPage > page+1){
+            model.addAttribute("loadMoreOption", "");
+        }
+        model.addAttribute("chef", chefService.getAll(page));
         return "ChefList";
+    }
+
+    @GetMapping("/loadMoreChefs")
+    public String loadMoreChefs(Model model, @RequestParam("page") int page){
+        int maxPage = chefService.MaxPage();
+        if (maxPage < page+1){
+            return "Error";
+        } else if (maxPage == page+1){
+            model.addAttribute("showNoMore", "");
+        }
+        model.addAttribute("chef", chefService.getAll(page));
+
+        return "loadMoreChefs";
     }
 
     @GetMapping("/chef/new")
