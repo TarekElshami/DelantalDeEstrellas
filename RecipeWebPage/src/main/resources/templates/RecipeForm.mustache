@@ -118,7 +118,9 @@
                     <div class="col-lg-6 offset-lg-3">
                         <p class="lead">Esta es una receta de
                             <select id="chefInput" onchange="updateChefContent(this.value)">
+                                {{#showAllOptions}}
                                 <option id="chefnoChef" value="noChef" data-description="No existe" selected>Sin Chef</option>
+                                {{/showAllOptions}}
                                 {{#chefs}}
                                     <option id="chef{{id}}" value="{{id}}" data-description="{{description}}">{{name}}</option>
                                 {{/chefs}}
@@ -145,7 +147,7 @@
 
                     <button type="submit" class="btn btn-xl btn-outline-light" onclick="validateAndSendForm('/recipe/new')"><i class="fas fa-plus me-2"></i><b>Crear Receta</b></button>
                     <!-- /recipe/{ {id}}/update -->
-                    <a class="btn btn-xl btn-outline-danger" href="/recipes"> <!-- /recipe/{ {id}} -->
+                    <a class="btn btn-xl btn-outline-danger" href="{{url}}"> <!-- /recipe/{ {id}} -->
                         <i class="fas fa-xmark me-2"></i> <b>Cancelar</b>
                     </a>
 

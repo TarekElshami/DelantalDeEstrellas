@@ -74,7 +74,7 @@ public class ChefController {
         }
         model.addAttribute("FormBtn", "Guardar cambios");
         model.addAttribute("url", id+"/update");
-        model.addAttribute("chef", chef);
+        model.addAttribute("chef", chef.get());
         model.addAttribute("title", "Editar chef");
         model.addAttribute("recipeList", chef.get().getBestRecipes());
         model.addAttribute("backBtn", "/chef/"+id);

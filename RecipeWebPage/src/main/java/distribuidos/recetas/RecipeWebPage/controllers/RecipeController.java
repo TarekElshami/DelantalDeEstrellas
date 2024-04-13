@@ -62,8 +62,25 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/new")
-    public String newRecipe(Model model) {
-        model.addAttribute("chefs", chefService.getAll());
+    public String newRecipe(Model model, @RequestParam(value = "id", required = false) Long id) {
+        if (id != null){
+            System.out.println("hola");
+            System.out.println(id);
+            Optional<Chef> chefOptional = chefService.getChefById(id);
+            if (chefOptional.isPresent()){
+                model.addAttribute("chefs", chefOptional.get());
+                model.addAttribute("url", "/chef/"+id);
+            } else {
+                model.addAttribute("errorMessage", "No existe el chef con la id " +id);
+                return "Error";
+            }
+
+
+        }else{
+            model.addAttribute("chefs", chefService.getAll());
+            model.addAttribute("url", "/recipes");
+            model.addAttribute("showAllOptions", "");
+        }
         return "RecipeForm";
     }
 
