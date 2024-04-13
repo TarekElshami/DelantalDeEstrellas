@@ -11,20 +11,23 @@ const closePopUp = () => {
     popup.style.display = "none"
 }
 
+const chefEvent = (e) => {
+    let element = e.target.closest('.chef-item')
+    let img = element.querySelector('img').getAttribute('src')
+    console.log(img)
+    let name = element.getAttribute('data-name')
+    let description = element.getAttribute('data-description')
+    popupBtn.setAttribute('data-id', element.getAttribute('data-id'))
+    popupTitle.textContent = name;
+    popupImage.src = img;
+    popupDescription.textContent = description;
+    popup.style.display = "block"
+}
+
 for (const chefItem of chefItems) {
     chefItem.addEventListener('click', (e) => {
-            let element = e.target.closest('.chef-item')
-            let img = element.querySelector('img').getAttribute('src')
-            console.log(img)
-            let name = element.getAttribute('data-name')
-            let description = element.getAttribute('data-description')
-            popupBtn.setAttribute('data-id', element.getAttribute('data-id'))
-            popupTitle.textContent = name;
-            popupImage.src = img;
-            popupDescription.textContent = description;
-            popup.style.display = "block"
-        }
-    )
+        chefEvent(e)
+    })
 }
 
 const closePopUpBtn = document.getElementById("close-popup");
@@ -38,6 +41,7 @@ closeBtn.addEventListener('click', () => {
 
 popupBtn.addEventListener('click', () => {
     let id = popupBtn.getAttribute('data-id')
+    closePopUp()
     window.location.href = '/chef/' + id;
 })
 
@@ -50,11 +54,25 @@ showMore.addEventListener('click', () => {
         .then(html => {
             document.getElementById('chef-container').insertAdjacentHTML('beforeend', html);
         });
-    if (!(document.getElementById('noMore') === null)){
-        showMore.style.display = "none";
-    }
     let nextPage = parseInt(page,10) + 1;
     showMore.setAttribute("data-nextPage",nextPage);
 })
 
+const repeatableObserver = (btn) => {
+    return new MutationObserver( m => {
+        m.forEach(m => {
+            m.addedNodes.forEach(n => {
 
+                if (n.nodeType === Node.ELEMENT_NODE && n.classList.contains('noMore')){
+                    btn.style.display = "none";
+                } else if (n.nodeType === Node.ELEMENT_NODE){
+                    n.firstElementChild.addEventListener('click', (e) => {chefEvent(e)})
+                }
+
+            })
+        })
+    })
+}
+
+let createdEventsObserver = repeatableObserver(showMore);
+createdEventsObserver.observe(document.getElementById('chef-container'), {childList: true});

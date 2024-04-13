@@ -48,9 +48,7 @@ public class ChefController {
     @GetMapping("/loadMoreChefs")
     public String loadMoreChefs(Model model, @RequestParam("page") int page){
         int maxPage = chefService.MaxPage();
-        if (maxPage < page+1){
-            return "Error";
-        } else if (maxPage == page+1){
+        if (maxPage == page+1){
             model.addAttribute("showNoMore", "");
         }
         model.addAttribute("chef", chefService.getAll(page));
