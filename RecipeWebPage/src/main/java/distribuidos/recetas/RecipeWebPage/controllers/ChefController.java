@@ -29,7 +29,7 @@ public class ChefController {
     @GetMapping("/home")
     public String showHome(Model model){
         model.addAttribute("chefList", chefService.getFirst3());
-        model.addAttribute("ingredientList", ingredientService.getFirst3());
+        model.addAttribute("ingredientList", ingredientService.getRandomN(3));
         model.addAttribute("recipeList", recipeService.getHighlights(3));
 
         return "Index";

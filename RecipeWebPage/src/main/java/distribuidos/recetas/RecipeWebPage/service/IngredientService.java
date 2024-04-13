@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -66,9 +67,10 @@ public class IngredientService {
         }
     }
 
-    public List<Ingredient> getFirst3(){
+    public List<Ingredient> getRandomN(int n){
         List<Ingredient> allIngredients = ingredientRepository.findAll();
-        return allIngredients.stream().limit(3).collect(Collectors.toList());
+        Collections.shuffle(allIngredients);
+        return allIngredients.stream().limit(n).collect(Collectors.toList());
     }
 
     public boolean isValidIngredient(IngredientDTO ingredientDTO) {
