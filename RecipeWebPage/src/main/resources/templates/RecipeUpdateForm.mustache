@@ -127,7 +127,6 @@
                     <div class="col-lg-6 offset-lg-3">
                         <p class="lead">Esta es una receta de
                             <select id="chefInput" data-original-chef="{{recipe.chef.id}}" onchange="updateChefContent(this.value)">
-                                <option id="chefnoChef" value="noChef" data-description="No existe">Sin Chef</option>
                                 {{#chefs}}
                                     <option id="chef{{id}}" value="{{id}}" data-description="{{description}}">{{name}}</option>
                                 {{/chefs}}

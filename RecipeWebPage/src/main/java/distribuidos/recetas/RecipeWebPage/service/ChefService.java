@@ -99,4 +99,9 @@ public class ChefService {
         chef.setId(-1L);
         return chef;
     }
+
+    public void save(Chef chef){
+        chefRepository.save(chef);
+    }
+
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -31,11 +32,11 @@ public class RecipeRestController {
     }
     @GetMapping("/recipe/{id}")
     public ResponseEntity<RecipeDTO> getRecipe(@PathVariable Long id){
-        Recipe recipe = recipeService.getRecipeById(id);
-        if (recipe==null){
+        Optional<Recipe> recipeOpt = recipeService.getRecipeById(id);
+        if (recipeOpt.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(new RecipeDTO(recipe));
+        return ResponseEntity.ok(new RecipeDTO(recipeOpt.get()));
     }
 
     @PostMapping("/recipe")

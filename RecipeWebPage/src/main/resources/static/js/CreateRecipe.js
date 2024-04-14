@@ -156,20 +156,21 @@ function validateForm(URL) {
         alert("La receta debe tener un nombre, descripción, e imagen");
         return false;
     }
-    //let ingredientsList = document.getElementById("ingList");
-    //if (ingredientsList.children.length <= 0){
-    //    alert("La receta debe tener al menos un ingrediente.")
-    //    return false;
-    //}
+    let ingredientsList = document.getElementById("ingList");
+    if (ingredientsList.children.length <= 0){
+        alert("La receta debe tener al menos un ingrediente.")
+        return false;
+    }
     let stepsList = document.getElementById("stepsList");
     if (stepsList.children.length <= 0){
         alert("La receta debe tener al menos un paso.")
         return false;
     }
-    //let chef = document.getElementById("chefInput").value
-    //if (chef === "noChef"){
-    //    alert("La receta debe tener un chef asignado.")
-    //}
+    let chef = document.getElementById("chefInput").value
+    if (chef === "noChef"){
+        alert("La receta debe tener un chef asignado.")
+        return false;
+    }
     return true;
 }
 

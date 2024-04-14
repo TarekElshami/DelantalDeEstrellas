@@ -2,6 +2,7 @@ package distribuidos.recetas.RecipeWebPage.service;
 
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.repository.RecipeRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,57 +13,42 @@ import java.util.concurrent.atomic.AtomicLong;
 public class RecipeService {
 
     public static final int PAGESIZE = 6;
-    private final Map<Long, Recipe> recipeMap;
-    private AtomicLong currentId = new AtomicLong(0);
-
-
     @Autowired
     private RecipeRepository recipeRepository;
-
-    private RecipeService(){
-        recipeMap = new LinkedHashMap<>();
-    }
+    private AtomicLong currentId = new AtomicLong(0);
 
     public Collection<Recipe> getAll(){
-        return recipeMap.values();
+        return recipeRepository.findAll();
     }
-    public Recipe getRecipeById(Long id) {
-        return recipeMap.get(id);
+    public Optional<Recipe> getRecipeById(Long id) {
+        return recipeRepository.findById(id);
     }
 
     public Collection<Recipe> getRecipeById(Collection<Long> ids) {
-        List<Recipe> result = new ArrayList<>();
-        if (ids==null || ids.isEmpty()) return result;
-        for (Long id : ids) {
-            Recipe recipe = recipeMap.get(id);
-            if (recipe != null) {
-                result.add(recipe);
-            }
-        }
-        return result;
+        return recipeRepository.findAllById(ids);
     }
 
     public Recipe newRecipe(Recipe recipe) {
         recipeRepository.save(recipe);
-        recipe.setId(currentId.incrementAndGet());
-        recipeMap.put(recipe.getId(), recipe);
         return recipe;
     }
 
     public Recipe substitute(Long id, Recipe recipe) {
-        if (!recipeMap.containsKey(id)) {
+        if (!recipeRepository.existsById(id)) {
             return null;
         }
         recipe.setId(id);
-        recipeMap.put(id, recipe);
+
+        recipeRepository.save(recipe);//(id, recipe);
         return recipe;
 
     }
 
     public Recipe modifyToMatch(Long id, Recipe recipe) {
-        Recipe storedRecipe = recipeMap.get(id);
-        if (storedRecipe==null)
+        Optional<Recipe> storedRecipeOpt = recipeRepository.findById(id);
+        if (storedRecipeOpt.isEmpty())
             return null;
+        Recipe storedRecipe = storedRecipeOpt.get();
         if (recipe.getName() != null){
             storedRecipe.setName(recipe.getName());
         } if (recipe.getDescription() != null){
@@ -80,7 +66,13 @@ public class RecipeService {
     }
 
     public Recipe delete(Long id) {
-        return recipeMap.remove(id);
+        Optional<Recipe> recipeOpt = recipeRepository.findById(id);
+        if (recipeOpt.isEmpty()) {
+            return null;
+        }
+        Recipe recipe = recipeOpt.get();
+        recipeRepository.deleteById(id);
+        return recipe;
     }
 
     public Collection<Recipe> getPage(int page) {
@@ -88,7 +80,7 @@ public class RecipeService {
     }
 
     public Collection<Recipe> getPage(int page, int pageSize) {
-        ArrayList<Recipe> recipes = new ArrayList<>(recipeMap.values());
+        ArrayList<Recipe> recipes = new ArrayList<>(recipeRepository.findAll());
         if (recipes.size()<page*pageSize){
             return null;
         }
@@ -96,32 +88,20 @@ public class RecipeService {
     }
 
     public boolean isLastPage(int pageNum) {
-        return pageNum == (Math.ceil((double) recipeMap.size() / (double) PAGESIZE)-1);
+        return pageNum == (Math.ceil((double) recipeRepository.count() / (double) PAGESIZE)-1);
     }
 
     public Collection<Recipe> getHighlights(int num) {
         Collection<Recipe> collection = new ArrayList<>();
-        List<Recipe> values = new ArrayList<>(recipeMap.values());
+        List<Recipe> values = new ArrayList<>(recipeRepository.findAll());
         Random rand = new Random();
         while (collection.size()!=num && collection.size()!=values.size()) {
-            Recipe randomRecipe = values.get(rand.nextInt(recipeMap.size()));
+            Recipe randomRecipe = values.get(rand.nextInt((int)recipeRepository.count()));
             if (!collection.contains(randomRecipe)){
                 collection.add(randomRecipe);
             }
         }
         return collection;
-    }
-
-    public List<Recipe> getFirst3(){
-        int i, aux;
-        List<Recipe> answer = new ArrayList<>();
-        if (recipeMap.size() < 4)
-            aux = recipeMap.size();
-        else aux = 4;
-        for (i=1;i<aux ;i++){
-            answer.add(recipeMap.get((long) i));
-        }
-        return answer;
     }
 
     public boolean isValidRecipe(Recipe recipe) {

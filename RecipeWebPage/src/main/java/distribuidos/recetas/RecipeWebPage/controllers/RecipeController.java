@@ -1,6 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import distribuidos.recetas.RecipeWebPage.DTO.ChefDTO;
 import distribuidos.recetas.RecipeWebPage.DTO.RecipeDTO;
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
@@ -43,11 +44,12 @@ public class RecipeController {
     }
     @GetMapping("/recipe/{id}")
     public String showRecipe(Model model, @PathVariable Long id){
-        Recipe recipe = recipeService.getRecipeById(id);
-        if (recipe==null){
+        Optional<Recipe> recipeOpt = recipeService.getRecipeById(id);
+        if (recipeOpt.isEmpty()){
             model.addAttribute("errorMessage", "No existe una receta con la id indicada");
             return "Error";
         }
+        Recipe recipe = recipeOpt.get();
         Chef chef;
         if (recipe.getChef() != null) {
             chef = recipe.getChef();
@@ -85,29 +87,32 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe/new")
-    public String newRecipeSend(@RequestBody RecipeDTO recipeDTO){
+    public String newRecipeSend(@RequestBody RecipeDTO recipeDTO, Model model){
         Recipe recipe = new Recipe(recipeDTO);
-        Optional<Chef> chef = chefService.getChefById(recipeDTO.getChef());
-        Chef chef1;
-        if (!chef.isPresent()){
-            chef1 = chefService.getEmptyChef();
-        } else{
-            chef1 = chef.get();
+        Optional<Chef> chefOpt = chefService.getChefById(recipeDTO.getChef());
+        if (chefOpt.isEmpty()){
+            model.addAttribute("errorMessage", "El formato de la receta es incorrecto.");
+            return "Error";
         }
-        recipe.setChef(chef1);
+        Chef chef = chefOpt.get();
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+        recipe.setChef(chef);
+        chef.addRecipe(recipe);
+
+        chefService.save(chef);
         recipeService.newRecipe(recipe);
         return "redirect:/recipes";
     }
 
     @GetMapping("/recipe/{id}/update")
     public String updateRecipeView(Model model, @PathVariable Long id){
-        Recipe recipe = recipeService.getRecipeById(id);
-        model.addAttribute("recipe", recipe);
+
+        Optional<Recipe> recipe = recipeService.getRecipeById(id);
+        model.addAttribute("recipe", recipe.get()); //what if there is an error?
         //model.addAttribute("chef", recipe.getChef());
         //model.addAttribute("showHighlightedRecipes", true);
         //model.addAttribute("highlightedRecipes", recipeService.getHighlighs(3));
-        model.addAttribute("chefs", chefService.getAll());
+        model.addAttribute("chefs", ChefDTO.toDTO(chefService.getAll()));
         //should call js updateStepIds when the file is rendered
         return "RecipeUpdateForm";
     }
@@ -115,22 +120,24 @@ public class RecipeController {
     @PostMapping("/recipe/{id}/update")
     @ResponseBody
     public ResponseEntity<Recipe> updateRecipeSend(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
-        if (recipeService.getRecipeById(id)==null){
+        if (recipeService.getRecipeById(id).isEmpty()){
             return ResponseEntity.notFound().build();
         }
         Recipe recipe = new Recipe(recipeDTO);
-        Optional<Chef> chef = chefService.getChefById(recipeDTO.getChef());
-        Chef chef1;
-        if (!chef.isPresent()){
-            chef1 = chefService.getEmptyChef();
-        } else {
-            chef1 = chef.get();
+        Optional<Chef> chefOpt = chefService.getChefById(recipeDTO.getChef());
+        if (chefOpt.isEmpty()){
+            //as it stands now, a recipe should always have a chef, so if it doesn't, that's an error
+            return ResponseEntity.internalServerError().build();
         }
-        recipe.setChef(chef1);
+        Chef chef = chefOpt.get();
+        recipe.setChef(chef);
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+
 
         Recipe substitute = recipeService.substitute(id, recipe);
         if (substitute!= null) {
+            substitute.getChef().deleteRecipeById(recipe.getId());
+            chef.addRecipe(recipe);
             return ResponseEntity.ok(recipe);
         } else {
             return ResponseEntity.notFound().build();
@@ -146,12 +153,12 @@ public class RecipeController {
 
     @GetMapping("/NextRecipePage")
     @ResponseBody
-    public ResponseEntity<Collection<Recipe>> nextPage(@RequestParam("page") int pageNum){
-        Collection<Recipe> page = recipeService.getPage(pageNum);
+    public ResponseEntity<Collection<RecipeDTO>> nextPage(@RequestParam("page") int pageNum){
+        Collection<RecipeDTO> page = RecipeDTO.toDTO(recipeService.getPage(pageNum));
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Is-Last-Page", String.valueOf(recipeService.isLastPage(pageNum)));
 
-        if (page==null){
+        if (page==null || page.isEmpty()){
             return new ResponseEntity<>(null, headers, 204); //204 No Content
         }
         return new ResponseEntity<>(page, headers, HttpStatus.OK);

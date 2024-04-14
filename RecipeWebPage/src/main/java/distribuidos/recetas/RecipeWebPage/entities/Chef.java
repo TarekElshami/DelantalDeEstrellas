@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.sql.Blob;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -39,5 +40,18 @@ public class Chef {
         this.name = dto.getName();
         this.description = dto.getDescription();
         this.image = dto.getImage();
+    }
+
+    public void deleteRecipeById(Long id) {
+        for (Recipe recipe : bestRecipes){
+            if (recipe.getId().equals(id)){
+                bestRecipes.remove(recipe);
+                return;
+            }
+        }
+    }
+
+    public void addRecipe(Recipe recipe) {
+        bestRecipes.add(recipe);
     }
 }
