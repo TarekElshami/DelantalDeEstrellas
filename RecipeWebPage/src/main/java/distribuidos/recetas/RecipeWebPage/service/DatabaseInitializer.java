@@ -74,21 +74,35 @@ public class DatabaseInitializer {
         recipeService.newRecipe(recipe11);
         recipeService.newRecipe(recipe12);
 
-        recipeService.getRecipeById(1L).setIngredients(ingredientService.getAll());
-        recipeService.getRecipeById(2L).setIngredients(Collections.singletonList(ingredientService.getIngredientById(1L)));
-        recipeService.getRecipeById(3L).setIngredients(Collections.singletonList(ingredientService.getIngredientById(2L)));
 
-        recipeService.getRecipeById(1L).setChef(chefService.getChefById(5L).get());
-        recipeService.getRecipeById(2L).setChef(chefService.getChefById(1L).get());
-        recipeService.getRecipeById(3L).setChef(chefService.getChefById(2L).get());
-        recipeService.getRecipeById(4L).setChef(chefService.getChefById(3L).get());
-        recipeService.getRecipeById(5L).setChef(chefService.getChefById(4L).get());
-        recipeService.getRecipeById(6L).setChef(chefService.getChefById(5L).get());
-        recipeService.getRecipeById(7L).setChef(chefService.getChefById(2L).get());
-        recipeService.getRecipeById(8L).setChef(chefService.getChefById(3L).get());
-        recipeService.getRecipeById(9L).setChef(chefService.getChefById(3L).get());
-        recipeService.getRecipeById(10L).setChef(chefService.getChefById(4L).get());
-        recipeService.getRecipeById(11L).setChef(chefService.getChefById(5L).get());
-        recipeService.getRecipeById(12L).setChef(chefService.getChefById(1L).get());
+        recipe.setIngredients(ingredientService.getAll());
+        recipe2.setIngredients(Collections.singletonList(ingredientService.getIngredientById(1L)));
+        recipe3.setIngredients(Collections.singletonList(ingredientService.getIngredientById(2L)));
+
+        recipe.setChef(chefService.getChefById(5L).get());
+        recipe2.setChef(chefService.getChefById(1L).get());
+        recipe3.setChef(chefService.getChefById(2L).get());
+        recipe4.setChef(chefService.getChefById(3L).get());
+        recipe5.setChef(chefService.getChefById(4L).get());
+        recipe6.setChef(chefService.getChefById(5L).get());
+        recipe7.setChef(chefService.getChefById(2L).get());
+        recipe8.setChef(chefService.getChefById(3L).get());
+        recipe9.setChef(chefService.getChefById(3L).get());
+        recipe10.setChef(chefService.getChefById(4L).get());
+        recipe11.setChef(chefService.getChefById(5L).get());
+        recipe12.setChef(chefService.getChefById(1L).get());
+
+        recipeService.newRecipe(recipe);
+        recipeService.newRecipe(recipe2);
+        recipeService.newRecipe(recipe3);
+        recipeService.newRecipe(recipe4);
+        recipeService.newRecipe(recipe5);
+        recipeService.newRecipe(recipe6);
+        recipeService.newRecipe(recipe7);
+        recipeService.newRecipe(recipe8);
+        recipeService.newRecipe(recipe9);
+        recipeService.newRecipe(recipe10);
+        recipeService.newRecipe(recipe11);
+        recipeService.newRecipe(recipe12);
     }
 }
