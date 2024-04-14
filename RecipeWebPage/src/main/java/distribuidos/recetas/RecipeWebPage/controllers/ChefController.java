@@ -77,6 +77,7 @@ public class ChefController {
             return "Error";
         }
         model.addAttribute("chef", chef.get());
+        model.addAttribute("recipeList", chef.get().getBestRecipes());
         return "Chef";
     }
 
