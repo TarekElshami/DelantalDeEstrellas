@@ -36,12 +36,12 @@ public class ChefController {
     }
 
     @GetMapping("/chefs")
-    public String showChefs(Model model, @RequestParam("page") int page){
+    public String showChefs(Model model){
         int maxPage = chefService.MaxPage();
-        if (maxPage > page+1){
+        if (maxPage > 1){
             model.addAttribute("loadMoreOption", "");
         }
-        model.addAttribute("chef", chefService.getAll(page));
+        model.addAttribute("chef", chefService.getAll(0));
         return "ChefList";
     }
 
