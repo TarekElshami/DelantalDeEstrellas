@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -34,6 +35,7 @@ public class Chef {
         this.name = name;
         this.description = description;
         this.image = image;
+        this.bestRecipes = new ArrayList<>();
     }
 
     public Chef(ChefDTO dto) {

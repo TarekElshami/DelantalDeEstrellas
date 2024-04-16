@@ -68,7 +68,9 @@ public class IngredientController {
 
     @PostMapping("/ingredient/{id}/delete")
     public String deleteIngredient(@PathVariable Long id){
-        ingredientService.delete(id);
+        if (ingredientService.delete(id) == null){
+            return "redirect:/Error"; //Can't delete that ingredient, because it has associated recipes
+        }
         return "redirect:/ingredients";
     }
 }

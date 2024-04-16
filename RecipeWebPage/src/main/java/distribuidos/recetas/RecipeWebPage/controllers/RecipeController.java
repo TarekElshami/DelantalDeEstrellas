@@ -1,10 +1,8 @@
 package distribuidos.recetas.RecipeWebPage.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import distribuidos.recetas.RecipeWebPage.DTO.ChefDTO;
 import distribuidos.recetas.RecipeWebPage.DTO.RecipeDTO;
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
-import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.service.ChefService;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
@@ -54,7 +52,7 @@ public class RecipeController {
         if (recipe.getChef() != null) {
             chef = recipe.getChef();
         } else {
-            chef = chefService.getEmptyChef();
+            chef = chefService.getDefaultChef();
         }
         model.addAttribute("recipe", recipe);
         model.addAttribute("chef", chef);

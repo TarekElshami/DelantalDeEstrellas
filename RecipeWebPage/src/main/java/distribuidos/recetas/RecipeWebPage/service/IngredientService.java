@@ -2,6 +2,7 @@ package distribuidos.recetas.RecipeWebPage.service;
 
 import distribuidos.recetas.RecipeWebPage.DTO.IngredientDTO;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
+import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,11 @@ public class IngredientService {
         Optional<Ingredient> ingredientOptional = ingredientRepository.findById(id);
         if (ingredientOptional.isPresent()) {
             Ingredient ingredient = ingredientOptional.get();
+
+            if (!ingredient.getBestRecipes().isEmpty()) {
+                return null; //only allow deletion if it has no recipes associated
+            }
+
             ingredientRepository.delete(id);
             ingredientRepository.delete(ingredient);
             return ingredient;

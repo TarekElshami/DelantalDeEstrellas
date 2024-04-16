@@ -27,8 +27,13 @@ public class Recipe {
     private String image;
 
     @ManyToMany
+    @JoinTable(
+            name = "recipe_ingredients",
+            joinColumns = @JoinColumn(name = "best_recipes_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredients_id"/*, nullable = false*/)
+    )
     private Collection<Ingredient> ingredients;
-    @ManyToOne
+    @ManyToOne//(optional = false)
     private Chef chef;
 
     public Recipe(String name){
@@ -58,4 +63,14 @@ public class Recipe {
     }
 
 
+    public void removeIngredient(Ingredient ingredient) {
+        ingredients.remove(ingredient);
+    }
+
+    @PreRemove
+    public void preRemove(){
+        for (Ingredient ing : ingredients){
+            ing.removeRecipe(this);
+        }
+    }
 }

@@ -1,18 +1,15 @@
 package distribuidos.recetas.RecipeWebPage.controllers;
 
 import distribuidos.recetas.RecipeWebPage.DTO.RecipeDTO;
-import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.service.ChefService;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
 import distribuidos.recetas.RecipeWebPage.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -45,7 +42,7 @@ public class RecipeRestController {
         if(recipeDTO.getChef() != null)
             recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
         else
-            recipe.setChef(chefService.getEmptyChef());
+            recipe.setChef(chefService.getDefaultChef());
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
 
         if (!recipeService.isValidRecipe(recipe)) return ResponseEntity.badRequest().build();
@@ -58,7 +55,7 @@ public class RecipeRestController {
         if(recipeDTO.getChef() != null)
             recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
         else
-            recipe.setChef(chefService.getEmptyChef());
+            recipe.setChef(chefService.getDefaultChef());
         recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
 
         if (!recipeService.isValidRecipe(recipe)) return ResponseEntity.badRequest().build();

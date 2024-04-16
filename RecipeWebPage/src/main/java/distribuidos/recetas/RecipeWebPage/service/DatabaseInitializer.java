@@ -50,6 +50,7 @@ public class DatabaseInitializer {
         chefService.newChef(new Chef("Pequeñin", "Cocinar puede que no, pero es demasiado mono", "https://www.shutterstock.com/shutterstock/photos/2092886932/display_1500/stock-vector-cute-kitten-wearing-a-chef-hat-2092886932.jpg"));
         chefService.newChef(new Chef("SuperChef", "Su nombre lo dice todo", "https://us.123rf.com/450wm/aprillrain/aprillrain2301/aprillrain230102062/197136034-caricatura-de-un-gato-cocinero-con-sombrero-de-chef-que-cocina-algo-en-la-cocina-caricatura.jpg?ver=6"));
         chefService.newChef(new Chef("Manchas", "5 estrellas michelin", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQCWLXiGp40ewzewy7i8p2Kk3LaLj3FQCG76yhdr5Pp9nqxUz4E35gIm_J6AENWVb-21c&usqp=CAU"));
+        chefService.getDefaultChef();
 
         ingredientService.newIngredient(ingredient);
         ingredientService.newIngredient(ingredient2);
@@ -60,20 +61,6 @@ public class DatabaseInitializer {
         ingredientService.newIngredient(ingredient7);
 
         recipe.getIngredients().add(ingredient);
-
-        recipeService.newRecipe(recipe);
-        recipeService.newRecipe(recipe2);
-        recipeService.newRecipe(recipe3);
-        recipeService.newRecipe(recipe4);
-        recipeService.newRecipe(recipe5);
-        recipeService.newRecipe(recipe6);
-        recipeService.newRecipe(recipe7);
-        recipeService.newRecipe(recipe8);
-        recipeService.newRecipe(recipe9);
-        recipeService.newRecipe(recipe10);
-        recipeService.newRecipe(recipe11);
-        recipeService.newRecipe(recipe12);
-
 
         recipe.setIngredients(ingredientService.getAll());
         recipe2.setIngredients(Collections.singletonList(ingredientService.getIngredientById(1L)));

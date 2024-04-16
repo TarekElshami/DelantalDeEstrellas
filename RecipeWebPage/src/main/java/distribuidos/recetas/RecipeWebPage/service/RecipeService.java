@@ -1,5 +1,6 @@
 package distribuidos.recetas.RecipeWebPage.service;
 
+import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.repository.RecipeRepository;
 import lombok.NoArgsConstructor;
@@ -71,6 +72,13 @@ public class RecipeService {
             return null;
         }
         Recipe recipe = recipeOpt.get();
+
+        recipe.getChef().deleteRecipeById(recipe.getId());
+        //possibly save the chef, since recipe is not the owning side
+        for (Ingredient ing : recipe.getIngredients()) {
+            ing.removeRecipe(recipe);
+            //in theory shouldn't need to save the ing, since Recipe should be the owning side
+        }
         recipeRepository.deleteById(id);
         return recipe;
     }
@@ -114,5 +122,9 @@ public class RecipeService {
         if (steps==null || steps.isEmpty()) return false;
         if (image==null || image.isEmpty()) return false;
         return true;
+    }
+
+    public void save(Recipe recipe) {
+        recipeRepository.save(recipe);
     }
 }

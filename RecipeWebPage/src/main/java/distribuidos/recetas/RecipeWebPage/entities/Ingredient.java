@@ -21,7 +21,7 @@ public class Ingredient {
     private String name;
     private String description;
     private String image;
-    @ManyToMany(mappedBy = "ingredients", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "ingredients", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Recipe> bestRecipes;
 
     public Ingredient(String name, String description, String imageUrl) {
@@ -39,4 +39,7 @@ public class Ingredient {
     }
 
 
+    public void removeRecipe(Recipe recipe) {
+        bestRecipes.remove(recipe);
+    }
 }

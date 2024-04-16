@@ -3,8 +3,9 @@ package distribuidos.recetas.RecipeWebPage.service;
 import distribuidos.recetas.RecipeWebPage.DTO.ChefDTO;
 import distribuidos.recetas.RecipeWebPage.entities.Chef;
 
-import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
+import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.repository.ChefRepository;
+import jakarta.persistence.PreRemove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,11 @@ public class ChefService {
 
     @Autowired
     private ChefRepository chefRepository;
+    @Autowired
+    private RecipeService recipeService;
 
     private int pageSize = 3;
+    private Chef defaultChef;
 
     public Collection<Chef> getAll(){
         return chefRepository.findAll();
@@ -71,6 +75,15 @@ public class ChefService {
         Optional<Chef> chefOptional = chefRepository.findById(id);
         if (chefOptional.isPresent()) {
             Chef chef = chefOptional.get();
+            Chef defaultChef1 = getDefaultChef();
+            for (Recipe recipe : chef.getBestRecipes()){
+                recipe.setChef(defaultChef1);
+                defaultChef1.addRecipe(recipe);
+                //Should not need to save it, since chef is the owning side
+                //recipeService.save(recipe);
+            }
+            chefRepository.save(defaultChef1);
+
             chefRepository.delete(chef);
             return chef;
         } else {
@@ -94,14 +107,20 @@ public class ChefService {
         return true;
     }
 
-    public Chef getEmptyChef(){
-        Chef chef = new Chef("Sin Chef", "Este Chef se le asigna a recetas que todavía no tienen un chef válido asignado.", "noImg");
-        chef.setId(-1L);
-        return chef;
+    public Chef getDefaultChef(){
+        if (defaultChef==null) {
+            defaultChef = new Chef("Anónimo", "Este Chef se asigna cuando el creador de la receta prefiere permanecer anónimo, o bien la receta pertenecía a un Chef que ha sido borrado del sistema.", "noImg");
+            //defaultChef.setId(-1L);
+            chefRepository.save(defaultChef);
+        }
+        //what about saving it???
+        return defaultChef;
     }
 
     public void save(Chef chef){
         chefRepository.save(chef);
     }
+
+
 
 }
