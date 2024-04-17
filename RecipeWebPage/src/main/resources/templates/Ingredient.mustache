@@ -131,7 +131,7 @@
         <div class="text-center mt-4">
             <a class="btn btn-xl btn-outline-light"  href="/ingredient/{{id}}/update"><i class="fas fa-edit me-2"></i>Editar ingrediente</a>
             <form action="/ingredient/{{id}}/delete" method="post" style="display: inline;">
-                <button type="submit" class="btn btn-xl btn-outline-danger" onclick="return confirmDelete()">
+                <button type="submit" class="btn btn-xl btn-outline-danger" onclick="return confirmDelete({{id}})">
                     <i class="fas fa-trash-alt me-2"></i> Borrar ingrediente
                 </button>
             </form>

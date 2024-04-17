@@ -3,6 +3,7 @@ package distribuidos.recetas.RecipeWebPage.controllers;
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -80,5 +81,15 @@ public class IngredientController {
     @GetMapping("/Error")
     public String error(){
         return "Error";
+    }
+
+    @ResponseBody
+    @GetMapping("/IsIngredientBeingUsed")
+    public ResponseEntity<Boolean> isIngredientBeingUsed(@RequestParam("id") Long id){
+        Ingredient ing = ingredientService.getIngredientById(id);
+        if (ing.getBestRecipes()==null || ing.getBestRecipes().isEmpty()){
+            return ResponseEntity.ok(false);
+        }
+        return ResponseEntity.ok(true);
     }
 }
