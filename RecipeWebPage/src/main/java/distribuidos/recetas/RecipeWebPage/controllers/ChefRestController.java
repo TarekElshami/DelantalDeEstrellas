@@ -76,6 +76,9 @@ public class ChefRestController {
 
     @DeleteMapping("/chef/{id}")
     public ResponseEntity<ChefDTO> deleteChef(@PathVariable Long id) {
+        if (chefService.getChefById(id).get().getName() == "Anónimo"){
+            return ResponseEntity.badRequest().build();
+        }
         Chef deletedChef = chefService.delete(id);
         if (deletedChef == null) {
             return ResponseEntity.notFound().build();
