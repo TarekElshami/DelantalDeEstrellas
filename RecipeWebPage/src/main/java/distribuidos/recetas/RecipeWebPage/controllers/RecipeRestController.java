@@ -1,6 +1,7 @@
 package distribuidos.recetas.RecipeWebPage.controllers;
 
 import distribuidos.recetas.RecipeWebPage.DTO.RecipeDTO;
+import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
 import distribuidos.recetas.RecipeWebPage.service.ChefService;
 import distribuidos.recetas.RecipeWebPage.service.IngredientService;
@@ -43,7 +44,11 @@ public class RecipeRestController {
             recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
         else
             recipe.setChef(chefService.getDefaultChef());
-        recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+        Collection<Ingredient> ingredients = ingredientService.getIngredientById(recipeDTO.getIngredients());
+        if (ingredients==null || ingredients.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        recipe.setIngredients(ingredients);
 
         if (!recipeService.isValidRecipe(recipe)) return ResponseEntity.badRequest().build();
         return ResponseEntity.status(201).body(new RecipeDTO(recipeService.newRecipe(recipe)));
