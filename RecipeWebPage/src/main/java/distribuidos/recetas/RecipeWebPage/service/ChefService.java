@@ -28,6 +28,8 @@ public class ChefService {
         return chefRepository.findAll();
     }
 
+    public List<Chef> getMost(int page){return chefRepository.findChefs(PageRequest.of(page, pageSize)).getContent();};
+
     public Collection<Chef> getAll(int page){
         return chefRepository.findAll(PageRequest.of(page, pageSize)).getContent();
     }

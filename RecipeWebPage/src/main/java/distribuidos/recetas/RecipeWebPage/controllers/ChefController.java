@@ -41,7 +41,7 @@ public class ChefController {
         if (maxPage > 1){
             model.addAttribute("loadMoreOption", "");
         }
-        model.addAttribute("chef", chefService.getAll(0));
+        model.addAttribute("chef", chefService.getMost(0));
         return "ChefList";
     }
 
@@ -51,7 +51,7 @@ public class ChefController {
         if (maxPage == page+1){
             model.addAttribute("showNoMore", "");
         }
-        model.addAttribute("chef", chefService.getAll(page));
+        model.addAttribute("chef", chefService.getMost(page));
 
         return "loadMoreChefs";
     }

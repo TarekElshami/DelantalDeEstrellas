@@ -14,10 +14,9 @@ const closePopUp = () => {
 const chefEvent = (e) => {
     let element = e.target.closest('.chef-item')
     let img = element.querySelector('img').getAttribute('src')
-    console.log(img)
     let name = element.getAttribute('data-name')
     let description = element.getAttribute('data-description')
-    popupBtn.setAttribute('data-id', element.getAttribute('data-id'))
+    popupBtn.setAttribute('data-url', element.getAttribute('data-url'))
     popupTitle.textContent = name;
     popupImage.src = img;
     popupDescription.textContent = description;
@@ -40,9 +39,9 @@ closeBtn.addEventListener('click', () => {
 })
 
 popupBtn.addEventListener('click', () => {
-    let id = popupBtn.getAttribute('data-id')
+    let url = popupBtn.getAttribute('data-url')
     closePopUp()
-    window.location.href = '/chef/' + id;
+    window.location.href = url;
 })
 
 window.addEventListener('click', (e) => {e.target === popup && closePopUp()})
