@@ -84,7 +84,7 @@ public class ChefController {
     @GetMapping("/chef/{id}/update")
     public String showChefEdit(@PathVariable Long id, Model model){
         Optional<Chef> chef = chefService.getChefById(id);
-        if (!chef.isPresent()){
+        if (!chef.isPresent() || id == 1){
             model.addAttribute("errorMessage", "No existe el chef con la id " +id);
             return "Error";
         }
@@ -98,10 +98,14 @@ public class ChefController {
     }
 
     @PostMapping("/chef/{id}/update")
-    public String editChef(@PathVariable Long id, Chef chef){
+    public String editChef(@PathVariable Long id, Chef chef, Model model){
+        if (id == 1) {
+            model.addAttribute("errorMessage", "No se puede borrar el chef con la id " +id);
+            return "Error";
+        }
         chefService.substitute(id, chef);
+        return "redirect:/chef/" + id;
 
-        return "redirect:/chef/"+id;
     }
 
     @GetMapping("/chef/{id}/delete")
@@ -110,7 +114,7 @@ public class ChefController {
         if (!chef.isPresent()){
             model.addAttribute("errorMessage", "No existe el chef con la id " +id);
             return "Error";
-        } else if (chef.get().getName() == "Anónimo"){
+        } else if (chef.get().getId() == 1){
             model.addAttribute("errorMessage", "No se puede borrar el chef con la id " +id);
             return "Error";
         }

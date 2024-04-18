@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ChefRepository extends JpaRepository<Chef, Long> {
 
-    @Query(value="SELECT * FROM delantaldeestrellas.chef c where c.name <> 'Anónimo'", nativeQuery = true)
+    @Query(value="SELECT * FROM delantaldeestrellas.chef c where c.id <> 1", nativeQuery = true)
     Page<Chef> findChefs(Pageable pageable);
 }

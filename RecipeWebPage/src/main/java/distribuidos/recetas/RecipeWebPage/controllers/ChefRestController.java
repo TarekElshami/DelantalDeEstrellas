@@ -50,14 +50,17 @@ public class ChefRestController {
 
     @PutMapping("/chef/{id}")
     public ResponseEntity<ChefDTO> substituteChef(@PathVariable Long id, @RequestBody ChefDTO chefDTO) {
-        Chef chef = new Chef(chefDTO);
-        chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
+        if (id != 1) {
+            Chef chef = new Chef(chefDTO);
+            chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
 
-        Chef updateChef = chefService.substitute(id, chef);
-        if (updateChef == null) {
-            return ResponseEntity.notFound().build();
+            Chef updateChef = chefService.substitute(id, chef);
+            if (updateChef == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(new ChefDTO((updateChef)));
         }
-        return ResponseEntity.ok(new ChefDTO((updateChef)));
+        return ResponseEntity.badRequest().build();
     }
 
     @PatchMapping("/chef/{id}")
@@ -65,6 +68,8 @@ public class ChefRestController {
         Optional<Chef> oldChef = chefService.getChefById(id);
         if (!oldChef.isPresent()) {
             return ResponseEntity.notFound().build();
+        }  else if (oldChef.get().getId() == 1){
+            return ResponseEntity.badRequest().build();
         }
         Chef chef = new Chef(chefDTO);
         chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
@@ -76,13 +81,14 @@ public class ChefRestController {
 
     @DeleteMapping("/chef/{id}")
     public ResponseEntity<ChefDTO> deleteChef(@PathVariable Long id) {
-        if (chefService.getChefById(id).get().getName() == "Anónimo"){
+        Optional<Chef> chef = chefService.getChefById(id);
+        if (!chef.isPresent()) {
+            return ResponseEntity.notFound().build();
+        } else if (chef.get().getId() == 1){
             return ResponseEntity.badRequest().build();
         }
         Chef deletedChef = chefService.delete(id);
-        if (deletedChef == null) {
-            return ResponseEntity.notFound().build();
-        }
+
         return ResponseEntity.ok(new ChefDTO(deletedChef));
     }
 }
