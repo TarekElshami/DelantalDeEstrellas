@@ -56,6 +56,7 @@ public class RecipeRestController {
 
     @PutMapping("/recipe/{id}")
     public ResponseEntity<RecipeDTO> substituteRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
+        if (recipeDTO.getIngredients()==null || recipeDTO.getIngredients().isEmpty()) return ResponseEntity.badRequest().build();
         Recipe recipe = new Recipe(recipeDTO);
         if(recipeDTO.getChef() != null)
             recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
@@ -77,10 +78,14 @@ public class RecipeRestController {
         if (recipeDTO.getName()!=null && recipeDTO.getName().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getDescription()!=null && recipeDTO.getDescription().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getSteps()!=null && recipeDTO.getSteps().isEmpty()) return ResponseEntity.badRequest().build();
+        if (recipeDTO.getIngredients()!=null && recipeDTO.getIngredients().isEmpty()) return ResponseEntity.badRequest().build();
+        if (recipeDTO.getChef()!=null && chefService.getChefById(recipeDTO.getChef()).isEmpty()) return ResponseEntity.badRequest().build();
+        if (recipeDTO.getChef()==null) recipeDTO.setChef(1L);
 
         Recipe recipe = new Recipe(recipeDTO);
         recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
-        recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+        if (recipeDTO.getIngredients() != null) recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+
 
         Recipe storedRecipe = recipeService.modifyToMatch(id, recipe);
         if (storedRecipe == null){
@@ -90,6 +95,7 @@ public class RecipeRestController {
     }
 
     @DeleteMapping("/recipe/{id}")
+    @ResponseBody
     public ResponseEntity<RecipeDTO> newRecipe(@PathVariable Long id){
         Recipe deletedRecipe = recipeService.delete(id);
         if (deletedRecipe == null) {

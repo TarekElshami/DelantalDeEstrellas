@@ -2,6 +2,8 @@ package distribuidos.recetas.RecipeWebPage.service;
 
 import distribuidos.recetas.RecipeWebPage.entities.Ingredient;
 import distribuidos.recetas.RecipeWebPage.entities.Recipe;
+import distribuidos.recetas.RecipeWebPage.repository.ChefRepository;
+import distribuidos.recetas.RecipeWebPage.repository.IngredientRepository;
 import distribuidos.recetas.RecipeWebPage.repository.RecipeRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,10 @@ public class RecipeService {
     public static final int PAGESIZE = 6;
     @Autowired
     private RecipeRepository recipeRepository;
+    @Autowired
+    private ChefRepository chefRepository;
+    @Autowired
+    private IngredientRepository ingredientRepository;
     private AtomicLong currentId = new AtomicLong(0);
 
     public Collection<Recipe> getAll(){
@@ -74,9 +80,11 @@ public class RecipeService {
         Recipe recipe = recipeOpt.get();
 
         recipe.getChef().deleteRecipeById(recipe.getId());
+        chefRepository.save(recipe.getChef());
         //possibly save the chef, since recipe is not the owning side
         for (Ingredient ing : recipe.getIngredients()) {
             ing.removeRecipe(recipe);
+            ingredientRepository.save(ing);
             //in theory shouldn't need to save the ing, since Recipe should be the owning side
         }
         recipeRepository.deleteById(id);

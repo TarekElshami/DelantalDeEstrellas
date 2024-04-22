@@ -111,7 +111,7 @@ public class ChefService {
 
     public Chef getDefaultChef(){
         if (defaultChef==null) {
-            defaultChef = new Chef("Anónimo", "Este Chef se asigna cuando el creador de la receta prefiere permanecer anónimo, o bien la receta pertenecía a un Chef que ha sido borrado del sistema.", "noImg");
+            defaultChef = new Chef("Anónimo", "Este Chef se asigna cuando el creador de la receta prefiere permanecer anónimo, o bien la receta pertenecía a un Chef que ha sido borrado del sistema.", "/img/anonimousChef.jpg");
             //defaultChef.setId(-1L);
             chefRepository.save(defaultChef);
         }

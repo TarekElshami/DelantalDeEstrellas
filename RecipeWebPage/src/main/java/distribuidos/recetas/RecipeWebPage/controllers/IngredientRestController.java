@@ -41,7 +41,7 @@ public class IngredientRestController {
     public ResponseEntity<IngredientDTO> createIngredient(@RequestBody IngredientDTO ingredientDTO) {
         if(!ingredientService.isValidIngredient(ingredientDTO)) return ResponseEntity.badRequest().build();
         Ingredient ingredient = new Ingredient(ingredientDTO);
-        ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
+        //ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
 
         return ResponseEntity.status(201).body(new IngredientDTO(ingredientService.newIngredient(ingredient)));
     }
@@ -50,7 +50,7 @@ public class IngredientRestController {
     public ResponseEntity<IngredientDTO> substituteIngredient(@PathVariable Long id, @RequestBody IngredientDTO ingredientDTO){
         if(!ingredientService.isValidIngredient(ingredientDTO)) return ResponseEntity.badRequest().build();
         Ingredient ingredient = new Ingredient(ingredientDTO);
-        ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
+        //ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
 
         Ingredient updateIngredient = ingredientService.substitute(id, ingredient);
         if(updateIngredient == null){
@@ -66,7 +66,7 @@ public class IngredientRestController {
             return ResponseEntity.notFound().build();
         }
         Ingredient ingredient = new Ingredient(ingredientDTO);
-        ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
+        //ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
 
         ingredientService.modifyToMatch(id, ingredient);
         return ResponseEntity.ok(new IngredientDTO(ingredientService.getIngredientById(id)));
@@ -74,10 +74,12 @@ public class IngredientRestController {
 
     @DeleteMapping("/ingredient/{id}")
     public ResponseEntity<IngredientDTO> deleteIngredient(@PathVariable Long id){
-        Ingredient deletedIngredient = ingredientService.delete(id);
-        if (deletedIngredient == null) {
+        if (ingredientService.getIngredientById(id) == null) {
             return ResponseEntity.notFound().build();
         }
+        Ingredient deletedIngredient = ingredientService.delete(id);
+        if (deletedIngredient==null) return ResponseEntity.status(403).build();
+
         return ResponseEntity.ok(new IngredientDTO(deletedIngredient));
     }
 }
