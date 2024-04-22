@@ -88,7 +88,10 @@ public class ChefController {
     public String showChefEdit(@PathVariable Long id, Model model){
         Optional<Chef> chef = chefService.getChefById(id);
         if (!chef.isPresent() || id == 1){
-            model.addAttribute("errorMessage", "No existe el chef con la id " +id);
+            model.addAttribute("errorMessage", "No existe el chef con la id: " +id);
+            return "Error";
+        } else if (id == 1){
+            model.addAttribute("errorMessage", "No se puede editar el chef con la id: " +id);
             return "Error";
         }
         model.addAttribute("FormBtn", "Guardar cambios");
@@ -103,10 +106,14 @@ public class ChefController {
     @PostMapping("/chef/{id}/update")
     public String editChef(@PathVariable Long id, Chef chef, Model model){
         if (id == 1) {
-            model.addAttribute("errorMessage", "No se puede borrar el chef con la id " +id);
+            model.addAttribute("errorMessage", "No se puede editar el chef con la id: " +id);
             return "Error";
         }
-        chefService.substitute(id, chef);
+        Chef newChef = chefService.substitute(id, chef);
+        if (newChef == null){
+            model.addAttribute("errorMessage", "No se existe el chef con la id: " +id);
+            return "Error";
+        }
         return "redirect:/chef/" + id;
 
     }
