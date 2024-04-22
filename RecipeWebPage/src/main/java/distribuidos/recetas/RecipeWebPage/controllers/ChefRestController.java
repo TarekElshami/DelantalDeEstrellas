@@ -50,17 +50,18 @@ public class ChefRestController {
 
     @PutMapping("/chef/{id}")
     public ResponseEntity<ChefDTO> substituteChef(@PathVariable Long id, @RequestBody ChefDTO chefDTO) {
-        if (id != 1) {
-            Chef chef = new Chef(chefDTO);
-            //chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
-
-            Chef updateChef = chefService.substitute(id, chef);
-            if (updateChef == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(new ChefDTO((updateChef)));
+        if (id == 1) {
+            return ResponseEntity.status(403).build();
         }
-        return ResponseEntity.badRequest().build();
+        Chef chef = new Chef(chefDTO);
+        //chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
+
+        Chef updateChef = chefService.substitute(id, chef);
+        if (updateChef == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new ChefDTO((updateChef)));
+
     }
 
     @PatchMapping("/chef/{id}")
@@ -70,7 +71,7 @@ public class ChefRestController {
         if (!oldChef.isPresent()) {
             return ResponseEntity.notFound().build();
         }  else if (oldChef.get().getId() == 1){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(403).build();
         }
         Chef chef = new Chef(chefDTO);
         //chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
@@ -86,7 +87,7 @@ public class ChefRestController {
         if (!chef.isPresent()) {
             return ResponseEntity.notFound().build();
         } else if (chef.get().getId() == 1){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(403).build();
         }
         Chef deletedChef = chefService.delete(id);
 

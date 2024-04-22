@@ -76,6 +76,9 @@ public class ChefController {
             model.addAttribute("errorMessage", "No existe el chef con la id " +id);
             return "Error";
         }
+        if (id != 1){
+            model.addAttribute("isNotAnonimo","");
+        }
         model.addAttribute("chef", chef.get());
         model.addAttribute("recipeList", chef.get().getBestRecipes());
         return "Chef";
