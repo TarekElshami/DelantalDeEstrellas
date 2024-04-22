@@ -106,6 +106,7 @@ public class ChefService {
         String description = chef.getDescription();
         if (name == null || name.isEmpty() ||
                 description == null || description.isEmpty()) return false;
+        if(chef.getBestRecipes() != null) return false;
         return true;
     }
 

@@ -20,10 +20,6 @@ public class ChefRestController {
 
     @Autowired
     private ChefService chefService;
-    @Autowired
-    private IngredientService ingredientService;
-    @Autowired
-    private RecipeService recipeService;
 
     @GetMapping("/chefs")
     public Collection<ChefDTO> showChefs() {
@@ -43,19 +39,16 @@ public class ChefRestController {
     public ResponseEntity<ChefDTO> newChef(@RequestBody ChefDTO chefDTO) {
         if (!chefService.isValidChef(chefDTO)) return ResponseEntity.badRequest().build();
         Chef chef = new Chef(chefDTO);
-        //chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
-
         return ResponseEntity.status(201).body(new ChefDTO(chefService.newChef(chef)));
     }
 
     @PutMapping("/chef/{id}")
     public ResponseEntity<ChefDTO> substituteChef(@PathVariable Long id, @RequestBody ChefDTO chefDTO) {
+        if (!chefService.isValidChef(chefDTO)) return ResponseEntity.badRequest().build();
         if (id == 1) {
             return ResponseEntity.status(403).build();
         }
         Chef chef = new Chef(chefDTO);
-        //chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
-
         Chef updateChef = chefService.substitute(id, chef);
         if (updateChef == null) {
             return ResponseEntity.notFound().build();
@@ -66,7 +59,7 @@ public class ChefRestController {
 
     @PatchMapping("/chef/{id}")
     public ResponseEntity<ChefDTO> modifyChef(@PathVariable Long id, @RequestBody ChefDTO chefDTO) {
-        if (chefDTO.getBestRecipes()!=null && !chefDTO.getBestRecipes().isEmpty()) return ResponseEntity.badRequest().build();
+        if (chefDTO.getBestRecipes()!=null) return ResponseEntity.badRequest().build();
         Optional<Chef> oldChef = chefService.getChefById(id);
         if (!oldChef.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -74,8 +67,6 @@ public class ChefRestController {
             return ResponseEntity.status(403).build();
         }
         Chef chef = new Chef(chefDTO);
-        //chef.setBestRecipes(recipeService.getRecipeById(chefDTO.getBestRecipes()));
-
         chefService.modifyToMatch(id, chef);
         return ResponseEntity.ok(new ChefDTO(chefService.getChefById(id).get()));
     }
@@ -90,7 +81,6 @@ public class ChefRestController {
             return ResponseEntity.status(403).build();
         }
         Chef deletedChef = chefService.delete(id);
-
         return ResponseEntity.ok(new ChefDTO(deletedChef));
     }
 }

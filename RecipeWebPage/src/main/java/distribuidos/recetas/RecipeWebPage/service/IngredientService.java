@@ -62,8 +62,6 @@ public class IngredientService {
             if (!ingredient.getBestRecipes().isEmpty()) {
                 return null; //only allow deletion if it has no recipes associated
             }
-
-            ingredientRepository.delete(id);
             ingredientRepository.delete(ingredient);
             return ingredient;
         } else {

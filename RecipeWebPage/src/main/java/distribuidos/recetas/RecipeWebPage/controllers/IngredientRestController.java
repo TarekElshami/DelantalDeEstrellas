@@ -16,8 +16,6 @@ public class IngredientRestController {
 
     @Autowired
     private IngredientService ingredientService;
-    @Autowired
-    private RecipeService recipeService;
 
 
     //Get All
@@ -61,13 +59,12 @@ public class IngredientRestController {
 
     @PatchMapping("/ingredient/{id}")
     public ResponseEntity<IngredientDTO> modifyIngredient(@PathVariable Long id, @RequestBody IngredientDTO ingredientDTO){
+        if(ingredientDTO.getBestRecipes() != null) return ResponseEntity.badRequest().build();
         Ingredient existingIngredient = ingredientService.getIngredientById(id);
         if (existingIngredient == null) {
             return ResponseEntity.notFound().build();
         }
         Ingredient ingredient = new Ingredient(ingredientDTO);
-        //ingredient.setBestRecipes(recipeService.getRecipeById(ingredientDTO.getBestRecipes()));
-
         ingredientService.modifyToMatch(id, ingredient);
         return ResponseEntity.ok(new IngredientDTO(ingredientService.getIngredientById(id)));
     }
