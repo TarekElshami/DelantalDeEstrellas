@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0fb5bdc2-42dc-4a39-a57d-945c059c7bcb",
+		"_postman_id": "4c4a603d-481c-49ed-99f7-e25cfa108daa",
 		"name": "SSDD_Grupo6",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "32974096"
@@ -57,7 +57,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Vegetable Lasagna\",\r\n    \"description\": \"Layers of pasta, vegetables, and cheesy goodness\",\r\n    \"steps\": [\r\n        \"Layer pasta and vegetables\",\r\n        \"Top with cheese\",\r\n        \"Bake until bubbly\"\r\n    ],\r\n    \"image\": \"/img/recipe.png\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Vegetable Lasagna\",\r\n    \"description\": \"Layers of pasta, vegetables, and cheesy goodness\",\r\n    \"steps\": [\r\n        \"Layer pasta and vegetables\",\r\n        \"Top with cheese\",\r\n        \"Bake until bubbly\"\r\n    ],\r\n    \"image\": \"/img/recipe.png\",\r\n    \"ingredients\":[1, 2, 3]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -86,7 +86,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Vegetable Lasagna\",\r\n    \"description\": \"Layers of pasta, vegetables, and cheesy goodness\",\r\n    \"steps\": [\r\n        \"Layer pasta and vegetables\",\r\n        \"Top with cheese\",\r\n        \"Bake until bubbly\"\r\n    ],\r\n    \"image\": \"/img/recipe.png\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Vegetable Lasagna\",\r\n    \"description\": \"Layers of pasta, vegetables, and cheesy goodness\",\r\n    \"steps\": [\r\n        \"Layer pasta and vegetables\",\r\n        \"Top with cheese\",\r\n        \"Bake until bubbly\"\r\n    ],\r\n    \"image\": \"/img/recipe.png\",\r\n    \"ingredients\":[2,3]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
