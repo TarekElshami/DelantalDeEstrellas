@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -97,10 +99,16 @@ public class RecipeRestController {
     @DeleteMapping("/recipe/{id}")
     @ResponseBody
     public ResponseEntity<RecipeDTO> newRecipe(@PathVariable Long id){
+        Optional<Recipe> recipeToDelete = recipeService.getRecipeById(id);
+        if (recipeToDelete.isEmpty()) return ResponseEntity.notFound().build();
+        List<String> fakeSteps = recipeToDelete.get().getSteps();
+        List<String> steps = new ArrayList<>(fakeSteps);
+
         Recipe deletedRecipe = recipeService.delete(id);
         if (deletedRecipe == null) {
             return ResponseEntity.notFound().build();
         }
+        deletedRecipe.setSteps(steps);
         return ResponseEntity.ok(new RecipeDTO(deletedRecipe));
     }
 }
