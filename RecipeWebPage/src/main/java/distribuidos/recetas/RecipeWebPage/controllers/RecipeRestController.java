@@ -90,10 +90,11 @@ public class RecipeRestController {
         if (recipeDTO.getImage()!= null && recipeDTO.getImage().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getIngredients()!=null && recipeDTO.getIngredients().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getChef()!=null && chefService.getChefById(recipeDTO.getChef()).isEmpty()) return ResponseEntity.badRequest().build();
-        if (recipeDTO.getChef()==null) recipeDTO.setChef(1L);
+        //if (recipeDTO.getChef()==null) recipeDTO.setChef(1L);
 
         Recipe recipe = new Recipe(recipeDTO);
-        recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
+        if (recipeDTO.getChef()!=null)
+            recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
         if (recipeDTO.getIngredients() != null) {
             Collection<Ingredient> ingredients = ingredientService.getIngredientById(recipeDTO.getIngredients());
             if (ingredients==null || ingredients.isEmpty()){

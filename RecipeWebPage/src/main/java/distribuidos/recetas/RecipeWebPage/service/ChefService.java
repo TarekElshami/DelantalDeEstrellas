@@ -18,8 +18,6 @@ public class ChefService {
 
     @Autowired
     private ChefRepository chefRepository;
-    @Autowired
-    private RecipeService recipeService;
 
     private int pageSize = 3;
     private Chef defaultChef;
