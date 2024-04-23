@@ -60,6 +60,9 @@ public class ChefRestController {
     @PatchMapping("/chef/{id}")
     public ResponseEntity<ChefDTO> modifyChef(@PathVariable Long id, @RequestBody ChefDTO chefDTO) {
         if (chefDTO.getBestRecipes()!=null) return ResponseEntity.badRequest().build();
+        if (chefDTO.getName()!=null && chefDTO.getName().isEmpty()) return ResponseEntity.badRequest().build();
+        if (chefDTO.getDescription()!=null && chefDTO.getDescription().isEmpty()) return ResponseEntity.badRequest().build();
+        if (chefDTO.getImage()!= null && chefDTO.getImage().isEmpty()) return ResponseEntity.badRequest().build();
         Optional<Chef> oldChef = chefService.getChefById(id);
         if (!oldChef.isPresent()) {
             return ResponseEntity.notFound().build();

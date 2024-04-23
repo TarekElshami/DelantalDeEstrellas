@@ -104,8 +104,10 @@ public class ChefService {
     public boolean isValidChef(ChefDTO chef) {
         String name = chef.getName();
         String description = chef.getDescription();
+        String image = chef.getImage();
         if (name == null || name.isEmpty() ||
-                description == null || description.isEmpty()) return false;
+                description == null || description.isEmpty() ||
+            image==null || image.isEmpty()) return false;
         if(chef.getBestRecipes() != null) return false;
         return true;
     }

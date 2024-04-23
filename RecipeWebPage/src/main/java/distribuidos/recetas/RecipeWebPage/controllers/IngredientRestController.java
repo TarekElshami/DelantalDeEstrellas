@@ -59,7 +59,10 @@ public class IngredientRestController {
 
     @PatchMapping("/ingredient/{id}")
     public ResponseEntity<IngredientDTO> modifyIngredient(@PathVariable Long id, @RequestBody IngredientDTO ingredientDTO){
-        if(ingredientDTO.getBestRecipes() != null) return ResponseEntity.badRequest().build();
+        if (ingredientDTO.getBestRecipes() != null) return ResponseEntity.badRequest().build();
+        if (ingredientDTO.getName()!=null && ingredientDTO.getName().isEmpty()) return ResponseEntity.badRequest().build();
+        if (ingredientDTO.getDescription()!=null && ingredientDTO.getDescription().isEmpty()) return ResponseEntity.badRequest().build();
+        if (ingredientDTO.getImage()!= null && ingredientDTO.getImage().isEmpty()) return ResponseEntity.badRequest().build();
         Ingredient existingIngredient = ingredientService.getIngredientById(id);
         if (existingIngredient == null) {
             return ResponseEntity.notFound().build();

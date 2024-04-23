@@ -87,6 +87,7 @@ public class RecipeRestController {
         if (recipeDTO.getName()!=null && recipeDTO.getName().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getDescription()!=null && recipeDTO.getDescription().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getSteps()!=null && recipeDTO.getSteps().isEmpty()) return ResponseEntity.badRequest().build();
+        if (recipeDTO.getImage()!= null && recipeDTO.getImage().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getIngredients()!=null && recipeDTO.getIngredients().isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getChef()!=null && chefService.getChefById(recipeDTO.getChef()).isEmpty()) return ResponseEntity.badRequest().build();
         if (recipeDTO.getChef()==null) recipeDTO.setChef(1L);
