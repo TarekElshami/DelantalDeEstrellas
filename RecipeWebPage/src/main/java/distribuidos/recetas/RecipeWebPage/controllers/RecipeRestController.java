@@ -42,9 +42,10 @@ public class RecipeRestController {
     @PostMapping("/recipe")
     public ResponseEntity<RecipeDTO> newRecipe(@RequestBody RecipeDTO recipeDTO){
         Recipe recipe = new Recipe(recipeDTO);
-        if(recipeDTO.getChef() != null)
+        if(recipeDTO.getChef() != null) {
+            if (chefService.getChefById(recipeDTO.getChef()).isEmpty()) return ResponseEntity.badRequest().build();
             recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
-        else
+        } else
             recipe.setChef(chefService.getDefaultChef());
         Collection<Ingredient> ingredients = ingredientService.getIngredientById(recipeDTO.getIngredients());
         if (ingredients==null || ingredients.isEmpty()){
@@ -60,11 +61,17 @@ public class RecipeRestController {
     public ResponseEntity<RecipeDTO> substituteRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO){
         if (recipeDTO.getIngredients()==null || recipeDTO.getIngredients().isEmpty()) return ResponseEntity.badRequest().build();
         Recipe recipe = new Recipe(recipeDTO);
-        if(recipeDTO.getChef() != null)
+        if(recipeDTO.getChef() != null) {
+            if (chefService.getChefById(recipeDTO.getChef()).isEmpty()) return ResponseEntity.badRequest().build();
             recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
-        else
+        } else
             recipe.setChef(chefService.getDefaultChef());
-        recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+
+        Collection<Ingredient> ingredients = ingredientService.getIngredientById(recipeDTO.getIngredients());
+        if (ingredients==null || ingredients.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        recipe.setIngredients(ingredients);
 
         if (!recipeService.isValidRecipe(recipe)) return ResponseEntity.badRequest().build();
 
@@ -86,7 +93,13 @@ public class RecipeRestController {
 
         Recipe recipe = new Recipe(recipeDTO);
         recipe.setChef(chefService.getChefById(recipeDTO.getChef()).get());
-        if (recipeDTO.getIngredients() != null) recipe.setIngredients(ingredientService.getIngredientById(recipeDTO.getIngredients()));
+        if (recipeDTO.getIngredients() != null) {
+            Collection<Ingredient> ingredients = ingredientService.getIngredientById(recipeDTO.getIngredients());
+            if (ingredients==null || ingredients.isEmpty()){
+                return ResponseEntity.badRequest().build();
+            }
+            recipe.setIngredients(ingredients);
+        }
 
 
         Recipe storedRecipe = recipeService.modifyToMatch(id, recipe);
