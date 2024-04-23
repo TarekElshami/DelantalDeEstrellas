@@ -50,6 +50,7 @@ public class ChefService {
             return null;
         }
         chef.setId(id);
+        chef.setBestRecipes(chef1.get().getBestRecipes());
         return chefRepository.save(chef);
 
     }

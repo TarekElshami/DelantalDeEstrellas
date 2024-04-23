@@ -37,6 +37,7 @@ public class IngredientService {
         Optional<Ingredient> existingIngredientOptional = ingredientRepository.findById(id);
         if (existingIngredientOptional.isPresent()) {
             ingredient.setId(id);
+            ingredient.setBestRecipes(existingIngredientOptional.get().getBestRecipes());
             return ingredientRepository.save(ingredient);
         } else {
             return null;
