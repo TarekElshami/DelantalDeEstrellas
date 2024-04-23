@@ -1,6 +1,6 @@
 function confirmDelete(id) {
     if (confirm("¿Estás seguro de que quieres borrar este ingrediente?")){
-        fetch("/IsIngredientBeingUsed?id="+id)
+        return fetch("/IsIngredientBeingUsed?id="+id)
             .then( response => {
                 return response.json();
             }).then( data => {
@@ -14,6 +14,7 @@ function confirmDelete(id) {
                     }, 500);
                     return false;
                 }
+                else return true
             })
 
     }
