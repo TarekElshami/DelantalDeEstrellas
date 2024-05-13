@@ -46,12 +46,12 @@ public class DatabaseInitializer {
 
         //Chefs
         chefService.getDefaultChef();
-        chefService.newChef(new Chef("Blackie", "Hace las mejores galletas del vecindaio", "https://imgs.search.brave.com/o_sKJgf-zu8Xs3rtChHmgZrKHt4uHCVjWlJ3lbO9GTM/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9jb2xv/cmluZ29ubHkuY29t/L2VzL2ltYWdlcy9p/bWdjb2xvci9DaGVm/LUN1bGluYXJpby1k/ZS1EaWJ1am9zLUFu/aW1hZG9zLmpwZw"));
-        chefService.newChef(new Chef("Garfield", "Solo sabe hacer lasaña, pero se le da de miedo","https://imgs.search.brave.com/oytmY1I40RkuCMmDs1IZH8AHZVlWyZ8M-JSzZMlOWHc/rs:fit:500:0:0/g:ce/aHR0cHM6Ly93d3cu/aW1hZ3VpLmNvbS9p/L2RpYnVqby1jb2Np/bmVyYXMtaW1hZ3Vp/LTE0NjU5NS53ZWJw"));
-        chefService.newChef(new Chef("Pequeñin", "Cocinar puede que no, pero es demasiado mono", "https://www.shutterstock.com/shutterstock/photos/2092886932/display_1500/stock-vector-cute-kitten-wearing-a-chef-hat-2092886932.jpg"));
-        chefService.newChef(new Chef("SuperChef", "Su nombre lo dice todo", "https://us.123rf.com/450wm/aprillrain/aprillrain2301/aprillrain230102062/197136034-caricatura-de-un-gato-cocinero-con-sombrero-de-chef-que-cocina-algo-en-la-cocina-caricatura.jpg?ver=6"));
-        chefService.newChef(new Chef("Manchas", "5 estrellas michelin", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQCWLXiGp40ewzewy7i8p2Kk3LaLj3FQCG76yhdr5Pp9nqxUz4E35gIm_J6AENWVb-21c&usqp=CAU"));
 
+        Chef chef2 = chefService.newChef(new Chef("Blackie", "Hace las mejores galletas del vecindaio", "https://imgs.search.brave.com/o_sKJgf-zu8Xs3rtChHmgZrKHt4uHCVjWlJ3lbO9GTM/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9jb2xv/cmluZ29ubHkuY29t/L2VzL2ltYWdlcy9p/bWdjb2xvci9DaGVm/LUN1bGluYXJpby1k/ZS1EaWJ1am9zLUFu/aW1hZG9zLmpwZw"));
+        Chef chef3 = chefService.newChef(new Chef("Garfield", "Solo sabe hacer lasaña, pero se le da de miedo","https://imgs.search.brave.com/oytmY1I40RkuCMmDs1IZH8AHZVlWyZ8M-JSzZMlOWHc/rs:fit:500:0:0/g:ce/aHR0cHM6Ly93d3cu/aW1hZ3VpLmNvbS9p/L2RpYnVqby1jb2Np/bmVyYXMtaW1hZ3Vp/LTE0NjU5NS53ZWJw"));
+        Chef chef4= chefService.newChef(new Chef("Pequeñin", "Cocinar puede que no, pero es demasiado mono", "https://www.shutterstock.com/shutterstock/photos/2092886932/display_1500/stock-vector-cute-kitten-wearing-a-chef-hat-2092886932.jpg"));
+        Chef chef5 = chefService.newChef(new Chef("SuperChef", "Su nombre lo dice todo", "https://us.123rf.com/450wm/aprillrain/aprillrain2301/aprillrain230102062/197136034-caricatura-de-un-gato-cocinero-con-sombrero-de-chef-que-cocina-algo-en-la-cocina-caricatura.jpg?ver=6"));
+        Chef chef6 = chefService.newChef(new Chef("Manchas", "5 estrellas michelin", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQCWLXiGp40ewzewy7i8p2Kk3LaLj3FQCG76yhdr5Pp9nqxUz4E35gIm_J6AENWVb-21c&usqp=CAU"));
 
         ingredientService.newIngredient(ingredient);
         ingredientService.newIngredient(ingredient2);
@@ -67,18 +67,18 @@ public class DatabaseInitializer {
         recipe2.setIngredients(Collections.singletonList(ingredientService.getIngredientById(1L)));
         recipe3.setIngredients(Collections.singletonList(ingredientService.getIngredientById(2L)));
 
-        recipe.setChef(chefService.getChefById(5L).get());
-        recipe2.setChef(chefService.getChefById(6L).get());
-        recipe3.setChef(chefService.getChefById(2L).get());
-        recipe4.setChef(chefService.getChefById(3L).get());
-        recipe5.setChef(chefService.getChefById(4L).get());
-        recipe6.setChef(chefService.getChefById(5L).get());
-        recipe7.setChef(chefService.getChefById(2L).get());
-        recipe8.setChef(chefService.getChefById(3L).get());
-        recipe9.setChef(chefService.getChefById(3L).get());
-        recipe10.setChef(chefService.getChefById(4L).get());
-        recipe11.setChef(chefService.getChefById(5L).get());
-        recipe12.setChef(chefService.getChefById(6L).get());
+        recipe.setChef(chef5);
+        recipe2.setChef(chef6);
+        recipe3.setChef(chef2);
+        recipe4.setChef(chef3);
+        recipe5.setChef(chef4);
+        recipe6.setChef(chef5);
+        recipe7.setChef(chef2);
+        recipe8.setChef(chef3);
+        recipe9.setChef(chef3);
+        recipe10.setChef(chef4);
+        recipe11.setChef(chef5);
+        recipe12.setChef(chef6);
 
         recipeService.newRecipe(recipe);
         recipeService.newRecipe(recipe2);

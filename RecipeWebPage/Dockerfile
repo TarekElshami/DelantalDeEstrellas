@@ -29,6 +29,9 @@ WORKDIR /usr/app/
 # Copia el JAR del contenedor de compilación
 COPY --from=builder /project/target/*.jar /usr/app/
 
+#Copia el script para crear el certificado de cockroach
+COPY create_crt.sh /usr/app/create_crt.sh
+
 # Indica el puerto que expone el contenedor
 EXPOSE 8080
 
