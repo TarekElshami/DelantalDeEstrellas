@@ -12,27 +12,37 @@ services:
       - cockroachdb2
     restart: on-failure
     command: ["sh", "-c", "/usr/app/create_crt.sh && java -jar app.jar"]
+    networks:
+      - cockNet
 
   cockroachdb1:
     image: cockroachdb/cockroach:v21.1.7
-    command: start --insecure --join=cockroachdb1,cockroachdb2 --listen-addr=:26257 --advertise-addr=:26257
+    command: start --insecure --certs-dir=/cockroach/cockroach-certs --join=cockroachdb1,cockroachdb2,delantaldeestrellas-9799.7tc.aws-eu-central-1.cockroachlabs.cloud --listen-addr=:26257 --advertise-addr=:26257
     volumes:
       - cockroachdb_data1:/cockroach/cockroach-data
     ports:
       - "26257:26257"
       - "8081:8080"
     restart: always
+    networks:
+      - cockNet
 
   cockroachdb2:
     image: cockroachdb/cockroach:v21.1.7
-    command: start --insecure --join=cockroachdb1,cockroachdb2 --listen-addr=:26257 --advertise-addr=:26257
+    command: start --insecure --certs-dir=/cockroach/cockroach-certs --join=cockroachdb1,cockroachdb2,delantaldeestrellas-9799.7tc.aws-eu-central-1.cockroachlabs.cloud --listen-addr=:26257 --advertise-addr=:26257
     volumes:
       - cockroachdb_data2:/cockroach/cockroach-data
     ports:
       - "26258:26257"
       - "8082:8080"
     restart: always
+    networks:
+      - cockNet
+
 
 volumes:
   cockroachdb_data1:
   cockroachdb_data2:
+
+networks:
+  cockNet:
