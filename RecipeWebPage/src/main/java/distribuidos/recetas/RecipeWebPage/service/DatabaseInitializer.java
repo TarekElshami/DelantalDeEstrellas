@@ -19,6 +19,7 @@ public class DatabaseInitializer {
     @Autowired
     private IngredientService ingredientService;
 
+    /*
     @PostConstruct
     public void init() {
         //Recipe
@@ -93,4 +94,5 @@ public class DatabaseInitializer {
         recipeService.newRecipe(recipe11);
         recipeService.newRecipe(recipe12);
     }
+    //*/
 }

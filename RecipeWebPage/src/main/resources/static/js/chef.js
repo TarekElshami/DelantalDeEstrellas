@@ -6,6 +6,10 @@ deleteBtn.addEventListener('click', () => {
     let id = deleteBtn.getAttribute('data-id');
     var confirmation = confirm("¿Seguro que quieres borrar este Chef?");
     if (confirmation) {
+        if (document.getElementById("name").textContent === "Anónimo"){
+            alert("No es posible borrar este Chef.")
+            return;
+        }
         window.location.href = "/chef/"+id+"/delete"
     } else {
         // User clicked Cancel
@@ -15,6 +19,10 @@ deleteBtn.addEventListener('click', () => {
 })
 
 changeInfoBtn.addEventListener('click', ()=> {
+    if (document.getElementById("name").textContent === "Anónimo"){
+        alert("No es posible editar este Chef.")
+        return;
+    }
     window.location.href = '/chef/'+ changeInfoBtn.getAttribute('data-id')+'/update';
 })
 

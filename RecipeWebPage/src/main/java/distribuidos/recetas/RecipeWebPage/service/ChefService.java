@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 @Service
 public class ChefService {
 
+    public static final String DEFAULT_CHEF_NAME = "Anónimo";
+
     @Autowired
     private ChefRepository chefRepository;
 
@@ -41,10 +43,13 @@ public class ChefService {
 
 
     public Chef newChef(Chef chef) {
+        if (DEFAULT_CHEF_NAME.equals(chef.getName())) return null;
         return chefRepository.save(chef);
     }
 
     public Chef substitute(Long id, Chef chef) {
+        if (id.equals(defaultChef.getId())) return null;
+
         Optional<Chef> chef1 = chefRepository.findById(id);
         if(!chef1.isPresent()){
             return null;
@@ -56,6 +61,7 @@ public class ChefService {
     }
 
     public void modifyToMatch(Long id, Chef chef) {
+        if (id.equals(defaultChef.getId())) return;
         Optional<Chef> storedChef1 = chefRepository.findById(id);
         Chef storedChef = new Chef();
         if (storedChef1.isPresent()){
@@ -73,6 +79,7 @@ public class ChefService {
     }
 
     public Chef delete(Long id) {
+        if (id.equals(defaultChef.getId())) return null;
         Optional<Chef> chefOptional = chefRepository.findById(id);
         if (chefOptional.isPresent()) {
             Chef chef = chefOptional.get();
@@ -104,7 +111,7 @@ public class ChefService {
         String name = chef.getName();
         String description = chef.getDescription();
         String image = chef.getImage();
-        if (name == null || name.isEmpty() ||
+        if (name == null || name.isEmpty() || name.equals(ChefService.DEFAULT_CHEF_NAME) ||
                 description == null || description.isEmpty() ||
             image==null || image.isEmpty()) return false;
         if(chef.getBestRecipes() != null) return false;
@@ -112,12 +119,20 @@ public class ChefService {
     }
 
     public Chef getDefaultChef(){
-        if (defaultChef==null) {
-            defaultChef = new Chef("Anónimo", "Este Chef se asigna cuando el creador de la receta prefiere permanecer anónimo, o bien la receta pertenecía a un Chef que ha sido borrado del sistema.", "/img/anonimousChef.jpg");
-            //defaultChef.setId(-1L);
-            chefRepository.save(defaultChef);
+        if (defaultChef!=null) {
+            return defaultChef;
         }
-        //what about saving it???
+        Collection<Chef> chefsByName = chefRepository.findChefsByName(DEFAULT_CHEF_NAME);
+        if (chefsByName.size() > 1) {throw new RuntimeException("Varios chef anonimos");}
+        else if (chefsByName.size() == 1) {
+            defaultChef = (Chef) chefsByName.toArray()[0];
+            return defaultChef;
+        }
+
+        defaultChef = new Chef(DEFAULT_CHEF_NAME, "Este Chef se asigna cuando el creador de la receta prefiere permanecer anónimo, o bien la receta pertenecía a un Chef que ha sido borrado del sistema.", "/img/anonimousChef.jpg");
+        //defaultChef.setId(-1L);
+        chefRepository.save(defaultChef);
+
         return defaultChef;
     }
 
