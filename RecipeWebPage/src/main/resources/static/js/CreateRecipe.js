@@ -13,7 +13,7 @@ function filterIngredients(){
                 let ingredient = data[key]
                 let ingredientName = ingredient.name.toLowerCase()
                 if (ingredientName.includes(input)){
-                    let htmlToAdd = `<li id="tempIng${ingredient.id}" onclick="select(${ingredient.id})">${ingredientName}</li>`;
+                    let htmlToAdd = `<li id="tempIng${ingredient.id}" onclick="select('${ingredient.id}')">${ingredientName}</li>`;
                     list.insertAdjacentHTML('beforeend', htmlToAdd);
                 }
             }

@@ -64,8 +64,6 @@ public class RecipeController {
     @GetMapping("/recipe/new")
     public String newRecipe(Model model, @RequestParam(value = "id", required = false) Long id) {
         if (id != null){
-            System.out.println("hola");
-            System.out.println(id);
             Optional<Chef> chefOptional = chefService.getChefById(id);
             if (chefOptional.isPresent()){
                 model.addAttribute("chefs", chefOptional.get());
@@ -159,6 +157,7 @@ public class RecipeController {
         if (page==null || page.isEmpty()){
             return new ResponseEntity<>(null, headers, 204); //204 No Content
         }
+
         return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 }

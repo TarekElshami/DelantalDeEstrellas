@@ -4,9 +4,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://delantaldeestrellas-9799.7tc.aws-eu-central-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&password=W0rCJoi77QV71AJ2Kx8w4g&user=alvaro&loadBalanceHosts=true
-      - SPRING_DATASOURCE_USERNAME=alvaro
-      - SPRING_DATASOURCE_PASSWORD=W0rCJoi77QV71AJ2Kx8w4g
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://cockroachdb1:26257, cockroachdb2:26257/defaultdb?sslmode=disable&loadBalanceHosts=true
     depends_on:
       - cockroachdb1
       - cockroachdb2
@@ -17,7 +15,7 @@ services:
 
   cockroachdb1:
     image: cockroachdb/cockroach:v21.1.7
-    command: start --insecure --certs-dir=/cockroach/cockroach-certs --join=cockroachdb1,cockroachdb2,delantaldeestrellas-9799.7tc.aws-eu-central-1.cockroachlabs.cloud --listen-addr=:26257 --advertise-addr=:26257
+    command: start --insecure --certs-dir=/cockroach/cockroach-certs --join=cockroachdb1,cockroachdb2 --listen-addr=:26257 --advertise-addr=:26257
     volumes:
       - cockroachdb_data1:/cockroach/cockroach-data
     ports:
@@ -29,7 +27,7 @@ services:
 
   cockroachdb2:
     image: cockroachdb/cockroach:v21.1.7
-    command: start --insecure --certs-dir=/cockroach/cockroach-certs --join=cockroachdb1,cockroachdb2,delantaldeestrellas-9799.7tc.aws-eu-central-1.cockroachlabs.cloud --listen-addr=:26257 --advertise-addr=:26257
+    command: start --insecure --certs-dir=/cockroach/cockroach-certs --join=cockroachdb1,cockroachdb2 --listen-addr=:26257 --advertise-addr=:26257
     volumes:
       - cockroachdb_data2:/cockroach/cockroach-data
     ports:

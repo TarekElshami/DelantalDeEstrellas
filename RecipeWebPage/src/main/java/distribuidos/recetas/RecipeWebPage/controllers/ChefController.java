@@ -124,9 +124,6 @@ public class ChefController {
         if (!chef.isPresent()){
             model.addAttribute("errorMessage", "No existe el chef con la id " +id);
             return "Error";
-        } else if (chef.get().getId() == 1){
-            model.addAttribute("errorMessage", "No se puede borrar el chef con la id " +id);
-            return "Error";
         }
         chefService.delete(id);
         return "redirect:/chefs";

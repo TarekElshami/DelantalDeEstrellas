@@ -48,8 +48,7 @@ public class ChefService {
     }
 
     public Chef substitute(Long id, Chef chef) {
-        if (id.equals(defaultChef.getId())) return null;
-
+        if (id.equals(getDefaultChef().getId())) return null;
         Optional<Chef> chef1 = chefRepository.findById(id);
         if(!chef1.isPresent()){
             return null;
@@ -61,7 +60,7 @@ public class ChefService {
     }
 
     public void modifyToMatch(Long id, Chef chef) {
-        if (id.equals(defaultChef.getId())) return;
+        if (id.equals(getDefaultChef().getId())) return;
         Optional<Chef> storedChef1 = chefRepository.findById(id);
         Chef storedChef = new Chef();
         if (storedChef1.isPresent()){
@@ -79,7 +78,9 @@ public class ChefService {
     }
 
     public Chef delete(Long id) {
-        if (id.equals(defaultChef.getId())) return null;
+        if (id.equals(getDefaultChef().getId())) return null;
+
+
         Optional<Chef> chefOptional = chefRepository.findById(id);
         if (chefOptional.isPresent()) {
             Chef chef = chefOptional.get();
@@ -91,7 +92,6 @@ public class ChefService {
                 //recipeService.save(recipe);
             }
             chefRepository.save(defaultChef1);
-
             chefRepository.delete(chef);
             return chef;
         } else {

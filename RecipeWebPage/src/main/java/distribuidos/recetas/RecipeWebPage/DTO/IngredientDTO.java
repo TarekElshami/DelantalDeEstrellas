@@ -18,7 +18,7 @@ import java.util.List;
 public class IngredientDTO {
 
 
-    private Long id;
+    private String id;
     private String name;
     private String description;
     private String image;
@@ -26,7 +26,7 @@ public class IngredientDTO {
     private Collection<Long> bestRecipes;
 
     public IngredientDTO(Ingredient ingredient) {
-        this.id = ingredient.getId();
+        this.id = ingredient.getId().toString();
         this.name = ingredient.getName();
         this.description = ingredient.getDescription();
         this.image = ingredient.getImage();

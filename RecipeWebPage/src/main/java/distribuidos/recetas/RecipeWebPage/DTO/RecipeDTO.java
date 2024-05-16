@@ -19,7 +19,7 @@ import java.util.List;
 public class RecipeDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String name;
     private String description;
     private List<String> steps;
@@ -29,7 +29,7 @@ public class RecipeDTO {
     private Collection<Long> ingredients;
 
     public RecipeDTO(Recipe recipe) {
-        this.id = recipe.getId();
+        this.id = recipe.getId().toString();
         this.name = recipe.getName();
         this.description = recipe.getDescription();
         this.steps = recipe.getSteps();

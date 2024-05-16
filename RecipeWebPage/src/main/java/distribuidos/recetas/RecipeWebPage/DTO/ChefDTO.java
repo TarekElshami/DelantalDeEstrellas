@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class ChefDTO {
-    private Long id;
+    private String id;
     private String name;
     private String description;
     private String image;
@@ -26,7 +26,7 @@ public class ChefDTO {
     private Collection<Long> bestRecipes;
 
     public ChefDTO(Chef chef) {
-        this.id = chef.getId();
+        this.id = chef.getId().toString();
         this.name = chef.getName();
         this.description = chef.getDescription();
         this.image = chef.getImage();
