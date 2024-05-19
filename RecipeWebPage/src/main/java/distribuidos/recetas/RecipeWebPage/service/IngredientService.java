@@ -88,4 +88,5 @@ public class IngredientService {
         return true;
     }
 
+    public long count(){return ingredientRepository.count();}
 }

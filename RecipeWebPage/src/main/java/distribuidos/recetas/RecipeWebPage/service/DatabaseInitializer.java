@@ -21,6 +21,7 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void init() {
+        if (! (chefService.count() == 0 && recipeService.count() == 0 && ingredientService.count() == 0)) return;
         //Recipe
         Recipe recipe = new Recipe("Spaghetti Bolognese", "Classic Italian pasta dish", null, List.of("Boil spaghetti", "Prepare Bolognese sauce", "Combine and serve"), "https://rollercoaster.ie/wp-content/uploads/2020/04/super-easy-spaghetti-bolognese.jpg", null);
         Recipe recipe2 = new Recipe("Chicken Alfredo", "Creamy Alfredo sauce with grilled chicken", null, List.of("Cook chicken", "Prepare Alfredo sauce", "Combine and serve"), "https://evoke.ie/wp-content/uploads/2019/11/Sprezzatura-Gluten-Free-Pasta-copy.jpg", null);

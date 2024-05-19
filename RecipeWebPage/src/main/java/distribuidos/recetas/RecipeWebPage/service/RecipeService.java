@@ -135,4 +135,5 @@ public class RecipeService {
     public void save(Recipe recipe) {
         recipeRepository.save(recipe);
     }
+    public long count(){return recipeRepository.count();}
 }

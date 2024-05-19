@@ -125,6 +125,6 @@ public class ChefService {
         chefRepository.save(chef);
     }
 
-
+    public long count(){return chefRepository.count();}
 
 }
