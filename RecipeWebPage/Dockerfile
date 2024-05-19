@@ -30,7 +30,7 @@ WORKDIR /usr/app/
 COPY --from=builder /project/target/*.jar /usr/app/
 
 #Copia el script para crear el certificado de cockroach
-COPY create_crt.sh /usr/app/create_crt.sh
+RUN curl --create-dirs -o ~/.postgresql/root.crt -O https://cockroachlabs.cloud/clusters/94285693-fa2e-4a98-a3ab-589ceb61e17a/cert
 
 # Indica el puerto que expone el contenedor
 EXPOSE 8080
