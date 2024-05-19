@@ -1,39 +1,39 @@
 #################################################
-# Imagen base para el contenedor de compilación
+# Base image for the build container
 ################################################# 3.8.5
 FROM maven:3.9.6-eclipse-temurin-17 as builder
 
-# Define el directorio de trabajo donde ejecutar comandos
+# Define the working directory where commands will be executed
 WORKDIR /project
 
-# Copia las dependencias del proyecto
+# Copy the project dependencies
 COPY pom.xml /project/
 
-# Descarga las dependencias del proyecto
+# Download the project dependencies
 RUN mvn clean verify
 
-# Copia el código del proyecto
+# Copy the project code
 COPY src /project/src
 
-# Compila proyecto
+# Build the project
 RUN mvn package -o -DskipTests=true
 
 #################################################
-# Imagen base para el contenedor de la aplicación
+# Base image for the application container
 #################################################
 FROM openjdk:17
 
-# Define el directorio de trabajo donde se encuentra el JAR
+# Define the working directory where the JAR is located
 WORKDIR /usr/app/
 
-# Copia el JAR del contenedor de compilación
+# Copy the JAR from the build container
 COPY --from=builder /project/target/*.jar /usr/app/
 
-#Copia el script para crear el certificado de cockroach
+# Download the cockroach certificate
 RUN curl --create-dirs -o ~/.postgresql/root.crt -O https://cockroachlabs.cloud/clusters/94285693-fa2e-4a98-a3ab-589ceb61e17a/cert
 
-# Indica el puerto que expone el contenedor
+# Indicate the port that exposed by the container
 EXPOSE 8080
 
-# Comando que se ejecuta al hacer docker run
+# Command that is executed when running docker run
 CMD [ "java", "-jar", "app.jar" ]

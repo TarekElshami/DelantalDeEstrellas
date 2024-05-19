@@ -9,7 +9,6 @@ services:
       - cockroachdb1
       - cockroachdb2
     restart: on-failure
-    #command: ["sh", "-c", "/usr/app/create_crt.sh && java -jar app.jar"]
     networks:
       - cockNet
 
