@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.3.5</version> <!-- Usa una versión actualizada -->
+			<version>42.3.9</version> <!-- Usa una versión actualizada -->
 		</dependency>
 
 	</dependencies>
